@@ -1,0 +1,1 @@
+2024-08-14 13:25:56,846 pmorales-virtual-machine surefirebooter-20240814132543872_3.jar[14845] WARN  [io.qua.res.rea.com.dep.ResteasyReactiveCommonProcessor] (build-13) Mixing RESTEasy Reactive server and RESTEasy Classic client parts might lead to unexpected results. Consider using 'quarkus-rest-client-reactive' instead.
