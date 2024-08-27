@@ -1,68 +1,14 @@
-2024-05-04 14:52:26,479 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] WARN  [org.hib.too.sch.int.ExceptionHandlerLoggedImpl] (JPA Startup Thread) GenerationTarget encountered exception accepting command : Error executing DDL "alter table Faqs modify respuesta varchar2(255 char)" via JDBC [ORA-22859: invalid modification of columns
+2024-08-24 14:10:05,847 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] INFO  [io.quarkus] (Quarkus Main Thread) sistema-hoteles-be 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.7.4) started in 15.924s. Listening on: http://localhost:8080
+2024-08-24 14:10:05,855 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] INFO  [io.quarkus] (Quarkus Main Thread) Profile dev activated. Live Coding activated.
+2024-08-24 14:10:05,860 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [agroal, cdi, hibernate-orm, hibernate-orm-panache, jdbc-oracle, narayana-jta, resteasy-client, resteasy-reactive, resteasy-reactive-jackson, smallrye-context-propagation, vertx]
+2024-08-24 14:12:45,449 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] WARN  [org.hib.eng.jdb.spi.SqlExceptionHelper] (executor-thread-1) SQL Error: 1950, SQLState: 42000
+2024-08-24 14:12:45,451 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] ERROR [org.hib.eng.jdb.spi.SqlExceptionHelper] (executor-thread-1) ORA-01950: no privileges on tablespace 'USERS'
 
-https://docs.oracle.com/error-help/db/ora-22859/]: org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table Faqs modify respuesta varchar2(255 char)" via JDBC [ORA-22859: invalid modification of columns
+https://docs.oracle.com/error-help/db/ora-01950/
+2024-08-24 14:12:45,498 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] ERROR [io.qua.ver.htt.run.QuarkusErrorHandler] (executor-thread-1) HTTP Request to /usuarios/captcha failed, error id: 24bd9275-6282-4542-b987-c82550d1a411-1: org.hibernate.exception.SQLGrammarException: could not execute statement [ORA-01950: no privileges on tablespace 'USERS'
 
-https://docs.oracle.com/error-help/db/ora-22859/]
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:574)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:514)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.migrateTable(AbstractSchemaMigrator.java:333)
-	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:84)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:232)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:117)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:286)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:145)
-	at java.base/java.util.HashMap.forEach(HashMap.java:1421)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:142)
-	at io.quarkus.hibernate.orm.runtime.observers.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:21)
-	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:315)
-	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.build(FastBootEntityManagerFactoryBuilder.java:87)
-	at io.quarkus.hibernate.orm.runtime.FastBootHibernatePersistenceProvider.createEntityManagerFactory(FastBootHibernatePersistenceProvider.java:72)
-	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:80)
-	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:55)
-	at io.quarkus.hibernate.orm.runtime.JPAConfig$LazyPersistenceUnit.get(JPAConfig.java:157)
-	at io.quarkus.hibernate.orm.runtime.JPAConfig$1.run(JPAConfig.java:64)
-	at java.base/java.lang.Thread.run(Thread.java:840)
-Caused by: java.sql.SQLException: ORA-22859: invalid modification of columns
-
-https://docs.oracle.com/error-help/db/ora-22859/
-	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:702)
-	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:608)
-	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1330)
-	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:1102)
-	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:456)
-	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:498)
-	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:190)
-	at oracle.jdbc.driver.T4CStatement.executeForRows(T4CStatement.java:1368)
-	at oracle.jdbc.driver.OracleStatement.executeSQLStatement(OracleStatement.java:1958)
-	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1594)
-	at oracle.jdbc.driver.OracleStatement.executeInternal(OracleStatement.java:2636)
-	at oracle.jdbc.driver.OracleStatement.execute(OracleStatement.java:2585)
-	at oracle.jdbc.driver.OracleStatementWrapper.execute(OracleStatementWrapper.java:334)
-	at io.agroal.pool.wrapper.StatementWrapper.execute(StatementWrapper.java:235)
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
-	... 20 more
-Caused by: Error : 22859, Position : 24, SQL = alter table Faqs modify respuesta varchar2(255 char), Original SQL = alter table Faqs modify respuesta varchar2(255 char), Error Message = ORA-22859: invalid modification of columns
-
-	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:710)
-	... 34 more
-
-2024-05-04 14:52:28,056 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [io.quarkus] (Quarkus Main Thread) sistema-hoteles-be 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.7.4) started in 41.005s. Listening on: http://localhost:8080
-2024-05-04 14:52:28,060 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [io.quarkus] (Quarkus Main Thread) Profile dev activated. Live Coding activated.
-2024-05-04 14:52:28,062 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [agroal, cdi, hibernate-orm, hibernate-orm-panache, jdbc-oracle, narayana-jta, resteasy-client, resteasy-reactive, resteasy-reactive-jackson, smallrye-context-propagation, vertx]
-2024-05-04 14:57:50,642 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-17) Inicio del proceso de creación de reserva. Fecha de ingreso: 2024-05-09, Fecha de salida: 2024-05-11
-2024-05-04 14:57:51,045 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-17) No se encontraron conflictos con otras reservas. Procediendo con la creación de la reserva.
-2024-05-04 14:57:51,158 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-17) Habitación encontrada. Tipo de habitación obtenido: 3
-2024-05-04 14:57:51,365 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-17) Reserva creada con éxito. ID de la reserva: 1101
-2024-05-04 14:57:51,642 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] WARN  [org.hib.eng.jdb.spi.SqlExceptionHelper] (executor-thread-17) SQL Error: 2291, SQLState: 23000
-2024-05-04 14:57:51,644 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] ERROR [org.hib.eng.jdb.spi.SqlExceptionHelper] (executor-thread-17) ORA-02291: integrity constraint (PDBADMIN.SYS_C008287) violated - parent key not found
-
-https://docs.oracle.com/error-help/db/ora-02291/
-2024-05-04 14:57:51,662 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] WARN  [com.arj.ats.arjuna] (executor-thread-17) ARJUNA012125: TwoPhaseCoordinator.beforeCompletion - failed for SynchronizationImple< 0:ffff7f000101:b353:6636a033:159d, org.hibernate.resource.transaction.backend.jta.internal.synchronization.RegisteredSynchronization@2b1247c3 >: org.hibernate.exception.ConstraintViolationException: could not execute statement [ORA-02291: integrity constraint (PDBADMIN.SYS_C008287) violated - parent key not found
-
-https://docs.oracle.com/error-help/db/ora-02291/] [insert into RESERVAS (CODIGO_RESERVA,ESTADO_RESERVA,FECHA_INGRESO,FECHA_SALIDA,ID_HABITACION,ID_HOTEL,ID_USUARIO,PERSONAS_RESERVA,TIPO_HABITACION,TOTAL_RESERVA,ID_RESERVA) values (?,?,?,?,?,?,?,?,?,?,?)]
-	at org.hibernate.exception.internal.SQLExceptionTypeDelegate.convert(SQLExceptionTypeDelegate.java:62)
+https://docs.oracle.com/error-help/db/ora-01950/] [insert into Usuarios (email,fecha_nacimiento,nacionalidad,pasaporte,password,primer_apellido,primer_nombre,rol,segundo_apellido,segundo_nombre,id) values (?,?,?,?,?,?,?,?,?,?,?)]
+	at org.hibernate.exception.internal.SQLExceptionTypeDelegate.convert(SQLExceptionTypeDelegate.java:66)
 	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58)
 	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
 	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:197)
@@ -76,25 +22,25 @@ https://docs.oracle.com/error-help/db/ora-02291/] [insert into RESERVAS (CODIGO_
 	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:632)
 	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:499)
 	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:363)
-	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:41)
+	at org.hibernate.event.internal.DefaultAutoFlushEventListener.onAutoFlush(DefaultAutoFlushEventListener.java:61)
 	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1403)
-	at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:484)
-	at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2319)
-	at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1976)
-	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439)
-	at org.hibernate.resource.transaction.backend.jta.internal.JtaTransactionCoordinatorImpl.beforeCompletion(JtaTransactionCoordinatorImpl.java:336)
-	at org.hibernate.resource.transaction.backend.jta.internal.synchronization.SynchronizationCallbackCoordinatorNonTrackingImpl.beforeCompletion(SynchronizationCallbackCoordinatorNonTrackingImpl.java:47)
-	at org.hibernate.resource.transaction.backend.jta.internal.synchronization.RegisteredSynchronization.beforeCompletion(RegisteredSynchronization.java:37)
-	at com.arjuna.ats.internal.jta.resources.arjunacore.SynchronizationImple.beforeCompletion(SynchronizationImple.java:52)
-	at com.arjuna.ats.arjuna.coordinator.TwoPhaseCoordinator.beforeCompletion(TwoPhaseCoordinator.java:351)
-	at com.arjuna.ats.arjuna.coordinator.TwoPhaseCoordinator.end(TwoPhaseCoordinator.java:69)
-	at com.arjuna.ats.arjuna.AtomicAction.commit(AtomicAction.java:138)
-	at com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionImple.commitAndDisassociate(TransactionImple.java:1271)
-	at com.arjuna.ats.internal.jta.transaction.arjunacore.BaseTransaction.commit(BaseTransaction.java:104)
-	at io.quarkus.narayana.jta.runtime.NotifyingTransactionManager.commit(NotifyingTransactionManager.java:70)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.endTransaction(TransactionalInterceptorBase.java:406)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:171)
+	at org.hibernate.internal.SessionImpl.autoFlushIfRequired(SessionImpl.java:1366)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.lambda$new$2(ConcreteSqmSelectQueryPlan.java:136)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.withCacheableSqmInterpretation(ConcreteSqmSelectQueryPlan.java:362)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.performList(ConcreteSqmSelectQueryPlan.java:303)
+	at org.hibernate.query.sqm.internal.QuerySqmImpl.doList(QuerySqmImpl.java:509)
+	at org.hibernate.query.spi.AbstractSelectionQuery.list(AbstractSelectionQuery.java:427)
+	at org.hibernate.query.Query.getResultList(Query.java:120)
+	at io.quarkus.hibernate.orm.panache.common.runtime.CommonPanacheQueryImpl.firstResult(CommonPanacheQueryImpl.java:296)
+	at io.quarkus.hibernate.orm.panache.runtime.PanacheQueryImpl.firstResult(PanacheQueryImpl.java:159)
+	at pack_hotel.RolRepositorio.obtenerNombreRolPorId(RolRepositorio.java:19)
+	at pack_hotel.RolRepositorio_ClientProxy.obtenerNombreRolPorId(Unknown Source)
+	at pack_hotel.UsuarioRecursoCaptcha.crearUsuario(UsuarioRecursoCaptcha.java:73)
+	at pack_hotel.UsuarioRecursoCaptcha_Subclass.crearUsuario$$superforward(Unknown Source)
+	at pack_hotel.UsuarioRecursoCaptcha_Subclass$$function$$1.apply(Unknown Source)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:136)
 	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:107)
 	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:38)
 	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:61)
@@ -103,8 +49,8 @@ https://docs.oracle.com/error-help/db/ora-02291/] [insert into RESERVAS (CODIGO_
 	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
 	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
 	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
-	at pack_hotel.ReservasRecurso_Subclass.crearReserva(Unknown Source)
-	at pack_hotel.ReservasRecurso$quarkusrestinvoker$crearReserva_4926b5f540a98122427acba1d98ebfde6c46cee3.invoke(Unknown Source)
+	at pack_hotel.UsuarioRecursoCaptcha_Subclass.crearUsuario(Unknown Source)
+	at pack_hotel.UsuarioRecursoCaptcha$quarkusrestinvoker$crearUsuario_cc05442ed9b5d3b111a6cb35b7086b41bd595831.invoke(Unknown Source)
 	at org.jboss.resteasy.reactive.server.handlers.InvocationHandler.handle(InvocationHandler.java:29)
 	at io.quarkus.resteasy.reactive.server.runtime.QuarkusResteasyReactiveRequestContext.invokeHandler(QuarkusResteasyReactiveRequestContext.java:141)
 	at org.jboss.resteasy.reactive.common.core.AbstractResteasyReactiveContext.run(AbstractResteasyReactiveContext.java:147)
@@ -115,9 +61,9 @@ https://docs.oracle.com/error-help/db/ora-02291/] [insert into RESERVAS (CODIGO_
 	at org.jboss.threads.ThreadLocalResettingRunnable.run(ThreadLocalResettingRunnable.java:29)
 	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
 	at java.base/java.lang.Thread.run(Thread.java:840)
-Caused by: java.sql.SQLIntegrityConstraintViolationException: ORA-02291: integrity constraint (PDBADMIN.SYS_C008287) violated - parent key not found
+Caused by: java.sql.SQLSyntaxErrorException: ORA-01950: no privileges on tablespace 'USERS'
 
-https://docs.oracle.com/error-help/db/ora-02291/
+https://docs.oracle.com/error-help/db/ora-01950/
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:702)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:608)
 	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1330)
@@ -135,43 +81,19 @@ https://docs.oracle.com/error-help/db/ora-02291/
 	at io.agroal.pool.wrapper.PreparedStatementWrapper.executeUpdate(PreparedStatementWrapper.java:88)
 	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:194)
 	... 49 more
-Caused by: Error : 2291, Position : 0, SQL = insert into RESERVAS (CODIGO_RESERVA,ESTADO_RESERVA,FECHA_INGRESO,FECHA_SALIDA,ID_HABITACION,ID_HOTEL,ID_USUARIO,PERSONAS_RESERVA,TIPO_HABITACION,TOTAL_RESERVA,ID_RESERVA) values (:1 ,:2 ,:3 ,:4 ,:5 ,:6 ,:7 ,:8 ,:9 ,:10 ,:11 ), Original SQL = insert into RESERVAS (CODIGO_RESERVA,ESTADO_RESERVA,FECHA_INGRESO,FECHA_SALIDA,ID_HABITACION,ID_HOTEL,ID_USUARIO,PERSONAS_RESERVA,TIPO_HABITACION,TOTAL_RESERVA,ID_RESERVA) values (?,?,?,?,?,?,?,?,?,?,?), Error Message = ORA-02291: integrity constraint (PDBADMIN.SYS_C008287) violated - parent key not found
+Caused by: Error : 1950, Position : 12, SQL = insert into Usuarios (email,fecha_nacimiento,nacionalidad,pasaporte,password,primer_apellido,primer_nombre,rol,segundo_apellido,segundo_nombre,id) values (:1 ,:2 ,:3 ,:4 ,:5 ,:6 ,:7 ,:8 ,:9 ,:10 ,:11 ), Original SQL = insert into Usuarios (email,fecha_nacimiento,nacionalidad,pasaporte,password,primer_apellido,primer_nombre,rol,segundo_apellido,segundo_nombre,id) values (?,?,?,?,?,?,?,?,?,?,?), Error Message = ORA-01950: no privileges on tablespace 'USERS'
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:710)
 	... 64 more
 
-2024-05-04 14:57:51,795 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] ERROR [io.qua.ver.htt.run.QuarkusErrorHandler] (executor-thread-17) HTTP Request to /reservas failed, error id: 80f292c6-837e-4da3-9db2-77f84ab1971e-1: io.quarkus.arc.ArcUndeclaredThrowableException: Error invoking subclass method
-	at pack_hotel.ReservasRecurso_Subclass.crearReserva(Unknown Source)
-	at pack_hotel.ReservasRecurso$quarkusrestinvoker$crearReserva_4926b5f540a98122427acba1d98ebfde6c46cee3.invoke(Unknown Source)
-	at org.jboss.resteasy.reactive.server.handlers.InvocationHandler.handle(InvocationHandler.java:29)
-	at io.quarkus.resteasy.reactive.server.runtime.QuarkusResteasyReactiveRequestContext.invokeHandler(QuarkusResteasyReactiveRequestContext.java:141)
-	at org.jboss.resteasy.reactive.common.core.AbstractResteasyReactiveContext.run(AbstractResteasyReactiveContext.java:147)
-	at io.quarkus.vertx.core.runtime.VertxCoreRecorder$14.runWith(VertxCoreRecorder.java:582)
-	at org.jboss.threads.EnhancedQueueExecutor$Task.run(EnhancedQueueExecutor.java:2513)
-	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1538)
-	at org.jboss.threads.DelegatingRunnable.run(DelegatingRunnable.java:29)
-	at org.jboss.threads.ThreadLocalResettingRunnable.run(ThreadLocalResettingRunnable.java:29)
-	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
-	at java.base/java.lang.Thread.run(Thread.java:840)
-Caused by: jakarta.transaction.RollbackException: ARJUNA016053: Could not commit transaction.
-	at com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionImple.commitAndDisassociate(TransactionImple.java:1283)
-	at com.arjuna.ats.internal.jta.transaction.arjunacore.BaseTransaction.commit(BaseTransaction.java:104)
-	at io.quarkus.narayana.jta.runtime.NotifyingTransactionManager.commit(NotifyingTransactionManager.java:70)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.endTransaction(TransactionalInterceptorBase.java:406)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:171)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:107)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:38)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:61)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:32)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
-	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
-	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
-	... 12 more
-Caused by: org.hibernate.exception.ConstraintViolationException: could not execute statement [ORA-02291: integrity constraint (PDBADMIN.SYS_C008287) violated - parent key not found
+2024-08-24 14:13:13,973 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] WARN  [org.hib.eng.jdb.spi.SqlExceptionHelper] (executor-thread-1) SQL Error: 1950, SQLState: 42000
+2024-08-24 14:13:13,979 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] ERROR [org.hib.eng.jdb.spi.SqlExceptionHelper] (executor-thread-1) ORA-01950: no privileges on tablespace 'USERS'
 
-https://docs.oracle.com/error-help/db/ora-02291/] [insert into RESERVAS (CODIGO_RESERVA,ESTADO_RESERVA,FECHA_INGRESO,FECHA_SALIDA,ID_HABITACION,ID_HOTEL,ID_USUARIO,PERSONAS_RESERVA,TIPO_HABITACION,TOTAL_RESERVA,ID_RESERVA) values (?,?,?,?,?,?,?,?,?,?,?)]
-	at org.hibernate.exception.internal.SQLExceptionTypeDelegate.convert(SQLExceptionTypeDelegate.java:62)
+https://docs.oracle.com/error-help/db/ora-01950/
+2024-08-24 14:13:13,990 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] ERROR [io.qua.ver.htt.run.QuarkusErrorHandler] (executor-thread-1) HTTP Request to /usuarios/captcha failed, error id: 24bd9275-6282-4542-b987-c82550d1a411-2: org.hibernate.exception.SQLGrammarException: could not execute statement [ORA-01950: no privileges on tablespace 'USERS'
+
+https://docs.oracle.com/error-help/db/ora-01950/] [insert into Usuarios (email,fecha_nacimiento,nacionalidad,pasaporte,password,primer_apellido,primer_nombre,rol,segundo_apellido,segundo_nombre,id) values (?,?,?,?,?,?,?,?,?,?,?)]
+	at org.hibernate.exception.internal.SQLExceptionTypeDelegate.convert(SQLExceptionTypeDelegate.java:66)
 	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58)
 	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
 	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:197)
@@ -185,25 +107,48 @@ https://docs.oracle.com/error-help/db/ora-02291/] [insert into RESERVAS (CODIGO_
 	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:632)
 	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:499)
 	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:363)
-	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:41)
+	at org.hibernate.event.internal.DefaultAutoFlushEventListener.onAutoFlush(DefaultAutoFlushEventListener.java:61)
 	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1403)
-	at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:484)
-	at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2319)
-	at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1976)
-	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439)
-	at org.hibernate.resource.transaction.backend.jta.internal.JtaTransactionCoordinatorImpl.beforeCompletion(JtaTransactionCoordinatorImpl.java:336)
-	at org.hibernate.resource.transaction.backend.jta.internal.synchronization.SynchronizationCallbackCoordinatorNonTrackingImpl.beforeCompletion(SynchronizationCallbackCoordinatorNonTrackingImpl.java:47)
-	at org.hibernate.resource.transaction.backend.jta.internal.synchronization.RegisteredSynchronization.beforeCompletion(RegisteredSynchronization.java:37)
-	at com.arjuna.ats.internal.jta.resources.arjunacore.SynchronizationImple.beforeCompletion(SynchronizationImple.java:52)
-	at com.arjuna.ats.arjuna.coordinator.TwoPhaseCoordinator.beforeCompletion(TwoPhaseCoordinator.java:351)
-	at com.arjuna.ats.arjuna.coordinator.TwoPhaseCoordinator.end(TwoPhaseCoordinator.java:69)
-	at com.arjuna.ats.arjuna.AtomicAction.commit(AtomicAction.java:138)
-	at com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionImple.commitAndDisassociate(TransactionImple.java:1271)
-	... 24 more
-Caused by: java.sql.SQLIntegrityConstraintViolationException: ORA-02291: integrity constraint (PDBADMIN.SYS_C008287) violated - parent key not found
+	at org.hibernate.internal.SessionImpl.autoFlushIfRequired(SessionImpl.java:1366)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.lambda$new$2(ConcreteSqmSelectQueryPlan.java:136)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.withCacheableSqmInterpretation(ConcreteSqmSelectQueryPlan.java:362)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.performList(ConcreteSqmSelectQueryPlan.java:303)
+	at org.hibernate.query.sqm.internal.QuerySqmImpl.doList(QuerySqmImpl.java:509)
+	at org.hibernate.query.spi.AbstractSelectionQuery.list(AbstractSelectionQuery.java:427)
+	at org.hibernate.query.Query.getResultList(Query.java:120)
+	at io.quarkus.hibernate.orm.panache.common.runtime.CommonPanacheQueryImpl.firstResult(CommonPanacheQueryImpl.java:296)
+	at io.quarkus.hibernate.orm.panache.runtime.PanacheQueryImpl.firstResult(PanacheQueryImpl.java:159)
+	at pack_hotel.RolRepositorio.obtenerNombreRolPorId(RolRepositorio.java:19)
+	at pack_hotel.RolRepositorio_ClientProxy.obtenerNombreRolPorId(Unknown Source)
+	at pack_hotel.UsuarioRecursoCaptcha.crearUsuario(UsuarioRecursoCaptcha.java:73)
+	at pack_hotel.UsuarioRecursoCaptcha_Subclass.crearUsuario$$superforward(Unknown Source)
+	at pack_hotel.UsuarioRecursoCaptcha_Subclass$$function$$1.apply(Unknown Source)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:136)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:107)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:38)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:61)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:32)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
+	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
+	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
+	at pack_hotel.UsuarioRecursoCaptcha_Subclass.crearUsuario(Unknown Source)
+	at pack_hotel.UsuarioRecursoCaptcha$quarkusrestinvoker$crearUsuario_cc05442ed9b5d3b111a6cb35b7086b41bd595831.invoke(Unknown Source)
+	at org.jboss.resteasy.reactive.server.handlers.InvocationHandler.handle(InvocationHandler.java:29)
+	at io.quarkus.resteasy.reactive.server.runtime.QuarkusResteasyReactiveRequestContext.invokeHandler(QuarkusResteasyReactiveRequestContext.java:141)
+	at org.jboss.resteasy.reactive.common.core.AbstractResteasyReactiveContext.run(AbstractResteasyReactiveContext.java:147)
+	at io.quarkus.vertx.core.runtime.VertxCoreRecorder$14.runWith(VertxCoreRecorder.java:582)
+	at org.jboss.threads.EnhancedQueueExecutor$Task.run(EnhancedQueueExecutor.java:2513)
+	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1538)
+	at org.jboss.threads.DelegatingRunnable.run(DelegatingRunnable.java:29)
+	at org.jboss.threads.ThreadLocalResettingRunnable.run(ThreadLocalResettingRunnable.java:29)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.sql.SQLSyntaxErrorException: ORA-01950: no privileges on tablespace 'USERS'
 
-https://docs.oracle.com/error-help/db/ora-02291/
+https://docs.oracle.com/error-help/db/ora-01950/
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:702)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:608)
 	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1330)
@@ -221,65 +166,44 @@ https://docs.oracle.com/error-help/db/ora-02291/
 	at io.agroal.pool.wrapper.PreparedStatementWrapper.executeUpdate(PreparedStatementWrapper.java:88)
 	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:194)
 	... 49 more
-Caused by: Error : 2291, Position : 0, SQL = insert into RESERVAS (CODIGO_RESERVA,ESTADO_RESERVA,FECHA_INGRESO,FECHA_SALIDA,ID_HABITACION,ID_HOTEL,ID_USUARIO,PERSONAS_RESERVA,TIPO_HABITACION,TOTAL_RESERVA,ID_RESERVA) values (:1 ,:2 ,:3 ,:4 ,:5 ,:6 ,:7 ,:8 ,:9 ,:10 ,:11 ), Original SQL = insert into RESERVAS (CODIGO_RESERVA,ESTADO_RESERVA,FECHA_INGRESO,FECHA_SALIDA,ID_HABITACION,ID_HOTEL,ID_USUARIO,PERSONAS_RESERVA,TIPO_HABITACION,TOTAL_RESERVA,ID_RESERVA) values (?,?,?,?,?,?,?,?,?,?,?), Error Message = ORA-02291: integrity constraint (PDBADMIN.SYS_C008287) violated - parent key not found
+Caused by: Error : 1950, Position : 12, SQL = insert into Usuarios (email,fecha_nacimiento,nacionalidad,pasaporte,password,primer_apellido,primer_nombre,rol,segundo_apellido,segundo_nombre,id) values (:1 ,:2 ,:3 ,:4 ,:5 ,:6 ,:7 ,:8 ,:9 ,:10 ,:11 ), Original SQL = insert into Usuarios (email,fecha_nacimiento,nacionalidad,pasaporte,password,primer_apellido,primer_nombre,rol,segundo_apellido,segundo_nombre,id) values (?,?,?,?,?,?,?,?,?,?,?), Error Message = ORA-01950: no privileges on tablespace 'USERS'
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:710)
 	... 64 more
 
-2024-05-04 14:58:33,389 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-17) Inicio del proceso de creación de reserva. Fecha de ingreso: 2024-05-09, Fecha de salida: 2024-05-11
-2024-05-04 14:58:33,519 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-17) No se encontraron conflictos con otras reservas. Procediendo con la creación de la reserva.
-2024-05-04 14:58:33,649 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-17) Habitación encontrada. Tipo de habitación obtenido: 3
-2024-05-04 14:58:33,848 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-17) Reserva creada con éxito. ID de la reserva: 1102
-2024-05-04 14:58:34,257 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] WARN  [org.hib.eng.jdb.spi.SqlExceptionHelper] (executor-thread-17) SQL Error: 2291, SQLState: 23000
-2024-05-04 14:58:34,258 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] ERROR [org.hib.eng.jdb.spi.SqlExceptionHelper] (executor-thread-17) ORA-02291: integrity constraint (PDBADMIN.SYS_C008287) violated - parent key not found
+2024-08-24 14:28:54,229 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] INFO  [pac.ReservasRecurso] (executor-thread-12) Inicio del proceso de creación de reserva. Fecha de ingreso: 2024-08-27, Fecha de salida: 2024-08-29
+2024-08-24 14:28:55,378 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] INFO  [pac.ReservasRecurso] (executor-thread-12) No se encontraron conflictos con otras reservas. Procediendo con la creación de la reserva.
+2024-08-24 14:28:55,385 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] INFO  [pac.ReservasRecurso] (executor-thread-12) Habitación encontrada. Tipo de habitación obtenido: 4
+2024-08-24 14:28:55,393 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] INFO  [pac.ReservasRecurso] (executor-thread-12) Reserva creada con éxito. ID de la reserva: 1
+2024-08-24 14:30:44,146 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] WARN  [org.hib.eng.jdb.spi.SqlExceptionHelper] (executor-thread-12) SQL Error: 942, SQLState: 42000
+2024-08-24 14:30:44,147 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] ERROR [org.hib.eng.jdb.spi.SqlExceptionHelper] (executor-thread-12) ORA-00942: table or view does not exist
 
-https://docs.oracle.com/error-help/db/ora-02291/
-2024-05-04 14:58:34,260 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] WARN  [com.arj.ats.arjuna] (executor-thread-17) ARJUNA012125: TwoPhaseCoordinator.beforeCompletion - failed for SynchronizationImple< 0:ffff7f000101:b353:6636a033:15af, org.hibernate.resource.transaction.backend.jta.internal.synchronization.RegisteredSynchronization@17f10ee1 >: org.hibernate.exception.ConstraintViolationException: could not execute statement [ORA-02291: integrity constraint (PDBADMIN.SYS_C008287) violated - parent key not found
+https://docs.oracle.com/error-help/db/ora-00942/
+2024-08-24 14:30:44,149 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] ERROR [pac.ReservasRecurso] (executor-thread-12) Error al obtener el historial de reservas del usuario: org.hibernate.exception.SQLGrammarException: JDBC exception executing SQL [SELECT id_reserva, id_hotel, id_habitacion, id_usuario, tipo_habitacion, codigo_reserva, fecha_ingreso, fecha_salida, total_reserva, estado_reserva FROM VistaSeguimientoClientes WHERE id_usuario = ?] [ORA-00942: table or view does not exist
 
-https://docs.oracle.com/error-help/db/ora-02291/] [insert into RESERVAS (CODIGO_RESERVA,ESTADO_RESERVA,FECHA_INGRESO,FECHA_SALIDA,ID_HABITACION,ID_HOTEL,ID_USUARIO,PERSONAS_RESERVA,TIPO_HABITACION,TOTAL_RESERVA,ID_RESERVA) values (?,?,?,?,?,?,?,?,?,?,?)]
-	at org.hibernate.exception.internal.SQLExceptionTypeDelegate.convert(SQLExceptionTypeDelegate.java:62)
+https://docs.oracle.com/error-help/db/ora-00942/] [n/a]
+	at org.hibernate.exception.internal.SQLExceptionTypeDelegate.convert(SQLExceptionTypeDelegate.java:66)
 	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58)
 	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
-	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:197)
-	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.performNonBatchedMutation(AbstractMutationExecutor.java:108)
-	at org.hibernate.engine.jdbc.mutation.internal.MutationExecutorSingleNonBatched.performNonBatchedOperations(MutationExecutorSingleNonBatched.java:40)
-	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.execute(AbstractMutationExecutor.java:52)
-	at org.hibernate.persister.entity.mutation.InsertCoordinator.doStaticInserts(InsertCoordinator.java:175)
-	at org.hibernate.persister.entity.mutation.InsertCoordinator.coordinateInsert(InsertCoordinator.java:113)
-	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2873)
-	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:104)
-	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:632)
-	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:499)
-	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:363)
-	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:41)
-	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1403)
-	at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:484)
-	at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2319)
-	at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1976)
-	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439)
-	at org.hibernate.resource.transaction.backend.jta.internal.JtaTransactionCoordinatorImpl.beforeCompletion(JtaTransactionCoordinatorImpl.java:336)
-	at org.hibernate.resource.transaction.backend.jta.internal.synchronization.SynchronizationCallbackCoordinatorNonTrackingImpl.beforeCompletion(SynchronizationCallbackCoordinatorNonTrackingImpl.java:47)
-	at org.hibernate.resource.transaction.backend.jta.internal.synchronization.RegisteredSynchronization.beforeCompletion(RegisteredSynchronization.java:37)
-	at com.arjuna.ats.internal.jta.resources.arjunacore.SynchronizationImple.beforeCompletion(SynchronizationImple.java:52)
-	at com.arjuna.ats.arjuna.coordinator.TwoPhaseCoordinator.beforeCompletion(TwoPhaseCoordinator.java:351)
-	at com.arjuna.ats.arjuna.coordinator.TwoPhaseCoordinator.end(TwoPhaseCoordinator.java:69)
-	at com.arjuna.ats.arjuna.AtomicAction.commit(AtomicAction.java:138)
-	at com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionImple.commitAndDisassociate(TransactionImple.java:1271)
-	at com.arjuna.ats.internal.jta.transaction.arjunacore.BaseTransaction.commit(BaseTransaction.java:104)
-	at io.quarkus.narayana.jta.runtime.NotifyingTransactionManager.commit(NotifyingTransactionManager.java:70)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.endTransaction(TransactionalInterceptorBase.java:406)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:171)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:107)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:38)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:61)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:32)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
-	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
-	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
-	at pack_hotel.ReservasRecurso_Subclass.crearReserva(Unknown Source)
-	at pack_hotel.ReservasRecurso$quarkusrestinvoker$crearReserva_4926b5f540a98122427acba1d98ebfde6c46cee3.invoke(Unknown Source)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:94)
+	at org.hibernate.sql.results.jdbc.internal.DeferredResultSetAccess.executeQuery(DeferredResultSetAccess.java:265)
+	at org.hibernate.sql.results.jdbc.internal.DeferredResultSetAccess.getResultSet(DeferredResultSetAccess.java:167)
+	at org.hibernate.sql.results.jdbc.internal.AbstractResultSetAccess.getMetaData(AbstractResultSetAccess.java:36)
+	at org.hibernate.sql.results.jdbc.internal.AbstractResultSetAccess.getColumnCount(AbstractResultSetAccess.java:52)
+	at org.hibernate.query.results.ResultSetMappingImpl.resolve(ResultSetMappingImpl.java:193)
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.resolveJdbcValuesSource(JdbcSelectExecutorStandardImpl.java:325)
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.doExecuteQuery(JdbcSelectExecutorStandardImpl.java:115)
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.executeQuery(JdbcSelectExecutorStandardImpl.java:83)
+	at org.hibernate.sql.exec.spi.JdbcSelectExecutor.list(JdbcSelectExecutor.java:76)
+	at org.hibernate.sql.exec.spi.JdbcSelectExecutor.list(JdbcSelectExecutor.java:65)
+	at org.hibernate.query.sql.internal.NativeSelectQueryPlanImpl.performList(NativeSelectQueryPlanImpl.java:138)
+	at org.hibernate.query.sql.internal.NativeQueryImpl.doList(NativeQueryImpl.java:621)
+	at org.hibernate.query.spi.AbstractSelectionQuery.list(AbstractSelectionQuery.java:427)
+	at org.hibernate.query.Query.getResultList(Query.java:120)
+	at pack_hotel.ReservasRepositorio.obtenerReservasPorUsuario(ReservasRepositorio.java:38)
+	at pack_hotel.ReservasRepositorio_ClientProxy.obtenerReservasPorUsuario(Unknown Source)
+	at pack_hotel.ReservasRecurso.obtenerHistorialReservasUsuario(ReservasRecurso.java:415)
+	at pack_hotel.ReservasRecurso$quarkusrestinvoker$obtenerHistorialReservasUsuario_a283f0bcb7ebf3c0e1e5428d6bf6dbf24b5ce3af.invoke(Unknown Source)
 	at org.jboss.resteasy.reactive.server.handlers.InvocationHandler.handle(InvocationHandler.java:29)
 	at io.quarkus.resteasy.reactive.server.runtime.QuarkusResteasyReactiveRequestContext.invokeHandler(QuarkusResteasyReactiveRequestContext.java:141)
 	at org.jboss.resteasy.reactive.common.core.AbstractResteasyReactiveContext.run(AbstractResteasyReactiveContext.java:147)
@@ -290,9 +214,9 @@ https://docs.oracle.com/error-help/db/ora-02291/] [insert into RESERVAS (CODIGO_
 	at org.jboss.threads.ThreadLocalResettingRunnable.run(ThreadLocalResettingRunnable.java:29)
 	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
 	at java.base/java.lang.Thread.run(Thread.java:840)
-Caused by: java.sql.SQLIntegrityConstraintViolationException: ORA-02291: integrity constraint (PDBADMIN.SYS_C008287) violated - parent key not found
+Caused by: java.sql.SQLSyntaxErrorException: ORA-00942: table or view does not exist
 
-https://docs.oracle.com/error-help/db/ora-02291/
+https://docs.oracle.com/error-help/db/ora-00942/
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:702)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:608)
 	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1330)
@@ -300,116 +224,20 @@ https://docs.oracle.com/error-help/db/ora-02291/
 	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:456)
 	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:498)
 	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:272)
-	at oracle.jdbc.driver.T4CPreparedStatement.executeForRows(T4CPreparedStatement.java:1451)
-	at oracle.jdbc.driver.OracleStatement.executeSQLStatement(OracleStatement.java:1958)
-	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1594)
+	at oracle.jdbc.driver.T4CPreparedStatement.executeForDescribe(T4CPreparedStatement.java:1198)
+	at oracle.jdbc.driver.OracleStatement.prepareDefineBufferAndExecute(OracleStatement.java:1390)
+	at oracle.jdbc.driver.OracleStatement.executeMaybeDescribe(OracleStatement.java:1269)
+	at oracle.jdbc.driver.OracleStatement.executeSQLSelect(OracleStatement.java:1794)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1592)
 	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3754)
-	at oracle.jdbc.driver.OraclePreparedStatement.executeLargeUpdate(OraclePreparedStatement.java:4100)
-	at oracle.jdbc.driver.OraclePreparedStatement.executeUpdate(OraclePreparedStatement.java:4071)
-	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeUpdate(OraclePreparedStatementWrapper.java:997)
-	at io.agroal.pool.wrapper.PreparedStatementWrapper.executeUpdate(PreparedStatementWrapper.java:88)
-	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:194)
-	... 49 more
-Caused by: Error : 2291, Position : 0, SQL = insert into RESERVAS (CODIGO_RESERVA,ESTADO_RESERVA,FECHA_INGRESO,FECHA_SALIDA,ID_HABITACION,ID_HOTEL,ID_USUARIO,PERSONAS_RESERVA,TIPO_HABITACION,TOTAL_RESERVA,ID_RESERVA) values (:1 ,:2 ,:3 ,:4 ,:5 ,:6 ,:7 ,:8 ,:9 ,:10 ,:11 ), Original SQL = insert into RESERVAS (CODIGO_RESERVA,ESTADO_RESERVA,FECHA_INGRESO,FECHA_SALIDA,ID_HABITACION,ID_HOTEL,ID_USUARIO,PERSONAS_RESERVA,TIPO_HABITACION,TOTAL_RESERVA,ID_RESERVA) values (?,?,?,?,?,?,?,?,?,?,?), Error Message = ORA-02291: integrity constraint (PDBADMIN.SYS_C008287) violated - parent key not found
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3940)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1103)
+	at io.agroal.pool.wrapper.PreparedStatementWrapper.executeQuery(PreparedStatementWrapper.java:78)
+	at org.hibernate.sql.results.jdbc.internal.DeferredResultSetAccess.executeQuery(DeferredResultSetAccess.java:246)
+	... 27 more
+Caused by: Error : 942, Position : 153, SQL = SELECT id_reserva, id_hotel, id_habitacion, id_usuario, tipo_habitacion, codigo_reserva, fecha_ingreso, fecha_salida, total_reserva, estado_reserva FROM VistaSeguimientoClientes WHERE id_usuario = :1 , Original SQL = SELECT id_reserva, id_hotel, id_habitacion, id_usuario, tipo_habitacion, codigo_reserva, fecha_ingreso, fecha_salida, total_reserva, estado_reserva FROM VistaSeguimientoClientes WHERE id_usuario = ?, Error Message = ORA-00942: table or view does not exist
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:710)
-	... 64 more
+	... 43 more
 
-2024-05-04 14:58:34,378 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] ERROR [io.qua.ver.htt.run.QuarkusErrorHandler] (executor-thread-17) HTTP Request to /reservas failed, error id: 80f292c6-837e-4da3-9db2-77f84ab1971e-2: io.quarkus.arc.ArcUndeclaredThrowableException: Error invoking subclass method
-	at pack_hotel.ReservasRecurso_Subclass.crearReserva(Unknown Source)
-	at pack_hotel.ReservasRecurso$quarkusrestinvoker$crearReserva_4926b5f540a98122427acba1d98ebfde6c46cee3.invoke(Unknown Source)
-	at org.jboss.resteasy.reactive.server.handlers.InvocationHandler.handle(InvocationHandler.java:29)
-	at io.quarkus.resteasy.reactive.server.runtime.QuarkusResteasyReactiveRequestContext.invokeHandler(QuarkusResteasyReactiveRequestContext.java:141)
-	at org.jboss.resteasy.reactive.common.core.AbstractResteasyReactiveContext.run(AbstractResteasyReactiveContext.java:147)
-	at io.quarkus.vertx.core.runtime.VertxCoreRecorder$14.runWith(VertxCoreRecorder.java:582)
-	at org.jboss.threads.EnhancedQueueExecutor$Task.run(EnhancedQueueExecutor.java:2513)
-	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1538)
-	at org.jboss.threads.DelegatingRunnable.run(DelegatingRunnable.java:29)
-	at org.jboss.threads.ThreadLocalResettingRunnable.run(ThreadLocalResettingRunnable.java:29)
-	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
-	at java.base/java.lang.Thread.run(Thread.java:840)
-Caused by: jakarta.transaction.RollbackException: ARJUNA016053: Could not commit transaction.
-	at com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionImple.commitAndDisassociate(TransactionImple.java:1283)
-	at com.arjuna.ats.internal.jta.transaction.arjunacore.BaseTransaction.commit(BaseTransaction.java:104)
-	at io.quarkus.narayana.jta.runtime.NotifyingTransactionManager.commit(NotifyingTransactionManager.java:70)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.endTransaction(TransactionalInterceptorBase.java:406)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:171)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:107)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:38)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:61)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:32)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
-	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
-	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
-	... 12 more
-Caused by: org.hibernate.exception.ConstraintViolationException: could not execute statement [ORA-02291: integrity constraint (PDBADMIN.SYS_C008287) violated - parent key not found
-
-https://docs.oracle.com/error-help/db/ora-02291/] [insert into RESERVAS (CODIGO_RESERVA,ESTADO_RESERVA,FECHA_INGRESO,FECHA_SALIDA,ID_HABITACION,ID_HOTEL,ID_USUARIO,PERSONAS_RESERVA,TIPO_HABITACION,TOTAL_RESERVA,ID_RESERVA) values (?,?,?,?,?,?,?,?,?,?,?)]
-	at org.hibernate.exception.internal.SQLExceptionTypeDelegate.convert(SQLExceptionTypeDelegate.java:62)
-	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58)
-	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
-	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:197)
-	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.performNonBatchedMutation(AbstractMutationExecutor.java:108)
-	at org.hibernate.engine.jdbc.mutation.internal.MutationExecutorSingleNonBatched.performNonBatchedOperations(MutationExecutorSingleNonBatched.java:40)
-	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.execute(AbstractMutationExecutor.java:52)
-	at org.hibernate.persister.entity.mutation.InsertCoordinator.doStaticInserts(InsertCoordinator.java:175)
-	at org.hibernate.persister.entity.mutation.InsertCoordinator.coordinateInsert(InsertCoordinator.java:113)
-	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2873)
-	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:104)
-	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:632)
-	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:499)
-	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:363)
-	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:41)
-	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1403)
-	at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:484)
-	at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2319)
-	at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1976)
-	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439)
-	at org.hibernate.resource.transaction.backend.jta.internal.JtaTransactionCoordinatorImpl.beforeCompletion(JtaTransactionCoordinatorImpl.java:336)
-	at org.hibernate.resource.transaction.backend.jta.internal.synchronization.SynchronizationCallbackCoordinatorNonTrackingImpl.beforeCompletion(SynchronizationCallbackCoordinatorNonTrackingImpl.java:47)
-	at org.hibernate.resource.transaction.backend.jta.internal.synchronization.RegisteredSynchronization.beforeCompletion(RegisteredSynchronization.java:37)
-	at com.arjuna.ats.internal.jta.resources.arjunacore.SynchronizationImple.beforeCompletion(SynchronizationImple.java:52)
-	at com.arjuna.ats.arjuna.coordinator.TwoPhaseCoordinator.beforeCompletion(TwoPhaseCoordinator.java:351)
-	at com.arjuna.ats.arjuna.coordinator.TwoPhaseCoordinator.end(TwoPhaseCoordinator.java:69)
-	at com.arjuna.ats.arjuna.AtomicAction.commit(AtomicAction.java:138)
-	at com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionImple.commitAndDisassociate(TransactionImple.java:1271)
-	... 24 more
-Caused by: java.sql.SQLIntegrityConstraintViolationException: ORA-02291: integrity constraint (PDBADMIN.SYS_C008287) violated - parent key not found
-
-https://docs.oracle.com/error-help/db/ora-02291/
-	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:702)
-	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:608)
-	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1330)
-	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:1102)
-	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:456)
-	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:498)
-	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:272)
-	at oracle.jdbc.driver.T4CPreparedStatement.executeForRows(T4CPreparedStatement.java:1451)
-	at oracle.jdbc.driver.OracleStatement.executeSQLStatement(OracleStatement.java:1958)
-	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1594)
-	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3754)
-	at oracle.jdbc.driver.OraclePreparedStatement.executeLargeUpdate(OraclePreparedStatement.java:4100)
-	at oracle.jdbc.driver.OraclePreparedStatement.executeUpdate(OraclePreparedStatement.java:4071)
-	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeUpdate(OraclePreparedStatementWrapper.java:997)
-	at io.agroal.pool.wrapper.PreparedStatementWrapper.executeUpdate(PreparedStatementWrapper.java:88)
-	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:194)
-	... 49 more
-Caused by: Error : 2291, Position : 0, SQL = insert into RESERVAS (CODIGO_RESERVA,ESTADO_RESERVA,FECHA_INGRESO,FECHA_SALIDA,ID_HABITACION,ID_HOTEL,ID_USUARIO,PERSONAS_RESERVA,TIPO_HABITACION,TOTAL_RESERVA,ID_RESERVA) values (:1 ,:2 ,:3 ,:4 ,:5 ,:6 ,:7 ,:8 ,:9 ,:10 ,:11 ), Original SQL = insert into RESERVAS (CODIGO_RESERVA,ESTADO_RESERVA,FECHA_INGRESO,FECHA_SALIDA,ID_HABITACION,ID_HOTEL,ID_USUARIO,PERSONAS_RESERVA,TIPO_HABITACION,TOTAL_RESERVA,ID_RESERVA) values (?,?,?,?,?,?,?,?,?,?,?), Error Message = ORA-02291: integrity constraint (PDBADMIN.SYS_C008287) violated - parent key not found
-
-	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:710)
-	... 64 more
-
-2024-05-04 15:00:06,870 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-22) Inicio del proceso de creación de reserva. Fecha de ingreso: 2024-05-27, Fecha de salida: 2024-05-28
-2024-05-04 15:00:06,977 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-22) No se encontraron conflictos con otras reservas. Procediendo con la creación de la reserva.
-2024-05-04 15:00:07,084 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-22) Habitación encontrada. Tipo de habitación obtenido: 3
-2024-05-04 15:00:07,178 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-22) Reserva creada con éxito. ID de la reserva: 1103
-2024-05-04 15:01:27,111 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-28) Inicio del proceso de creación de reserva. Fecha de ingreso: 2024-07-15, Fecha de salida: 2024-07-18
-2024-05-04 15:01:27,317 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-28) No se encontraron conflictos con otras reservas. Procediendo con la creación de la reserva.
-2024-05-04 15:01:27,522 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-28) Habitación encontrada. Tipo de habitación obtenido: 4
-2024-05-04 15:01:27,633 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-28) Reserva creada con éxito. ID de la reserva: 1104
-2024-05-04 15:17:06,285 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [pac.ReservasRecurso] (executor-thread-45) Reserva con ID: 1105 ha sido cancelada
-2024-05-04 15:20:21,920 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] WARN  [io.agr.pool] (agroal-11) Datasource '<default>': ORA-17909: Socket channel is closed. (CONNECTION_ID=LVCKG5gaRcWgBinZ7Sj1+g==)
-https://docs.oracle.com/error-help/db/ora-17909/
-2024-05-04 15:26:42,524 pmorales-virtual-machine sistema-hoteles-be-dev.jar[25904] INFO  [io.quarkus] (Shutdown thread) sistema-hoteles-be stopped in 0.059s
+2024-08-24 16:24:30,325 pmorales-virtual-machine sistema-hoteles-be-dev.jar[24646] INFO  [io.quarkus] (Shutdown thread) sistema-hoteles-be stopped in 0.678s
