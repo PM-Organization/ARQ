@@ -1,0 +1,118 @@
+pipeline {
+    agent any
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('554fa22a-b8cf-4538-bb29-778d1bc87aea')
+        SONARQUBE_ENV = 'SonarQube'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: env.BRANCH_NAME, url: 'https://github.com/PM-Organization/ARQ.git'
+            }
+        }
+
+        stage('Build Backend') {
+            steps {
+                dir('backend/sistema-hoteles-be') {
+                    script {
+                        dockerImageBackend = docker.build("backend-image:latest")
+                    }
+                }
+            }
+        }
+
+        stage('Build Frontend') {
+            steps {
+                dir('frontend/sistema_hoteles') {
+                    script {
+                        dockerImageFrontend = docker.build("frontend-image:latest")
+                    }
+                }
+            }
+        }
+
+        stage('Unit Tests') {
+            steps {
+                dir('backend/sistema-hoteles-be') {
+                    sh './mvnw test'
+                }
+                dir('frontend/sistema_hoteles') {
+                    sh 'npm test'
+                }
+            }
+        }
+
+        stage('Code Quality Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    dir('backend/sistema-hoteles-be') {
+                        sh './mvnw sonar:sonar'
+                    }
+                    dir('frontend/sistema_hoteles') {
+                        sh 'npm run sonar'
+                    }
+                }
+            }
+        }
+
+        stage('Build and Push Docker Images') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', '554fa22a-b8cf-4538-bb29-778d1bc87aea') {
+                        dockerImageBackend.push("${env.BRANCH_NAME}")
+                        dockerImageFrontend.push("${env.BRANCH_NAME}")
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to Development') {
+            when {
+                branch 'dev'
+            }
+            steps {
+                script {
+                    dockerImageBackend.run('-p 8085:8085 backend-image:dev')
+                    dockerImageFrontend.run('-p 3000:3000 frontend-image:dev')
+                }
+            }
+        }
+
+        stage('Deploy to UAT/QA') {
+            when {
+                branch 'uat'
+            }
+            steps {
+                script {
+                    dockerImageBackend.run('-p 8085:8085 backend-image:uat')
+                    dockerImageFrontend.run('-p 3000:3000 frontend-image:uat')
+                }
+            }
+        }
+
+        stage('Deploy to Production') {
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    dockerImageBackend.run('-p 8085:8085 backend-image:master')
+                    dockerImageFrontend.run('-p 3000:3000 frontend-image:master')
+                }
+            }
+        }
+    }
+
+    post {
+        failure {
+            mail to: 'pdmorales@unis.edu.gt',
+                 subject: "Build Failed: ${env.BUILD_TAG}",
+                 body: "Something is wrong with the build ${env.BUILD_URL}"
+        }
+        success {
+            script {
+                currentBuild.description = "Build Successful: ${env.BRANCH_NAME}"
+            }
+        }
+    }
+}
