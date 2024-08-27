@@ -33,7 +33,7 @@ const AddHabitacionPage = () => {
 
   const fetchHoteles = async () => {
     try {
-      const response = await fetch('http://localhost:8080/hoteles');
+      const response = await fetch('http://localhost:8080/hoteles'); 
       if (!response.ok) throw new Error('Error al cargar los hoteles');
       const data = await response.json();
       setHoteles(data);
