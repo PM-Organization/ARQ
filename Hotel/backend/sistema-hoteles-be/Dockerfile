@@ -1,25 +1,16 @@
+# Use a Quarkus base image
+FROM quay.io/quarkus/ubi-quarkus-native-image:22.2.0-java11 AS build
+WORKDIR /work/
+COPY mvnw ./
+COPY .mvn .mvn
+COPY pom.xml ./
+COPY src ./src
+RUN ./mvnw package -Pnative -Dquarkus.native.container-build=true -DskipTests
 
-# Usar la imagen de Quarkus para la construcción
-FROM quay.io/quarkus/quarkus-distroless-image:1.0 AS build
-
-# Copiar el código fuente al contenedor
-COPY . /usr/src/app
-
-# Cambiar al directorio de la aplicación
-WORKDIR /usr/src/app
-
-# Construir el proyecto con Maven
-RUN ./mvnw package -DskipTests
-
-# Usar la imagen runtime de Quarkus
-FROM quay.io/quarkus/quarkus-distroless-image:1.0
-
-# Copiar el JAR generado al contenedor
-COPY --from=build /usr/src/app/target/*-runner.jar /app/app.jar
-
-# Exponer el puerto 8080
-EXPOSE 8080
-
-# Ejecutar la aplicación
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+# Use a smaller base image for runtime
+FROM quay.io/quarkus/quarkus-micro-image:1.0
+WORKDIR /work/
+COPY --from=build /work/target/*-runner /work/application
+EXPOSE 8085
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
 
