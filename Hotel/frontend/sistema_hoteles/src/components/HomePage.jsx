@@ -194,7 +194,7 @@ const applyAdditionalFilters = () => {
         const filteredRooms = await response.json();
   
   
-      // trasn las habitaciones filtradas en una estructura de hoteles con habitaciones
+      // trasnsss las habitaciones filtradas en una estructura de hoteles con habitaciones
       const hotelsMap = {};
       for (const room of filteredRooms) {
         if (!hotelsMap[room.id_hotel]) {
