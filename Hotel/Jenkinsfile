@@ -7,42 +7,19 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: env.BRANCH_NAME, url: 'https://github.com/PM-Organization/ARQ.git'
-            }
-        }
-
-        stage('Build Backend') {
-            steps {
-                dir('backend/sistema-hoteles-be') {
-                    script {
-                        dockerImageBackend = docker.build("backend-image:latest")
+                script {
+                    if (env.CHANGE_ID) { 
+                        echo "Building PR #${env.CHANGE_ID} targeting branch ${env.CHANGE_TARGET}"
+                        checkout scm
+                    } else {
+                        echo "Building branch ${env.BRANCH_NAME}"
+                        git branch: env.BRANCH_NAME, url: 'https://github.com/PM-Organization/ARQ.git'
                     }
                 }
             }
         }
 
-        stage('Build Frontend') {
-            steps {
-                dir('frontend/sistema_hoteles') {
-                    script {
-                        dockerImageFrontend = docker.build("frontend-image:latest")
-                    }
-                }
-            }
-        }
-
-        stage('Unit Tests') {
-            steps {
-                dir('backend/sistema-hoteles-be') {
-                    sh './mvnw test'
-                }
-                dir('frontend/sistema_hoteles') {
-                    sh 'npm test'
-                }
-            }
-        }
-
-        stage('Code Quality Analysis') {
+        stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
                     dir('backend/sistema-hoteles-be') {
@@ -55,49 +32,78 @@ pipeline {
             }
         }
 
-        stage('Build and Push Docker Images') {
+        stage('Build Backend') {
+            when {
+                not { changeRequest() } 
+            }
             steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', '554fa22a-b8cf-4538-bb29-778d1bc87aea') {
-                        dockerImageBackend.push("${env.BRANCH_NAME}")
-                        dockerImageFrontend.push("${env.BRANCH_NAME}")
+                dir('backend/sistema-hoteles-be') {
+                    script {
+                        dockerImageBackend = docker.build("backend-image:${env.BRANCH_NAME}")
                     }
                 }
             }
         }
 
-        stage('Deploy to Development') {
+        stage('Build Frontend') {
             when {
-                branch 'dev'
+                not { changeRequest() } 
             }
             steps {
-                script {
-                    dockerImageBackend.run('-p 8085:8085 backend-image:dev')
-                    dockerImageFrontend.run('-p 3000:3000 frontend-image:dev')
+                dir('frontend/sistema_hoteles') {
+                    script {
+                        dockerImageFrontend = docker.build("frontend-image:${env.BRANCH_NAME}")
+                    }
                 }
             }
         }
 
-        stage('Deploy to UAT/QA') {
+        stage('Deploy') {
             when {
-                branch 'uat'
-            }
-            steps {
-                script {
-                    dockerImageBackend.run('-p 8085:8085 backend-image:uat')
-                    dockerImageFrontend.run('-p 3000:3000 frontend-image:uat')
+                anyOf {
+                    branch 'dev'
+                    branch 'uat'
+                    branch 'master'
                 }
             }
-        }
+            stages {
+                stage('Unit Tests') {
+                    steps {
+                        dir('backend/sistema-hoteles-be') {
+                            sh './mvnw test'
+                        }
+                        dir('frontend/sistema_hoteles') {
+                            sh 'npm test'
+                        }
+                    }
+                }
 
-        stage('Deploy to Production') {
-            when {
-                branch 'master'
-            }
-            steps {
-                script {
-                    dockerImageBackend.run('-p 8085:8085 backend-image:master')
-                    dockerImageFrontend.run('-p 3000:3000 frontend-image:master')
+                stage('Build and Push Docker Images') {
+                    steps {
+                        script {
+                            docker.withRegistry('https://registry.hub.docker.com', '554fa22a-b8cf-4538-bb29-778d1bc87aea') {
+                                dockerImageBackend.push("${env.BRANCH_NAME}")
+                                dockerImageFrontend.push("${env.BRANCH_NAME}")
+                            }
+                        }
+                    }
+                }
+
+                stage('Deploy to Environment') {
+                    steps {
+                        script {
+                            if (env.BRANCH_NAME == 'dev') {
+                                dockerImageBackend.run('-p 8085:8085 backend-image:dev')
+                                dockerImageFrontend.run('-p 3000:3000 frontend-image:dev')
+                            } else if (env.BRANCH_NAME == 'uat') {
+                                dockerImageBackend.run('-p 8085:8085 backend-image:uat')
+                                dockerImageFrontend.run('-p 3000:3000 frontend-image:uat')
+                            } else if (env.BRANCH_NAME == 'master') {
+                                dockerImageBackend.run('-p 8085:8085 backend-image:master')
+                                dockerImageFrontend.run('-p 3000:3000 frontend-image:master')
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -116,4 +122,3 @@ pipeline {
         }
     }
 }
-
