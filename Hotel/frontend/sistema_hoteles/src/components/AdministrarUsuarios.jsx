@@ -158,7 +158,7 @@ const countries = [    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola",
         if (!response.ok) throw new Error('Error al actualizar el usuario');
   
         console.log("Usuario actualizado con éxito:", await response.json());
-        setEditandoId(null); // Desactivar modo edición
+        setEditandoId(null); // Desactivar modo ediciónnnnn
         fetchUsuarios();
       } catch (error) {
         console.error("Error al actualizar el usuario:", error);
