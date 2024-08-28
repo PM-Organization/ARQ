@@ -1,13 +1,21 @@
 pipeline {
     agent any
+
     environment {
         DOCKERHUB_CREDENTIALS = credentials('554fa22a-b8cf-4538-bb29-778d1bc87aea')
         SONARQUBE_ENV = 'SonarQube'
     }
+
     stages {
         stage('Checkout') {
             steps {
-                git branch: env.BRANCH_NAME, url: 'https://github.com/PM-Organization/ARQ.git'
+                checkout([$class: 'GitSCM', 
+                          branches: [[name: '*/main']], 
+                          doGenerateSubmoduleConfigurations: false, 
+                          extensions: [], 
+                          submoduleCfg: [], 
+                          userRemoteConfigs: [[url: 'https://github.com/PM-Organization/ARQ.git']]
+                ])
             }
         }
 
@@ -59,45 +67,18 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', '554fa22a-b8cf-4538-bb29-778d1bc87aea') {
-                        dockerImageBackend.push("${env.BRANCH_NAME}")
-                        dockerImageFrontend.push("${env.BRANCH_NAME}")
+                        dockerImageBackend.push("main")
+                        dockerImageFrontend.push("main")
                     }
                 }
             }
         }
 
-        stage('Deploy to Development') {
-            when {
-                branch 'dev'
-            }
+        stage('Deploy to Environment') {
             steps {
                 script {
-                    dockerImageBackend.run('-p 8085:8085 backend-image:dev')
-                    dockerImageFrontend.run('-p 3000:3000 frontend-image:dev')
-                }
-            }
-        }
-
-        stage('Deploy to UAT/QA') {
-            when {
-                branch 'uat'
-            }
-            steps {
-                script {
-                    dockerImageBackend.run('-p 8085:8085 backend-image:uat')
-                    dockerImageFrontend.run('-p 3000:3000 frontend-image:uat')
-                }
-            }
-        }
-
-        stage('Deploy to Production') {
-            when {
-                branch 'master'
-            }
-            steps {
-                script {
-                    dockerImageBackend.run('-p 8085:8085 backend-image:master')
-                    dockerImageFrontend.run('-p 3000:3000 frontend-image:master')
+                    dockerImageBackend.run('-p 8085:8085 backend-image:main')
+                    dockerImageFrontend.run('-p 3000:3000 frontend-image:main')
                 }
             }
         }
@@ -111,9 +92,8 @@ pipeline {
         }
         success {
             script {
-                currentBuild.description = "Build Successful: ${env.BRANCH_NAME}"
+                currentBuild.description = "Build Successful: main branch"
             }
         }
     }
 }
-
