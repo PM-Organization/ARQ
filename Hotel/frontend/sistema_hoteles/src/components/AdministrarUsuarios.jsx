@@ -137,7 +137,7 @@ const countries = [    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola",
         if (!response.ok) throw new Error('Error al eliminar el usuario');
   
         console.log("Usuario eliminado con éxito:", id);
-        fetchUsuarios(); // Refrescar la lista de usuarios después de eliminar uno
+        fetchUsuarios(); // Refrescar la lista de usuarios después de eliminar unoaaa
       } catch (error) {
         console.error("Error al eliminar el usuario:", error);
         setError(error.message);

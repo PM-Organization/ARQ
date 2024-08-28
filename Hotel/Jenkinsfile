@@ -102,7 +102,7 @@ pipeline {
         failure {
             mail to: 'pdmorales@unis.edu.gt',
                  subject: "Build Failed: ${env.BUILD_TAG}",
-                 body: "SOmething went wrong with the build ${env.BUILD_URL}"
+                 body: "Something went wrong with the build ${env.BUILD_URL}"
         }
         success {
             script {
