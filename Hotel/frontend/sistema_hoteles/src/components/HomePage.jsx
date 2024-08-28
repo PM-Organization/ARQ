@@ -185,7 +185,7 @@ const applyAdditionalFilters = () => {
   const fetchHotelsAndRoomsFiltered = async () => {
     let queryParams = `?pais=${paisSeleccionado}&fechaIngreso=${fechaIngreso}&fechaSalida=${fechaSalida}&numeroPersonas=${numeroPersonas}`;
     if (user && user.id) {
-        queryParams += `&usuarioId=${user.id}`;  // Agregaaaaaaaaaa el ID del usuario a los parámetros de la consultas determinadas.
+        queryParams += `&usuarioId=${user.id}`;  // Agreg el ID del usuario a los parámetros de la consultas determinadas.
     }
 
     try {
