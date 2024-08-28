@@ -3,34 +3,26 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('554fa22a-b8cf-4538-bb29-778d1bc87aea')
         SONARQUBE_ENV = 'SonarQube'
+        SONARQUBE_PROJECT_KEY = 'ARQ-PROJECT'
+        SONARQUBE_PROJECT_NAME = 'ARQ PROJECT'
+        SONARQUBE_HOST_URL = 'http://localhost:9000'
+        SONARQUBE_AUTH_TOKEN = 'sqa_e363a54de85c463743a8d04cd7efa4a151a79c3d'  // Token de SonarQube
     }
     stages {
         stage('Checkout') {
             steps {
-                script {
-                    // Se actualiza la lógica para asegurar que Jenkins maneje correctamente las ramas
-                    checkout([$class: 'GitSCM', 
-                        branches: [[name: "refs/heads/${env.BRANCH_NAME}"]], 
-                        userRemoteConfigs: [[url: 'https://github.com/PM-Organization/ARQ.git']]
-                    ])
-                }
+                git branch: env.BRANCH_NAME, url: 'https://github.com/PM-Organization/ARQ.git'
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    script {
-                        if (env.BRANCH_NAME == 'dev' || env.BRANCH_NAME == 'uat' || env.BRANCH_NAME == 'master') {
-                            dir('backend/sistema-hoteles-be') {
-                                sh './mvnw sonar:sonar'
-                            }
-                            dir('frontend/sistema_hoteles') {
-                                sh 'npm run sonar'
-                            }
-                        } else {
-                            echo "Skipping SonarQube analysis for non-main branches."
-                        }
+                    dir('backend/sistema-hoteles-be') {
+                        sh "./mvnw sonar:sonar -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} -Dsonar.projectName=${SONARQUBE_PROJECT_NAME} -Dsonar.host.url=${SONARQUBE_HOST_URL} -Dsonar.login=${SONARQUBE_AUTH_TOKEN}"
+                    }
+                    dir('frontend/sistema_hoteles') {
+                        sh "npm run sonar -- -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} -Dsonar.projectName=${SONARQUBE_PROJECT_NAME} -Dsonar.host.url=${SONARQUBE_HOST_URL} -Dsonar.login=${SONARQUBE_AUTH_TOKEN}"
                     }
                 }
             }
@@ -78,21 +70,38 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy to Development') {
+            when {
+                branch 'dev'
+            }
             steps {
                 script {
-                    if (env.BRANCH_NAME == 'dev') {
-                        dockerImageBackend.run('-p 8085:8085 backend-image:dev')
-                        dockerImageFrontend.run('-p 3000:3000 frontend-image:dev')
-                    } else if (env.BRANCH_NAME == 'uat') {
-                        dockerImageBackend.run('-p 8085:8085 backend-image:uat')
-                        dockerImageFrontend.run('-p 3000:3000 frontend-image:uat')
-                    } else if (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'main') {
-                        dockerImageBackend.run('-p 8085:8085 backend-image:master')
-                        dockerImageFrontend.run('-p 3000:3000 frontend-image:master')
-                    } else {
-                        echo "No deployment for branch ${env.BRANCH_NAME}"
-                    }
+                    dockerImageBackend.run('-p 8085:8085 backend-image:dev')
+                    dockerImageFrontend.run('-p 3000:3000 frontend-image:dev')
+                }
+            }
+        }
+
+        stage('Deploy to UAT/QA') {
+            when {
+                branch 'uat'
+            }
+            steps {
+                script {
+                    dockerImageBackend.run('-p 8085:8085 backend-image:uat')
+                    dockerImageFrontend.run('-p 3000:3000 frontend-image:uat')
+                }
+            }
+        }
+
+        stage('Deploy to Production') {
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    dockerImageBackend.run('-p 8085:8085 backend-image:master')
+                    dockerImageFrontend.run('-p 3000:3000 frontend-image:master')
                 }
             }
         }
@@ -102,7 +111,7 @@ pipeline {
         failure {
             mail to: 'pdmorales@unis.edu.gt',
                  subject: "Build Failed: ${env.BUILD_TAG}",
-                 body: "Something went wrong with the build ${env.BUILD_URL}"
+                 body: "Something is wrong with the build ${env.BUILD_URL}"
         }
         success {
             script {
@@ -111,4 +120,3 @@ pipeline {
         }
     }
 }
-
