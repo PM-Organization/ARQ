@@ -7,35 +7,33 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                script {
-                    if (env.CHANGE_ID) { 
-                        echo "Building PR #${env.CHANGE_ID} targeting branch ${env.CHANGE_TARGET}"
-                        checkout scm
-                    } else {
-                        echo "Building branch ${env.BRANCH_NAME}"
-                        git branch: env.BRANCH_NAME, url: 'https://github.com/PM-Organization/ARQ.git'
-                    }
-                }
+                checkout([$class: 'GitSCM', 
+                    branches: [[name: "*/${env.BRANCH_NAME}"]], 
+                    userRemoteConfigs: [[url: 'https://github.com/PM-Organization/ARQ.git']]
+                ])
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    dir('backend/sistema-hoteles-be') {
-                        sh './mvnw sonar:sonar'
-                    }
-                    dir('frontend/sistema_hoteles') {
-                        sh 'npm run sonar'
+                    script {
+                        if (env.BRANCH_NAME == 'dev' || env.BRANCH_NAME == 'uat' || env.BRANCH_NAME == 'master') {
+                            dir('backend/sistema-hoteles-be') {
+                                sh './mvnw sonar:sonar'
+                            }
+                            dir('frontend/sistema_hoteles') {
+                                sh 'npm run sonar'
+                            }
+                        } else {
+                            echo "Skipping SonarQube analysis for non-main branches."
+                        }
                     }
                 }
             }
         }
 
         stage('Build Backend') {
-            when {
-                not { changeRequest() } 
-            }
             steps {
                 dir('backend/sistema-hoteles-be') {
                     script {
@@ -46,9 +44,6 @@ pipeline {
         }
 
         stage('Build Frontend') {
-            when {
-                not { changeRequest() } 
-            }
             steps {
                 dir('frontend/sistema_hoteles') {
                     script {
@@ -58,51 +53,42 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-            when {
-                anyOf {
-                    branch 'dev'
-                    branch 'uat'
-                    branch 'master'
+        stage('Unit Tests') {
+            steps {
+                dir('backend/sistema-hoteles-be') {
+                    sh './mvnw test'
+                }
+                dir('frontend/sistema_hoteles') {
+                    sh 'npm test'
                 }
             }
-            stages {
-                stage('Unit Tests') {
-                    steps {
-                        dir('backend/sistema-hoteles-be') {
-                            sh './mvnw test'
-                        }
-                        dir('frontend/sistema_hoteles') {
-                            sh 'npm test'
-                        }
+        }
+
+        stage('Build and Push Docker Images') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', '554fa22a-b8cf-4538-bb29-778d1bc87aea') {
+                        dockerImageBackend.push("${env.BRANCH_NAME}")
+                        dockerImageFrontend.push("${env.BRANCH_NAME}")
                     }
                 }
+            }
+        }
 
-                stage('Build and Push Docker Images') {
-                    steps {
-                        script {
-                            docker.withRegistry('https://registry.hub.docker.com', '554fa22a-b8cf-4538-bb29-778d1bc87aea') {
-                                dockerImageBackend.push("${env.BRANCH_NAME}")
-                                dockerImageFrontend.push("${env.BRANCH_NAME}")
-                            }
-                        }
-                    }
-                }
-
-                stage('Deploy to Environment') {
-                    steps {
-                        script {
-                            if (env.BRANCH_NAME == 'dev') {
-                                dockerImageBackend.run('-p 8085:8085 backend-image:dev')
-                                dockerImageFrontend.run('-p 3000:3000 frontend-image:dev')
-                            } else if (env.BRANCH_NAME == 'uat') {
-                                dockerImageBackend.run('-p 8085:8085 backend-image:uat')
-                                dockerImageFrontend.run('-p 3000:3000 frontend-image:uat')
-                            } else if (env.BRANCH_NAME == 'master') {
-                                dockerImageBackend.run('-p 8085:8085 backend-image:master')
-                                dockerImageFrontend.run('-p 3000:3000 frontend-image:master')
-                            }
-                        }
+        stage('Deploy') {
+            steps {
+                script {
+                    if (env.BRANCH_NAME == 'dev') {
+                        dockerImageBackend.run('-p 8085:8085 backend-image:dev')
+                        dockerImageFrontend.run('-p 3000:3000 frontend-image:dev')
+                    } else if (env.BRANCH_NAME == 'uat') {
+                        dockerImageBackend.run('-p 8085:8085 backend-image:uat')
+                        dockerImageFrontend.run('-p 3000:3000 frontend-image:uat')
+                    } else if (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'main') {
+                        dockerImageBackend.run('-p 8085:8085 backend-image:master')
+                        dockerImageFrontend.run('-p 3000:3000 frontend-image:master')
+                    } else {
+                        echo "No deployment for branch ${env.BRANCH_NAME}"
                     }
                 }
             }
@@ -113,7 +99,7 @@ pipeline {
         failure {
             mail to: 'pdmorales@unis.edu.gt',
                  subject: "Build Failed: ${env.BUILD_TAG}",
-                 body: "Something is wrong with the build ${env.BUILD_URL}"
+                 body: "Something went wrong with the build ${env.BUILD_URL}"
         }
         success {
             script {
