@@ -137,7 +137,7 @@ const countries = [    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola",
         if (!response.ok) throw new Error('Error al eliminar el usuario');
   
         console.log("Usuario eliminado con éxito:", id);
-        fetchUsuarios(); // Refrescar la lista de usuarios después de eliminar unoaaa
+        fetchUsuarios(); // Refrescar la lista de usuarios después de eliminar uno
       } catch (error) {
         console.error("Error al eliminar el usuario:", error);
         setError(error.message);
@@ -158,7 +158,7 @@ const countries = [    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola",
         if (!response.ok) throw new Error('Error al actualizar el usuario');
   
         console.log("Usuario actualizado con éxito:", await response.json());
-        setEditandoId(null); // Desactivar modo edicióndd
+        setEditandoId(null); // Desactivar modo edición
         fetchUsuarios();
       } catch (error) {
         console.error("Error al actualizar el usuario:", error);
