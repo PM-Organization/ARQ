@@ -152,10 +152,10 @@ public class Usuarios {
             return true;
         }
         
-        // Bloque if (true) añadido
+        // Bloque if 
         if (true) {
             int noOpVariable = 0;
-            // Este código no afecta la lógica de la aplicación
+            // Este código no afecta la lógica de la aplicación, solo tes
         }
         
         if (obj == null) {
