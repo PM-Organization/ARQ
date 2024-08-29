@@ -1,0 +1,134 @@
+pipeline {
+    agent any
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('554fa22a-b8cf-4538-bb29-778d1bc87aea')
+        SONARQUBE_ENV = 'SonarQube'
+        SONARQUBE_PROJECT_KEY = 'ARQ-PROJECT'
+        SONARQUBE_PROJECT_NAME = 'ARQ PROJECT'
+        SONARQUBE_HOST_URL = 'http://localhost:9000'
+        SONARQUBE_AUTH_TOKEN = 'sqa_e363a54de85c463743a8d04cd7efa4a151a79c3d'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git(
+                    branch: 'dev',
+                    url: 'https://github.com/PM-Organization/ARQ.git',
+                    changelog: false,
+                    poll: false,
+                    shallow: false // Asegura que se clona todo el repositorio
+                )
+            }
+        }
+
+        stage('Verify mvnw presence') {
+            steps {
+                dir('backend/sistema-hoteles-be') {
+                    sh "pwd"  // Muestra el directorio actual
+                    sh "ls -la"  // Lista todos los archivos para asegurar que mvnw esté presente
+                }
+            }
+        }
+
+stage('SonarQube Analysis') {
+    steps {
+        withSonarQubeEnv('SonarQube') {
+            sh "chmod +x ./mvnw"  // Asegura que mvnw sea ejecutable
+            sh "./mvnw sonar:sonar -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} -Dsonar.projectName=${SONARQUBE_PROJECT_NAME} -Dsonar.host.url=${SONARQUBE_HOST_URL} -Dsonar.login=${SONARQUBE_AUTH_TOKEN}"
+        }
+    }
+}
+        }
+
+        stage('Build Backend') {
+            steps {
+                dir('backend/sistema-hoteles-be') {
+                    script {
+                        dockerImageBackend = docker.build("backend-image:${env.BRANCH_NAME}")
+                    }
+                }
+            }
+        }
+
+        stage('Build Frontend') {
+            steps {
+                dir('frontend/sistema_hoteles') {
+                    script {
+                        dockerImageFrontend = docker.build("frontend-image:${env.BRANCH_NAME}")
+                    }
+                }
+            }
+        }
+
+stage('Unit Tests') {
+    steps {
+        dir('backend/sistema-hoteles-be') {
+            sh '../../mvnw test'
+        }
+        dir('frontend/sistema_hoteles') {
+            sh 'npm test'
+        }
+    }
+}
+
+        stage('Build and Push Docker Images') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', DOCKERHUB_CREDENTIALS) {
+                        dockerImageBackend.push("${env.BRANCH_NAME}")
+                        dockerImageFrontend.push("${env.BRANCH_NAME}")
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to Development') {
+            when {
+                branch 'dev'
+            }
+            steps {
+                script {
+                    dockerImageBackend.run('-p 8085:8085 backend-image:dev')
+                    dockerImageFrontend.run('-p 3000:3000 frontend-image:dev')
+                }
+            }
+        }
+
+        stage('Deploy to UAT/QA') {
+            when {
+                branch 'uat'
+            }
+            steps {
+                script {
+                    dockerImageBackend.run('-p 8085:8085 backend-image:uat')
+                    dockerImageFrontend.run('-p 3000:3000 frontend-image:uat')
+                }
+            }
+        }
+
+        stage('Deploy to Production') {
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    dockerImageBackend.run('-p 8085:8085 backend-image:master')
+                    dockerImageFrontend.run('-p 3000:3000 frontend-image:master')
+                }
+            }
+        }
+    }
+
+    post {
+        failure {
+            mail to: 'jflores@unis.edu.gt',
+                 subject: "Build Failed: ${env.BUILD_TAG}",
+                 body: "Something is wrong with the build ${env.BUILD_URL}"
+        }
+        success {
+            script {
+                currentBuild.description = "Build Successful: ${env.BRANCH_NAME}"
+            }
+        }
+    }
+}
