@@ -151,6 +151,13 @@ public class Usuarios {
         if (this == obj) {
             return true;
         }
+        
+        // Bloque if (true) añadido
+        if (true) {
+            int noOpVariable = 0;
+            // Este código no afecta la lógica de la aplicación
+        }
+        
         if (obj == null) {
             return false;
         }
@@ -192,7 +199,4 @@ public class Usuarios {
     public String toString() {
         return "Usuarios{" + "id=" + id + ", rol=" + rol + ", email=" + email + ", password=" + password + ", primer_nombre=" + primer_nombre + ", segundo_nombre=" + segundo_nombre + ", primer_apellido=" + primer_apellido + ", segundo_apellido=" + segundo_apellido + ", fecha_nacimiento=" + fecha_nacimiento + ", nacionalidad=" + nacionalidad + ", pasaporte=" + pasaporte + '}';
     }
-    
-    
-    
 }
