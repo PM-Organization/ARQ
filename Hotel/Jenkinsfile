@@ -5,7 +5,7 @@ pipeline {
         SONARQUBE_ENV = 'SonarQube'
         SONARQUBE_PROJECT_KEY = 'ARQ-PROJECT'
         SONARQUBE_PROJECT_NAME = 'ARQ PROJECT'
-        SONARQUBE_HOST_URL = 'http://localhost:9000' 
+        SONARQUBE_HOST_URL = 'http://localhost:9000'
         SONARQUBE_AUTH_TOKEN = 'sqa_03e966309466ac3e1183db333242fb7eea44bf14'
     }
     stages {
@@ -21,29 +21,6 @@ pipeline {
                     dir('backend/sistema-hoteles-be') {
                         sh "./mvnw sonar:sonar -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} -Dsonar.projectName=${SONARQUBE_PROJECT_NAME} -Dsonar.host.url=${SONARQUBE_HOST_URL} -Dsonar.login=${SONARQUBE_AUTH_TOKEN}"
                     }
-                    dir('frontend/sistema_hoteles') {
-                        sh "npm run sonar -- -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} -Dsonar.projectName=${SONARQUBE_PROJECT_NAME} -Dsonar.host.url=${SONARQUBE_HOST_URL} -Dsonar.login=${SONARQUBE_AUTH_TOKEN}"
-                    }
-                }
-            }
-        }
-
-        stage('Build Backend') {
-            steps {
-                dir('backend/sistema-hoteles-be') {
-                    script {
-                        dockerImageBackend = docker.build("backend-image:${env.BRANCH_NAME}")
-                    }
-                }
-            }
-        }
-
-        stage('Build Frontend') {
-            steps {
-                dir('frontend/sistema_hoteles') {
-                    script {
-                        dockerImageFrontend = docker.build("frontend-image:${env.BRANCH_NAME}")
-                    }
                 }
             }
         }
@@ -52,56 +29,6 @@ pipeline {
             steps {
                 dir('backend/sistema-hoteles-be') {
                     sh './mvnw test'
-                }
-                dir('frontend/sistema_hoteles') {
-                    sh 'npm test'
-                }
-            }
-        }
-
-        stage('Build and Push Docker Images') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', '554fa22a-b8cf-4538-bb29-778d1bc87aea') {
-                        dockerImageBackend.push("${env.BRANCH_NAME}")
-                        dockerImageFrontend.push("${env.BRANCH_NAME}")
-                    }
-                }
-            }
-        }
-
-        stage('Deploy to Development') {
-            when {
-                branch 'dev'
-            }
-            steps {
-                script {
-                    dockerImageBackend.run('-p 8085:8085 backend-image:dev')
-                    dockerImageFrontend.run('-p 3000:3000 frontend-image:dev')
-                }
-            }
-        }
-
-        stage('Deploy to UAT/QA') {
-            when {
-                branch 'uat'
-            }
-            steps {
-                script {
-                    dockerImageBackend.run('-p 8085:8085 backend-image:uat')
-                    dockerImageFrontend.run('-p 3000:3000 frontend-image:uat')
-                }
-            }
-        }
-
-        stage('Deploy to Production') {
-            when {
-                branch 'master'
-            }
-            steps {
-                script {
-                    dockerImageBackend.run('-p 8085:8085 backend-image:master')
-                    dockerImageFrontend.run('-p 3000:3000 frontend-image:master')
                 }
             }
         }
