@@ -6,7 +6,7 @@ pipeline {
         SONARQUBE_PROJECT_KEY = 'ARQ-PROJECT'
         SONARQUBE_PROJECT_NAME = 'ARQ PROJECT'
         SONARQUBE_HOST_URL = 'http://localhost:9000' 
-        SONARQUBE_AUTH_TOKEN = 'sqa_e363a54de85c463743a8d04cd7efa4a151a79c3d'
+        SONARQUBE_AUTH_TOKEN = 'sqa_03e966309466ac3e1183db333242fb7eea44bf14'
     }
     stages {
         stage('Checkout') {
