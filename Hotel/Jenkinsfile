@@ -5,13 +5,13 @@ pipeline {
         SONARQUBE_ENV = 'SonarQube'
         SONARQUBE_PROJECT_KEY = 'ARQ-PROJECT'
         SONARQUBE_PROJECT_NAME = 'ARQ PROJECT'
-        SONARQUBE_HOST_URL = 'http://localhost:9000'
-        SONARQUBE_AUTH_TOKEN = 'sqa_e363a54de85c463743a8d04cd7efa4a151a79c3d'  // Token de SonarQube
+        SONARQUBE_HOST_URL = 'http://localhost:9000' 
+        SONARQUBE_AUTH_TOKEN = 'sqa_e363a54de85c463743a8d04cd7efa4a151a79c3d'
     }
     stages {
         stage('Checkout') {
             steps {
-                git branch: env.BRANCH_NAME, url: 'https://github.com/PM-Organization/ARQ.git'
+                git branch: "${env.BRANCH_NAME}", url: 'https://github.com/PM-Organization/ARQ.git'
             }
         }
 
