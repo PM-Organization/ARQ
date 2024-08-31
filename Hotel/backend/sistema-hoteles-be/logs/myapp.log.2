@@ -1,22 +1,89 @@
-2024-05-04 15:57:38,161 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] WARN  [org.hib.too.sch.int.ExceptionHandlerLoggedImpl] (JPA Startup Thread) GenerationTarget encountered exception accepting command : Error executing DDL "alter table Faqs modify respuesta varchar2(255 char)" via JDBC [ORA-22859: invalid modification of columns
+2024-08-30 18:00:38,795 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] WARN  [org.hib.eng.jdb.env.int.JdbcEnvironmentInitiator] (JPA Startup Thread) HHH000342: Could not obtain connection to query metadata: java.lang.NullPointerException: Cannot invoke "org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(java.sql.SQLException, String)" because the return value of "org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.sqlExceptionHelper()" is null
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.doTheWork(JtaIsolationDelegate.java:186)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.lambda$delegateWork$1(JtaIsolationDelegate.java:75)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.doInSuspendedTransaction(JtaIsolationDelegate.java:107)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.delegateWork(JtaIsolationDelegate.java:72)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:276)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:107)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:68)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
+	at org.hibernate.engine.jdbc.internal.JdbcServicesImpl.configure(JdbcServicesImpl.java:52)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.configureService(StandardServiceRegistryImpl.java:136)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:247)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
+	at org.hibernate.boot.internal.SessionFactoryOptionsBuilder.<init>(SessionFactoryOptionsBuilder.java:276)
+	at io.quarkus.hibernate.orm.runtime.recording.PrevalidatedQuarkusMetadata.buildSessionFactoryOptionsBuilder(PrevalidatedQuarkusMetadata.java:70)
+	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.build(FastBootEntityManagerFactoryBuilder.java:84)
+	at io.quarkus.hibernate.orm.runtime.FastBootHibernatePersistenceProvider.createEntityManagerFactory(FastBootHibernatePersistenceProvider.java:72)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:80)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:55)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$LazyPersistenceUnit.get(JPAConfig.java:157)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$1.run(JPAConfig.java:64)
+	at java.base/java.lang.Thread.run(Thread.java:840)
 
-https://docs.oracle.com/error-help/db/ora-22859/]: org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table Faqs modify respuesta varchar2(255 char)" via JDBC [ORA-22859: invalid modification of columns
+2024-08-30 18:00:33,997 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@236a36e1)
+2024-08-30 18:00:33,998 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) traceId=225F7909. 
+2024-08-30 18:00:37,999 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
+https://docs.oracle.com/error-help/db/ora-17002/
+	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1441)
+	at oracle.jdbc.driver.T4CConnection.handleLogonInterruptedIOException(T4CConnection.java:1309)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:986)
+	at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:1157)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:104)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:825)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:651)
+	at io.agroal.pool.ConnectionFactory.createConnection(ConnectionFactory.java:226)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:536)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:517)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at io.agroal.pool.util.PriorityScheduledExecutor.beforeExecute(PriorityScheduledExecutor.java:75)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.io.IOException: , Authentication lapse 0 ms.
+	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1436)
+	... 14 more
+Caused by: java.io.InterruptedIOException: 
+	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:299)
+	at oracle.net.nt.TcpNTAdapter.connect(TcpNTAdapter.java:222)
+	at oracle.net.nt.ConnOption.connect(ConnOption.java:327)
+	at oracle.net.nt.ConnStrategy.executeConnOption(ConnStrategy.java:1144)
+	at oracle.net.nt.ConnStrategy.execute(ConnStrategy.java:718)
+	at oracle.net.resolver.AddrResolution.resolveAndExecute(AddrResolution.java:707)
+	at oracle.net.ns.NSProtocol.establishConnection(NSProtocol.java:938)
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:327)
+	at oracle.jdbc.driver.T4CConnection.connectNetworkSessionProtocol(T4CConnection.java:3185)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:926)
+	... 12 more
+Caused by: java.io.InterruptedIOException: Socket read interrupted
+	at oracle.net.nt.TimeoutSocketChannel.doSelect(TimeoutSocketChannel.java:706)
+	at oracle.net.nt.TimeoutSocketChannel.initializeSocketChannel(TimeoutSocketChannel.java:245)
+	at oracle.net.nt.TimeoutSocketChannel.connect(TimeoutSocketChannel.java:203)
+	at oracle.net.nt.TimeoutSocketChannel.<init>(TimeoutSocketChannel.java:170)
+	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:256)
+	... 21 more
 
-https://docs.oracle.com/error-help/db/ora-22859/]
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:574)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:514)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.migrateTable(AbstractSchemaMigrator.java:333)
-	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:84)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:232)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:117)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:286)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:145)
-	at java.base/java.util.HashMap.forEach(HashMap.java:1421)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:142)
-	at io.quarkus.hibernate.orm.runtime.observers.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:21)
-	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:315)
+2024-08-30 18:00:38,000 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
+2024-08-30 18:00:38,822 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] WARN  [io.agr.pool] (agroal-11) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
+https://docs.oracle.com/error-help/db/ora-17002/
+2024-08-30 18:00:44,582 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] ERROR [org.hib.que.sqm.mut.int.tem.GlobalTemporaryTableStrategy] (JPA Startup Thread) Unable obtain JDBC Connection: java.sql.SQLException: Acquisition timeout while waiting for new connection
+	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:321)
+	at io.agroal.pool.ConnectionPool.getConnection(ConnectionPool.java:249)
+	at io.agroal.pool.DataSource.getConnection(DataSource.java:86)
+	at io.quarkus.hibernate.orm.runtime.customized.QuarkusConnectionProvider.getConnection(QuarkusConnectionProvider.java:23)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:428)
+	at org.hibernate.query.sqm.mutation.internal.temptable.GlobalTemporaryTableStrategy.prepare(GlobalTemporaryTableStrategy.java:90)
+	at org.hibernate.persister.entity.AbstractEntityPersister.lambda$prepareMappingModel$14(AbstractEntityPersister.java:5084)
+	at org.hibernate.metamodel.mapping.internal.MappingModelCreationProcess$PostInitCallbackEntry.process(MappingModelCreationProcess.java:246)
+	at org.hibernate.metamodel.mapping.internal.MappingModelCreationProcess.executePostInitCallbacks(MappingModelCreationProcess.java:106)
+	at org.hibernate.metamodel.mapping.internal.MappingModelCreationProcess.execute(MappingModelCreationProcess.java:88)
+	at org.hibernate.metamodel.mapping.internal.MappingModelCreationProcess.process(MappingModelCreationProcess.java:42)
+	at org.hibernate.metamodel.model.domain.internal.MappingMetamodelImpl.finishInitialization(MappingMetamodelImpl.java:198)
+	at org.hibernate.internal.SessionFactoryImpl.initializeMappingModel(SessionFactoryImpl.java:364)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:293)
 	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.build(FastBootEntityManagerFactoryBuilder.java:87)
 	at io.quarkus.hibernate.orm.runtime.FastBootHibernatePersistenceProvider.createEntityManagerFactory(FastBootHibernatePersistenceProvider.java:72)
 	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:80)
@@ -24,60 +91,14 @@ https://docs.oracle.com/error-help/db/ora-22859/]
 	at io.quarkus.hibernate.orm.runtime.JPAConfig$LazyPersistenceUnit.get(JPAConfig.java:157)
 	at io.quarkus.hibernate.orm.runtime.JPAConfig$1.run(JPAConfig.java:64)
 	at java.base/java.lang.Thread.run(Thread.java:840)
-Caused by: java.sql.SQLException: ORA-22859: invalid modification of columns
-
-https://docs.oracle.com/error-help/db/ora-22859/
-	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:702)
-	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:608)
-	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1330)
-	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:1102)
-	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:456)
-	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:498)
-	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:190)
-	at oracle.jdbc.driver.T4CStatement.executeForRows(T4CStatement.java:1368)
-	at oracle.jdbc.driver.OracleStatement.executeSQLStatement(OracleStatement.java:1958)
-	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1594)
-	at oracle.jdbc.driver.OracleStatement.executeInternal(OracleStatement.java:2636)
-	at oracle.jdbc.driver.OracleStatement.execute(OracleStatement.java:2585)
-	at oracle.jdbc.driver.OracleStatementWrapper.execute(OracleStatementWrapper.java:334)
-	at io.agroal.pool.wrapper.StatementWrapper.execute(StatementWrapper.java:235)
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
+Caused by: java.util.concurrent.TimeoutException
+	at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:204)
+	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:298)
 	... 20 more
-Caused by: Error : 22859, Position : 24, SQL = alter table Faqs modify respuesta varchar2(255 char), Original SQL = alter table Faqs modify respuesta varchar2(255 char), Error Message = ORA-22859: invalid modification of columns
 
-	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:710)
-	... 34 more
-
-2024-05-04 15:57:39,668 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [io.quarkus] (Quarkus Main Thread) sistema-hoteles-be 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.7.4) started in 84.821s. Listening on: http://localhost:8080
-2024-05-04 15:57:39,672 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [io.quarkus] (Quarkus Main Thread) Profile dev activated. Live Coding activated.
-2024-05-04 15:57:39,676 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [agroal, cdi, hibernate-orm, hibernate-orm-panache, jdbc-oracle, narayana-jta, resteasy-client, resteasy-reactive, resteasy-reactive-jackson, smallrye-context-propagation, vertx]
-2024-05-04 16:19:55,290 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@345e73b0)
-2024-05-04 16:19:55,291 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) traceId=68312E15. 
-2024-05-04 16:19:55,295 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) Session Attributes: 
-sdu=8192, tdu=2097152
-nt: host=35.211.214.127, port=1521, socketOptions={0=YES, 1=NO, 17=0, 18=false, 2=0, 20=true, 38=TLS, 23=40, 24=50, 40=false, 25=0}
-    socket=null
-client profile={oracle.net.encryption_types_client=(), oracle.net.crypto_seed=, oracle.net.authentication_services=(), oracle.net.setFIPSMode=false, oracle.net.kerberos5_mutual_authentication=false, oracle.net.encryption_client=ACCEPTED, oracle.net.crypto_checksum_client=ACCEPTED, oracle.net.crypto_checksum_types_client=()}
-connection options=[host=35.211.214.127 port=1521 protocol=TCP service_name=HOTPDB1 addr=(ADDRESS=(PROTOCOL=TCP)(HOST=35.211.214.127)(PORT=1521)) conn_data=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(PORT=1521)(HOST=35.211.214.127))(CONNECT_DATA=(CID=(PROGRAM=JDBC Thin Client)(HOST=pmorales-virtual-machine)(USER=pmorales))(SERVICE_NAME=HOTPDB1))) done=true]
-onBreakReset=false, dataEOF=false, negotiatedOptions=0x841, connected=false
-2024-05-04 16:19:55,296 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) traceId=68312E15, anoEnabled=true. 
-2024-05-04 16:19:55,297 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 299 bytes written to the Socket.
-2024-05-04 16:19:55,304 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 8 bytes
-2024-05-04 16:19:55,305 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) Got Resend, SessionTraceId = 68312E15
-2024-05-04 16:19:55,306 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 299 bytes written to the Socket.
-2024-05-04 16:19:55,311 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 45 bytes
-2024-05-04 16:19:55,312 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) Connection established. Cleared conn strategy stack
-2024-05-04 16:19:55,313 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 11 bytes written to the Socket.
-2024-05-04 16:19:55,314 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) Sending break marker, SessionTraceId = 68312E15
-2024-05-04 16:19:55,315 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 33 bytes written to the Socket.
-2024-05-04 16:19:55,319 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 254 bytes
-2024-05-04 16:19:55,321 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 2,771 bytes written to the Socket.
-2024-05-04 16:19:55,325 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 1,400 bytes
-2024-05-04 16:19:55,326 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 1,305 bytes
-2024-05-04 16:19:55,327 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 181 bytes written to the Socket.
-2024-05-04 16:19:56,275 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 373 bytes
-2024-05-04 16:19:56,280 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 1,177 bytes written to the Socket.
-2024-05-04 16:19:56,281 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: Socket read interrupted, Authentication lapse 179 ms.
+2024-08-30 18:00:38,999 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@3b10f061)
+2024-08-30 18:00:39,000 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) traceId=77E32377. 
+2024-08-30 18:00:43,999 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
 https://docs.oracle.com/error-help/db/ora-17002/
 	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1441)
 	at oracle.jdbc.driver.T4CConnection.handleLogonInterruptedIOException(T4CConnection.java:1309)
@@ -94,62 +115,62 @@ https://docs.oracle.com/error-help/db/ora-17002/
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:840)
-Caused by: java.io.IOException: Socket read interrupted, Authentication lapse 179 ms.
+Caused by: java.io.IOException: , Authentication lapse 0 ms.
 	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1436)
 	... 14 more
+Caused by: java.io.InterruptedIOException: 
+	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:299)
+	at oracle.net.nt.TcpNTAdapter.connect(TcpNTAdapter.java:222)
+	at oracle.net.nt.ConnOption.connect(ConnOption.java:327)
+	at oracle.net.nt.ConnStrategy.executeConnOption(ConnStrategy.java:1144)
+	at oracle.net.nt.ConnStrategy.execute(ConnStrategy.java:718)
+	at oracle.net.resolver.AddrResolution.resolveAndExecute(AddrResolution.java:707)
+	at oracle.net.ns.NSProtocol.establishConnection(NSProtocol.java:938)
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:327)
+	at oracle.jdbc.driver.T4CConnection.connectNetworkSessionProtocol(T4CConnection.java:3185)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:926)
+	... 12 more
 Caused by: java.io.InterruptedIOException: Socket read interrupted
 	at oracle.net.nt.TimeoutSocketChannel.doSelect(TimeoutSocketChannel.java:706)
-	at oracle.net.nt.TimeoutSocketChannel.doSelectForRead(TimeoutSocketChannel.java:599)
-	at oracle.net.nt.TimeoutSocketChannel.read(TimeoutSocketChannel.java:501)
-	at oracle.net.ns.NSProtocolNIO.doSocketRead(NSProtocolNIO.java:1228)
-	at oracle.net.ns.NIOPacket.readHeader(NIOPacket.java:271)
-	at oracle.net.ns.NIOPacket.readPacketFromSocketChannel(NIOPacket.java:204)
-	at oracle.net.ns.NIOPacket.readFromSocketChannel(NIOPacket.java:147)
-	at oracle.net.ns.NIOPacket.readFromSocketChannel(NIOPacket.java:120)
-	at oracle.net.ns.NIONSDataChannel.readDataFromSocketChannel(NIONSDataChannel.java:105)
-	at oracle.jdbc.driver.T4CMAREngineNIO.prepareForUnmarshall(T4CMAREngineNIO.java:893)
-	at oracle.jdbc.driver.T4CMAREngineNIO.unmarshalUB1(T4CMAREngineNIO.java:464)
-	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:949)
-	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:456)
-	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:508)
-	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTHWithO5Logon(T4CTTIoauthenticate.java:1676)
-	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:1421)
-	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:1368)
-	at oracle.jdbc.driver.T4CConnection.authenticateWithPassword(T4CConnection.java:1821)
-	at oracle.jdbc.driver.T4CConnection.authenticateUserForLogon(T4CConnection.java:1764)
-	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:976)
-	... 12 more
+	at oracle.net.nt.TimeoutSocketChannel.initializeSocketChannel(TimeoutSocketChannel.java:245)
+	at oracle.net.nt.TimeoutSocketChannel.connect(TimeoutSocketChannel.java:203)
+	at oracle.net.nt.TimeoutSocketChannel.<init>(TimeoutSocketChannel.java:170)
+	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:256)
+	... 21 more
 
-2024-05-04 16:19:56,282 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/Proyecto-B2B/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.10}. 
-2024-05-04 16:19:56,494 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] WARN  [io.agr.pool] (agroal-11) Datasource '<default>': ORA-17002: I/O error: Socket read interrupted, Authentication lapse 179 ms.
+2024-08-30 18:00:44,000 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
+2024-08-30 18:00:44,600 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] WARN  [io.agr.pool] (agroal-11) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
 https://docs.oracle.com/error-help/db/ora-17002/
-2024-05-04 16:19:56,283 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@6bc91bba)
-2024-05-04 16:19:56,284 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) traceId=43E48919. 
-2024-05-04 16:19:56,291 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) Session Attributes: 
-sdu=8192, tdu=2097152
-nt: host=35.211.214.127, port=1521, socketOptions={0=YES, 1=NO, 17=0, 18=false, 2=0, 20=true, 38=TLS, 23=40, 24=50, 40=false, 25=0}
-    socket=null
-client profile={oracle.net.encryption_types_client=(), oracle.net.crypto_seed=, oracle.net.authentication_services=(), oracle.net.setFIPSMode=false, oracle.net.kerberos5_mutual_authentication=false, oracle.net.encryption_client=ACCEPTED, oracle.net.crypto_checksum_client=ACCEPTED, oracle.net.crypto_checksum_types_client=()}
-connection options=[host=35.211.214.127 port=1521 protocol=TCP service_name=HOTPDB1 addr=(ADDRESS=(PROTOCOL=TCP)(HOST=35.211.214.127)(PORT=1521)) conn_data=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(PORT=1521)(HOST=35.211.214.127))(CONNECT_DATA=(CID=(PROGRAM=JDBC Thin Client)(HOST=pmorales-virtual-machine)(USER=pmorales))(SERVICE_NAME=HOTPDB1))) done=true]
-onBreakReset=false, dataEOF=false, negotiatedOptions=0x841, connected=false
-2024-05-04 16:19:56,292 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) traceId=43E48919, anoEnabled=true. 
-2024-05-04 16:19:56,293 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 299 bytes written to the Socket.
-2024-05-04 16:19:56,298 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 8 bytes
-2024-05-04 16:19:56,299 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) Got Resend, SessionTraceId = 43E48919
-2024-05-04 16:19:56,300 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 299 bytes written to the Socket.
-2024-05-04 16:19:56,303 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 45 bytes
-2024-05-04 16:19:56,304 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) Connection established. Cleared conn strategy stack
-2024-05-04 16:19:56,305 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 11 bytes written to the Socket.
-2024-05-04 16:19:56,306 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) Sending break marker, SessionTraceId = 43E48919
-2024-05-04 16:19:56,307 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 33 bytes written to the Socket.
-2024-05-04 16:19:56,310 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 254 bytes
-2024-05-04 16:19:56,311 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 2,771 bytes written to the Socket.
-2024-05-04 16:19:56,316 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 1,400 bytes
-2024-05-04 16:19:56,317 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 1,305 bytes
-2024-05-04 16:19:56,318 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 181 bytes written to the Socket.
-2024-05-04 16:19:57,273 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 373 bytes
-2024-05-04 16:19:57,277 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] FINEST [ora.jdbc] (agroal-11) 1,177 bytes written to the Socket.
-2024-05-04 16:19:57,278 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: Socket read interrupted, Authentication lapse 152 ms.
+2024-08-30 18:00:44,001 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@58789e09)
+2024-08-30 18:00:49,590 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] ERROR [org.hib.que.sqm.mut.int.tem.GlobalTemporaryTableStrategy] (JPA Startup Thread) Unable obtain JDBC Connection: java.sql.SQLException: Acquisition timeout while waiting for new connection
+	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:321)
+	at io.agroal.pool.ConnectionPool.getConnection(ConnectionPool.java:249)
+	at io.agroal.pool.DataSource.getConnection(DataSource.java:86)
+	at io.quarkus.hibernate.orm.runtime.customized.QuarkusConnectionProvider.getConnection(QuarkusConnectionProvider.java:23)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:428)
+	at org.hibernate.query.sqm.mutation.internal.temptable.GlobalTemporaryTableStrategy.prepare(GlobalTemporaryTableStrategy.java:90)
+	at org.hibernate.persister.entity.AbstractEntityPersister.lambda$prepareMappingModel$14(AbstractEntityPersister.java:5084)
+	at org.hibernate.metamodel.mapping.internal.MappingModelCreationProcess$PostInitCallbackEntry.process(MappingModelCreationProcess.java:246)
+	at org.hibernate.metamodel.mapping.internal.MappingModelCreationProcess.executePostInitCallbacks(MappingModelCreationProcess.java:106)
+	at org.hibernate.metamodel.mapping.internal.MappingModelCreationProcess.execute(MappingModelCreationProcess.java:88)
+	at org.hibernate.metamodel.mapping.internal.MappingModelCreationProcess.process(MappingModelCreationProcess.java:42)
+	at org.hibernate.metamodel.model.domain.internal.MappingMetamodelImpl.finishInitialization(MappingMetamodelImpl.java:198)
+	at org.hibernate.internal.SessionFactoryImpl.initializeMappingModel(SessionFactoryImpl.java:364)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:293)
+	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.build(FastBootEntityManagerFactoryBuilder.java:87)
+	at io.quarkus.hibernate.orm.runtime.FastBootHibernatePersistenceProvider.createEntityManagerFactory(FastBootHibernatePersistenceProvider.java:72)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:80)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:55)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$LazyPersistenceUnit.get(JPAConfig.java:157)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$1.run(JPAConfig.java:64)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.util.concurrent.TimeoutException
+	at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:204)
+	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:298)
+	... 20 more
+
+2024-08-30 18:00:44,002 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) traceId=61AA4DF7. 
+2024-08-30 18:00:49,000 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
 https://docs.oracle.com/error-help/db/ora-17002/
 	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1441)
 	at oracle.jdbc.driver.T4CConnection.handleLogonInterruptedIOException(T4CConnection.java:1309)
@@ -166,33 +187,220 @@ https://docs.oracle.com/error-help/db/ora-17002/
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:840)
-Caused by: java.io.IOException: Socket read interrupted, Authentication lapse 152 ms.
+Caused by: java.io.IOException: , Authentication lapse 0 ms.
 	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1436)
 	... 14 more
+Caused by: java.io.InterruptedIOException: 
+	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:299)
+	at oracle.net.nt.TcpNTAdapter.connect(TcpNTAdapter.java:222)
+	at oracle.net.nt.ConnOption.connect(ConnOption.java:327)
+	at oracle.net.nt.ConnStrategy.executeConnOption(ConnStrategy.java:1144)
+	at oracle.net.nt.ConnStrategy.execute(ConnStrategy.java:718)
+	at oracle.net.resolver.AddrResolution.resolveAndExecute(AddrResolution.java:707)
+	at oracle.net.ns.NSProtocol.establishConnection(NSProtocol.java:938)
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:327)
+	at oracle.jdbc.driver.T4CConnection.connectNetworkSessionProtocol(T4CConnection.java:3185)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:926)
+	... 12 more
 Caused by: java.io.InterruptedIOException: Socket read interrupted
 	at oracle.net.nt.TimeoutSocketChannel.doSelect(TimeoutSocketChannel.java:706)
-	at oracle.net.nt.TimeoutSocketChannel.doSelectForRead(TimeoutSocketChannel.java:599)
-	at oracle.net.nt.TimeoutSocketChannel.read(TimeoutSocketChannel.java:501)
-	at oracle.net.ns.NSProtocolNIO.doSocketRead(NSProtocolNIO.java:1228)
-	at oracle.net.ns.NIOPacket.readHeader(NIOPacket.java:271)
-	at oracle.net.ns.NIOPacket.readPacketFromSocketChannel(NIOPacket.java:204)
-	at oracle.net.ns.NIOPacket.readFromSocketChannel(NIOPacket.java:147)
-	at oracle.net.ns.NIOPacket.readFromSocketChannel(NIOPacket.java:120)
-	at oracle.net.ns.NIONSDataChannel.readDataFromSocketChannel(NIONSDataChannel.java:105)
-	at oracle.jdbc.driver.T4CMAREngineNIO.prepareForUnmarshall(T4CMAREngineNIO.java:893)
-	at oracle.jdbc.driver.T4CMAREngineNIO.unmarshalUB1(T4CMAREngineNIO.java:464)
-	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:949)
-	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:456)
-	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:508)
-	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTHWithO5Logon(T4CTTIoauthenticate.java:1676)
-	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:1421)
-	at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:1368)
-	at oracle.jdbc.driver.T4CConnection.authenticateWithPassword(T4CConnection.java:1821)
-	at oracle.jdbc.driver.T4CConnection.authenticateUserForLogon(T4CConnection.java:1764)
-	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:976)
-	... 12 more
+	at oracle.net.nt.TimeoutSocketChannel.initializeSocketChannel(TimeoutSocketChannel.java:245)
+	at oracle.net.nt.TimeoutSocketChannel.connect(TimeoutSocketChannel.java:203)
+	at oracle.net.nt.TimeoutSocketChannel.<init>(TimeoutSocketChannel.java:170)
+	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:256)
+	... 21 more
 
-2024-05-04 16:19:57,279 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [ora.jdbc] (agroal-11) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/Proyecto-B2B/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.10}. 
-2024-05-04 16:19:57,396 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] WARN  [io.agr.pool] (agroal-11) Datasource '<default>': ORA-17002: I/O error: Socket read interrupted, Authentication lapse 152 ms.
+2024-08-30 18:00:49,001 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
+2024-08-30 18:00:49,600 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] WARN  [io.agr.pool] (agroal-11) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
 https://docs.oracle.com/error-help/db/ora-17002/
-2024-05-04 17:06:41,577 pmorales-virtual-machine sistema-hoteles-be-dev.jar[43281] INFO  [io.quarkus] (Shutdown thread) sistema-hoteles-be stopped in 0.295s
+2024-08-30 18:00:54,597 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] ERROR [org.hib.que.sqm.mut.int.tem.GlobalTemporaryTableStrategy] (JPA Startup Thread) Unable obtain JDBC Connection: java.sql.SQLException: Acquisition timeout while waiting for new connection
+	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:321)
+	at io.agroal.pool.ConnectionPool.getConnection(ConnectionPool.java:249)
+	at io.agroal.pool.DataSource.getConnection(DataSource.java:86)
+	at io.quarkus.hibernate.orm.runtime.customized.QuarkusConnectionProvider.getConnection(QuarkusConnectionProvider.java:23)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:428)
+	at org.hibernate.query.sqm.mutation.internal.temptable.GlobalTemporaryTableStrategy.prepare(GlobalTemporaryTableStrategy.java:90)
+	at org.hibernate.persister.entity.AbstractEntityPersister.lambda$prepareMappingModel$14(AbstractEntityPersister.java:5084)
+	at org.hibernate.metamodel.mapping.internal.MappingModelCreationProcess$PostInitCallbackEntry.process(MappingModelCreationProcess.java:246)
+	at org.hibernate.metamodel.mapping.internal.MappingModelCreationProcess.executePostInitCallbacks(MappingModelCreationProcess.java:106)
+	at org.hibernate.metamodel.mapping.internal.MappingModelCreationProcess.execute(MappingModelCreationProcess.java:88)
+	at org.hibernate.metamodel.mapping.internal.MappingModelCreationProcess.process(MappingModelCreationProcess.java:42)
+	at org.hibernate.metamodel.model.domain.internal.MappingMetamodelImpl.finishInitialization(MappingMetamodelImpl.java:198)
+	at org.hibernate.internal.SessionFactoryImpl.initializeMappingModel(SessionFactoryImpl.java:364)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:293)
+	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.build(FastBootEntityManagerFactoryBuilder.java:87)
+	at io.quarkus.hibernate.orm.runtime.FastBootHibernatePersistenceProvider.createEntityManagerFactory(FastBootHibernatePersistenceProvider.java:72)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:80)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:55)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$LazyPersistenceUnit.get(JPAConfig.java:157)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$1.run(JPAConfig.java:64)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.util.concurrent.TimeoutException
+	at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:204)
+	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:298)
+	... 20 more
+
+2024-08-30 18:00:49,002 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@7763e31f)
+2024-08-30 18:00:49,003 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) traceId=3A2BAB92. 
+2024-08-30 18:00:53,999 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
+https://docs.oracle.com/error-help/db/ora-17002/
+	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1441)
+	at oracle.jdbc.driver.T4CConnection.handleLogonInterruptedIOException(T4CConnection.java:1309)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:986)
+	at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:1157)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:104)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:825)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:651)
+	at io.agroal.pool.ConnectionFactory.createConnection(ConnectionFactory.java:226)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:536)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:517)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at io.agroal.pool.util.PriorityScheduledExecutor.beforeExecute(PriorityScheduledExecutor.java:75)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.io.IOException: , Authentication lapse 0 ms.
+	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1436)
+	... 14 more
+Caused by: java.io.InterruptedIOException: 
+	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:299)
+	at oracle.net.nt.TcpNTAdapter.connect(TcpNTAdapter.java:222)
+	at oracle.net.nt.ConnOption.connect(ConnOption.java:327)
+	at oracle.net.nt.ConnStrategy.executeConnOption(ConnStrategy.java:1144)
+	at oracle.net.nt.ConnStrategy.execute(ConnStrategy.java:718)
+	at oracle.net.resolver.AddrResolution.resolveAndExecute(AddrResolution.java:707)
+	at oracle.net.ns.NSProtocol.establishConnection(NSProtocol.java:938)
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:327)
+	at oracle.jdbc.driver.T4CConnection.connectNetworkSessionProtocol(T4CConnection.java:3185)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:926)
+	... 12 more
+Caused by: java.io.InterruptedIOException: Socket read interrupted
+	at oracle.net.nt.TimeoutSocketChannel.doSelect(TimeoutSocketChannel.java:706)
+	at oracle.net.nt.TimeoutSocketChannel.initializeSocketChannel(TimeoutSocketChannel.java:245)
+	at oracle.net.nt.TimeoutSocketChannel.connect(TimeoutSocketChannel.java:203)
+	at oracle.net.nt.TimeoutSocketChannel.<init>(TimeoutSocketChannel.java:170)
+	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:256)
+	... 21 more
+
+2024-08-30 18:00:54,000 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
+2024-08-30 18:00:54,606 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] WARN  [io.agr.pool] (agroal-11) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
+https://docs.oracle.com/error-help/db/ora-17002/
+2024-08-30 18:00:59,602 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] ERROR [org.hib.que.sqm.mut.int.tem.GlobalTemporaryTableStrategy] (JPA Startup Thread) Unable obtain JDBC Connection: java.sql.SQLException: Acquisition timeout while waiting for new connection
+	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:321)
+	at io.agroal.pool.ConnectionPool.getConnection(ConnectionPool.java:249)
+	at io.agroal.pool.DataSource.getConnection(DataSource.java:86)
+	at io.quarkus.hibernate.orm.runtime.customized.QuarkusConnectionProvider.getConnection(QuarkusConnectionProvider.java:23)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:428)
+	at org.hibernate.query.sqm.mutation.internal.temptable.GlobalTemporaryTableStrategy.prepare(GlobalTemporaryTableStrategy.java:90)
+	at org.hibernate.persister.entity.AbstractEntityPersister.lambda$prepareMappingModel$14(AbstractEntityPersister.java:5084)
+	at org.hibernate.metamodel.mapping.internal.MappingModelCreationProcess$PostInitCallbackEntry.process(MappingModelCreationProcess.java:246)
+	at org.hibernate.metamodel.mapping.internal.MappingModelCreationProcess.executePostInitCallbacks(MappingModelCreationProcess.java:106)
+	at org.hibernate.metamodel.mapping.internal.MappingModelCreationProcess.execute(MappingModelCreationProcess.java:88)
+	at org.hibernate.metamodel.mapping.internal.MappingModelCreationProcess.process(MappingModelCreationProcess.java:42)
+	at org.hibernate.metamodel.model.domain.internal.MappingMetamodelImpl.finishInitialization(MappingMetamodelImpl.java:198)
+	at org.hibernate.internal.SessionFactoryImpl.initializeMappingModel(SessionFactoryImpl.java:364)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:293)
+	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.build(FastBootEntityManagerFactoryBuilder.java:87)
+	at io.quarkus.hibernate.orm.runtime.FastBootHibernatePersistenceProvider.createEntityManagerFactory(FastBootHibernatePersistenceProvider.java:72)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:80)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:55)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$LazyPersistenceUnit.get(JPAConfig.java:157)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$1.run(JPAConfig.java:64)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.util.concurrent.TimeoutException
+	at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:204)
+	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:298)
+	... 20 more
+
+2024-08-30 18:00:54,001 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@113c3dda)
+2024-08-30 18:00:54,002 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) traceId=7A2881ED. 
+2024-08-30 18:00:58,999 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
+https://docs.oracle.com/error-help/db/ora-17002/
+	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1441)
+	at oracle.jdbc.driver.T4CConnection.handleLogonInterruptedIOException(T4CConnection.java:1309)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:986)
+	at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:1157)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:104)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:825)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:651)
+	at io.agroal.pool.ConnectionFactory.createConnection(ConnectionFactory.java:226)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:536)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:517)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at io.agroal.pool.util.PriorityScheduledExecutor.beforeExecute(PriorityScheduledExecutor.java:75)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.io.IOException: , Authentication lapse 0 ms.
+	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1436)
+	... 14 more
+Caused by: java.io.InterruptedIOException: 
+	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:299)
+	at oracle.net.nt.TcpNTAdapter.connect(TcpNTAdapter.java:222)
+	at oracle.net.nt.ConnOption.connect(ConnOption.java:327)
+	at oracle.net.nt.ConnStrategy.executeConnOption(ConnStrategy.java:1144)
+	at oracle.net.nt.ConnStrategy.execute(ConnStrategy.java:718)
+	at oracle.net.resolver.AddrResolution.resolveAndExecute(AddrResolution.java:707)
+	at oracle.net.ns.NSProtocol.establishConnection(NSProtocol.java:938)
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:327)
+	at oracle.jdbc.driver.T4CConnection.connectNetworkSessionProtocol(T4CConnection.java:3185)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:926)
+	... 12 more
+Caused by: java.io.InterruptedIOException: Socket read interrupted
+	at oracle.net.nt.TimeoutSocketChannel.doSelect(TimeoutSocketChannel.java:706)
+	at oracle.net.nt.TimeoutSocketChannel.initializeSocketChannel(TimeoutSocketChannel.java:245)
+	at oracle.net.nt.TimeoutSocketChannel.connect(TimeoutSocketChannel.java:203)
+	at oracle.net.nt.TimeoutSocketChannel.<init>(TimeoutSocketChannel.java:170)
+	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:256)
+	... 21 more
+
+2024-08-30 18:00:59,000 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
+2024-08-30 18:00:59,609 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] WARN  [io.agr.pool] (agroal-11) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
+https://docs.oracle.com/error-help/db/ora-17002/
+2024-08-30 18:01:05,007 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] WARN  [org.hib.eng.jdb.spi.SqlExceptionHelper] (JPA Startup Thread) SQL Error: 0, SQLState: null
+2024-08-30 18:00:59,998 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@48ed7e40)
+2024-08-30 18:00:59,999 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) traceId=394ECF17. 
+2024-08-30 18:01:05,008 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] ERROR [org.hib.eng.jdb.spi.SqlExceptionHelper] (JPA Startup Thread) Acquisition timeout while waiting for new connection
+2024-08-30 18:01:04,999 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
+https://docs.oracle.com/error-help/db/ora-17002/
+	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1441)
+	at oracle.jdbc.driver.T4CConnection.handleLogonInterruptedIOException(T4CConnection.java:1309)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:986)
+	at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:1157)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:104)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:825)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:651)
+	at io.agroal.pool.ConnectionFactory.createConnection(ConnectionFactory.java:226)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:536)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:517)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at io.agroal.pool.util.PriorityScheduledExecutor.beforeExecute(PriorityScheduledExecutor.java:75)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.io.IOException: , Authentication lapse 0 ms.
+	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1436)
+	... 14 more
+Caused by: java.io.InterruptedIOException: 
+	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:299)
+	at oracle.net.nt.TcpNTAdapter.connect(TcpNTAdapter.java:222)
+	at oracle.net.nt.ConnOption.connect(ConnOption.java:327)
+	at oracle.net.nt.ConnStrategy.executeConnOption(ConnStrategy.java:1144)
+	at oracle.net.nt.ConnStrategy.execute(ConnStrategy.java:718)
+	at oracle.net.resolver.AddrResolution.resolveAndExecute(AddrResolution.java:707)
+	at oracle.net.ns.NSProtocol.establishConnection(NSProtocol.java:938)
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:327)
+	at oracle.jdbc.driver.T4CConnection.connectNetworkSessionProtocol(T4CConnection.java:3185)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:926)
+	... 12 more
+Caused by: java.io.InterruptedIOException: Socket read interrupted
+	at oracle.net.nt.TimeoutSocketChannel.doSelect(TimeoutSocketChannel.java:706)
+	at oracle.net.nt.TimeoutSocketChannel.initializeSocketChannel(TimeoutSocketChannel.java:245)
+	at oracle.net.nt.TimeoutSocketChannel.connect(TimeoutSocketChannel.java:203)
+	at oracle.net.nt.TimeoutSocketChannel.<init>(TimeoutSocketChannel.java:170)
+	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:256)
+	... 21 more
+
+2024-08-30 18:01:05,000 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] INFO  [ora.jdbc] (agroal-11) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
+2024-08-30 18:01:05,013 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7943] WARN  [io.agr.pool] (agroal-11) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
+https://docs.oracle.com/error-help/db/ora-17002/
