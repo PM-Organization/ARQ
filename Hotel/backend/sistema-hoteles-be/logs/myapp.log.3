@@ -1,4 +1,4 @@
-2024-08-30 17:58:04,768 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [org.hib.eng.jdb.env.int.JdbcEnvironmentInitiator] (JPA Startup Thread) HHH000342: Could not obtain connection to query metadata: java.lang.NullPointerException: Cannot invoke "org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(java.sql.SQLException, String)" because the return value of "org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.sqlExceptionHelper()" is null
+2024-08-30 17:58:53,399 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [org.hib.eng.jdb.env.int.JdbcEnvironmentInitiator] (JPA Startup Thread) HHH000342: Could not obtain connection to query metadata: java.lang.NullPointerException: Cannot invoke "org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(java.sql.SQLException, String)" because the return value of "org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.sqlExceptionHelper()" is null
 	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.doTheWork(JtaIsolationDelegate.java:186)
 	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.lambda$delegateWork$1(JtaIsolationDelegate.java:75)
 	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.doInSuspendedTransaction(JtaIsolationDelegate.java:107)
@@ -24,9 +24,9 @@
 	at io.quarkus.hibernate.orm.runtime.JPAConfig$1.run(JPAConfig.java:64)
 	at java.base/java.lang.Thread.run(Thread.java:840)
 
-2024-08-30 17:58:00,133 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@653b7e67)
-2024-08-30 17:58:00,134 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) traceId=3CB19709. 
-2024-08-30 17:58:04,135 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
+2024-08-30 17:58:48,135 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@e03eb42)
+2024-08-30 17:58:48,136 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) traceId=40AE74BE. 
+2024-08-30 17:58:53,135 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
 https://docs.oracle.com/error-help/db/ora-17002/
 	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1441)
 	at oracle.jdbc.driver.T4CConnection.handleLogonInterruptedIOException(T4CConnection.java:1309)
@@ -66,10 +66,10 @@ Caused by: java.io.InterruptedIOException: Socket read interrupted
 	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:256)
 	... 21 more
 
-2024-08-30 17:58:04,136 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
-2024-08-30 17:58:04,791 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [io.agr.pool] (agroal-11) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
+2024-08-30 17:58:53,136 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
+2024-08-30 17:58:53,424 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [io.agr.pool] (agroal-21) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
 https://docs.oracle.com/error-help/db/ora-17002/
-2024-08-30 17:58:10,798 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] ERROR [org.hib.que.sqm.mut.int.tem.GlobalTemporaryTableStrategy] (JPA Startup Thread) Unable obtain JDBC Connection: java.sql.SQLException: Acquisition timeout while waiting for new connection
+2024-08-30 17:58:58,490 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] ERROR [org.hib.que.sqm.mut.int.tem.GlobalTemporaryTableStrategy] (JPA Startup Thread) Unable obtain JDBC Connection: java.sql.SQLException: Acquisition timeout while waiting for new connection
 	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:321)
 	at io.agroal.pool.ConnectionPool.getConnection(ConnectionPool.java:249)
 	at io.agroal.pool.DataSource.getConnection(DataSource.java:86)
@@ -96,9 +96,9 @@ Caused by: java.util.concurrent.TimeoutException
 	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:298)
 	... 20 more
 
-2024-08-30 17:58:05,134 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@315279d6)
-2024-08-30 17:58:05,135 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) traceId=6A61DB27. 
-2024-08-30 17:58:10,134 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
+2024-08-30 17:58:53,137 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@30c36f2d)
+2024-08-30 17:58:53,138 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) traceId=28F9A78. 
+2024-08-30 17:58:58,135 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
 https://docs.oracle.com/error-help/db/ora-17002/
 	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1441)
 	at oracle.jdbc.driver.T4CConnection.handleLogonInterruptedIOException(T4CConnection.java:1309)
@@ -138,10 +138,10 @@ Caused by: java.io.InterruptedIOException: Socket read interrupted
 	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:256)
 	... 21 more
 
-2024-08-30 17:58:10,135 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
-2024-08-30 17:58:10,813 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [io.agr.pool] (agroal-11) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
+2024-08-30 17:58:58,136 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
+2024-08-30 17:58:58,504 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [io.agr.pool] (agroal-21) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
 https://docs.oracle.com/error-help/db/ora-17002/
-2024-08-30 17:58:15,807 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] ERROR [org.hib.que.sqm.mut.int.tem.GlobalTemporaryTableStrategy] (JPA Startup Thread) Unable obtain JDBC Connection: java.sql.SQLException: Acquisition timeout while waiting for new connection
+2024-08-30 17:59:03,495 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] ERROR [org.hib.que.sqm.mut.int.tem.GlobalTemporaryTableStrategy] (JPA Startup Thread) Unable obtain JDBC Connection: java.sql.SQLException: Acquisition timeout while waiting for new connection
 	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:321)
 	at io.agroal.pool.ConnectionPool.getConnection(ConnectionPool.java:249)
 	at io.agroal.pool.DataSource.getConnection(DataSource.java:86)
@@ -168,9 +168,9 @@ Caused by: java.util.concurrent.TimeoutException
 	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:298)
 	... 20 more
 
-2024-08-30 17:58:10,136 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@51657f72)
-2024-08-30 17:58:10,137 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) traceId=39F82BF0. 
-2024-08-30 17:58:15,134 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
+2024-08-30 17:58:58,137 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@22e9bec0)
+2024-08-30 17:58:58,138 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) traceId=53E757EC. 
+2024-08-30 17:59:03,135 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
 https://docs.oracle.com/error-help/db/ora-17002/
 	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1441)
 	at oracle.jdbc.driver.T4CConnection.handleLogonInterruptedIOException(T4CConnection.java:1309)
@@ -210,10 +210,10 @@ Caused by: java.io.InterruptedIOException: Socket read interrupted
 	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:256)
 	... 21 more
 
-2024-08-30 17:58:15,135 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
-2024-08-30 17:58:15,819 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [io.agr.pool] (agroal-11) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
+2024-08-30 17:59:03,136 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
+2024-08-30 17:59:03,505 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [io.agr.pool] (agroal-21) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
 https://docs.oracle.com/error-help/db/ora-17002/
-2024-08-30 17:58:20,813 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] ERROR [org.hib.que.sqm.mut.int.tem.GlobalTemporaryTableStrategy] (JPA Startup Thread) Unable obtain JDBC Connection: java.sql.SQLException: Acquisition timeout while waiting for new connection
+2024-08-30 17:59:08,500 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] ERROR [org.hib.que.sqm.mut.int.tem.GlobalTemporaryTableStrategy] (JPA Startup Thread) Unable obtain JDBC Connection: java.sql.SQLException: Acquisition timeout while waiting for new connection
 	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:321)
 	at io.agroal.pool.ConnectionPool.getConnection(ConnectionPool.java:249)
 	at io.agroal.pool.DataSource.getConnection(DataSource.java:86)
@@ -240,9 +240,9 @@ Caused by: java.util.concurrent.TimeoutException
 	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:298)
 	... 20 more
 
-2024-08-30 17:58:15,136 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@d9e349e)
-2024-08-30 17:58:15,137 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) traceId=6F6757F9. 
-2024-08-30 17:58:20,135 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
+2024-08-30 17:59:03,137 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@54f6c186)
+2024-08-30 17:59:03,138 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) traceId=5ABC6E1D. 
+2024-08-30 17:59:08,134 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
 https://docs.oracle.com/error-help/db/ora-17002/
 	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1441)
 	at oracle.jdbc.driver.T4CConnection.handleLogonInterruptedIOException(T4CConnection.java:1309)
@@ -282,10 +282,11 @@ Caused by: java.io.InterruptedIOException: Socket read interrupted
 	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:256)
 	... 21 more
 
-2024-08-30 17:58:20,136 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
-2024-08-30 17:58:20,822 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [io.agr.pool] (agroal-11) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
+2024-08-30 17:59:08,135 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
+2024-08-30 17:59:08,508 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [io.agr.pool] (agroal-21) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
 https://docs.oracle.com/error-help/db/ora-17002/
-2024-08-30 17:58:25,818 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] ERROR [org.hib.que.sqm.mut.int.tem.GlobalTemporaryTableStrategy] (JPA Startup Thread) Unable obtain JDBC Connection: java.sql.SQLException: Acquisition timeout while waiting for new connection
+2024-08-30 17:59:08,136 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@64ef2d3b)
+2024-08-30 17:59:13,506 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] ERROR [org.hib.que.sqm.mut.int.tem.GlobalTemporaryTableStrategy] (JPA Startup Thread) Unable obtain JDBC Connection: java.sql.SQLException: Acquisition timeout while waiting for new connection
 	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:321)
 	at io.agroal.pool.ConnectionPool.getConnection(ConnectionPool.java:249)
 	at io.agroal.pool.DataSource.getConnection(DataSource.java:86)
@@ -312,9 +313,8 @@ Caused by: java.util.concurrent.TimeoutException
 	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:298)
 	... 20 more
 
-2024-08-30 17:58:20,137 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@4c6fb85a)
-2024-08-30 17:58:20,138 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) traceId=299E0361. 
-2024-08-30 17:58:25,134 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
+2024-08-30 17:59:08,137 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) traceId=2D8FF5B7. 
+2024-08-30 17:59:13,135 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
 https://docs.oracle.com/error-help/db/ora-17002/
 	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1441)
 	at oracle.jdbc.driver.T4CConnection.handleLogonInterruptedIOException(T4CConnection.java:1309)
@@ -354,14 +354,14 @@ Caused by: java.io.InterruptedIOException: Socket read interrupted
 	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:256)
 	... 21 more
 
-2024-08-30 17:58:25,135 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
-2024-08-30 17:58:25,830 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [io.agr.pool] (agroal-11) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
+2024-08-30 17:59:13,136 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
+2024-08-30 17:59:13,513 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [io.agr.pool] (agroal-21) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
 https://docs.oracle.com/error-help/db/ora-17002/
-2024-08-30 17:58:31,337 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [org.hib.eng.jdb.spi.SqlExceptionHelper] (JPA Startup Thread) SQL Error: 0, SQLState: null
-2024-08-30 17:58:26,134 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@5295ca5f)
-2024-08-30 17:58:31,339 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] ERROR [org.hib.eng.jdb.spi.SqlExceptionHelper] (JPA Startup Thread) Acquisition timeout while waiting for new connection
-2024-08-30 17:58:26,135 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) traceId=1A113730. 
-2024-08-30 17:58:31,134 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
+2024-08-30 17:59:18,578 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [org.hib.eng.jdb.spi.SqlExceptionHelper] (JPA Startup Thread) SQL Error: 0, SQLState: null
+2024-08-30 17:59:13,137 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) entering args (oracle.jdbc.internal.AbstractConnectionBuilder$1@775a293b)
+2024-08-30 17:59:18,580 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] ERROR [org.hib.eng.jdb.spi.SqlExceptionHelper] (JPA Startup Thread) Acquisition timeout while waiting for new connection
+2024-08-30 17:59:13,138 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) traceId=37D76E8D. 
+2024-08-30 17:59:18,134 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) throwing: java.sql.SQLRecoverableException: ORA-17002: I/O error: , Authentication lapse 0 ms.
 https://docs.oracle.com/error-help/db/ora-17002/
 	at oracle.jdbc.driver.T4CConnection.handleLogonIOException(T4CConnection.java:1441)
 	at oracle.jdbc.driver.T4CConnection.handleLogonInterruptedIOException(T4CConnection.java:1309)
@@ -401,10 +401,10 @@ Caused by: java.io.InterruptedIOException: Socket read interrupted
 	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:256)
 	... 21 more
 
-2024-08-30 17:58:31,135 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-11) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
-2024-08-30 17:58:31,347 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [io.agr.pool] (agroal-11) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
+2024-08-30 17:59:18,135 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [ora.jdbc] (agroal-21) properties={LOCALE=en_US, DriverVersion=23.3.0.23.09, java.library.path: =/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib, java.class.path: =/home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/backend/sistema-hoteles-be/target/sistema-hoteles-be-dev.jar, java.version: =17.0.12}. 
+2024-08-30 17:59:18,586 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [io.agr.pool] (agroal-21) Datasource '<default>': ORA-17002: I/O error: , Authentication lapse 0 ms.
 https://docs.oracle.com/error-help/db/ora-17002/
-2024-08-30 17:58:31,378 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] ERROR [io.qua.run.Application] (Quarkus Main Thread) Failed to start application (with profile [dev]): java.lang.RuntimeException: Failed to start quarkus
+2024-08-30 17:59:18,587 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] ERROR [io.qua.run.Application] (Quarkus Main Thread) Failed to start application (with profile [dev]): java.lang.RuntimeException: Failed to start quarkus
 	at io.quarkus.runner.ApplicationImpl.doStart(Unknown Source)
 	at io.quarkus.runtime.Application.start(Application.java:101)
 	at io.quarkus.runtime.ApplicationLifecycleManager.run(ApplicationLifecycleManager.java:111)
@@ -462,5 +462,3 @@ Caused by: java.util.concurrent.TimeoutException
 	at io.agroal.pool.ConnectionPool.handlerFromSharedCache(ConnectionPool.java:298)
 	... 27 more
 
-2024-08-30 17:58:31,449 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] INFO  [io.qua.dep.dev.IsolatedDevModeMain] (main) Attempting to start live reload endpoint to recover from previous Quarkus startup failure
-2024-08-30 17:58:45,301 pmorales-virtual-machine sistema-hoteles-be-dev.jar[7163] WARN  [io.qua.res.rea.com.dep.ResteasyReactiveCommonProcessor] (build-23) Mixing RESTEasy Reactive server and RESTEasy Classic client parts might lead to unexpected results. Consider using 'quarkus-rest-client-reactive' instead.

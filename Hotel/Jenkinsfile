@@ -121,7 +121,11 @@ stage('Unit Tests') {
 
     post {
         failure {
+<<<<<<< HEAD
+            mail to: 'jflores@unis.edu.gt',
+=======
             mail to: 'pdmorales@unis.edu.gt',
+>>>>>>> main
                  subject: "Build Failed: ${env.BUILD_TAG}",
                  body: "Something is wrong with the build ${env.BUILD_URL}"
         }
@@ -129,8 +133,13 @@ stage('Unit Tests') {
             script {
                 currentBuild.description = "Build Successful: ${env.BRANCH_NAME}"
             }
+<<<<<<< HEAD
+        }
+    }
+=======
         }
     }
+>>>>>>> main
 }
 <<<<<<< HEAD
 
