@@ -44,3 +44,7 @@ nb-configuration.xml
 
 
 /src/main/resources/
+
+
+# Ignorar archivos de logs
+logs/myapp.log*
