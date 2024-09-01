@@ -3,9 +3,11 @@ node {
     checkout scm
   }
   stage('SonarQube Analysis') {
-    def mvn = tool 'Default Maven';
-    withSonarQubeEnv() {
-      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=ARQ-PROJECT -Dsonar.projectName='ARQ PROJECT' -Dsonar.projectVersion=1.0"
+    dir('Hotel/backend/sistema-hoteles-be') {
+      def mvn = tool 'Default Maven';
+      withSonarQubeEnv() {
+        sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=ARQ-PROJECT -Dsonar.projectName='ARQ PROJECT'"
+      }
     }
   }
 }
