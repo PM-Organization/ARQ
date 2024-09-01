@@ -1,5 +1,7 @@
+# Ignorar todo excepto lo que se necesita
 *
-!target/*-runner
-!target/*-runner.jar
-!target/lib/*
-!target/quarkus-app/*
+!.mvn/
+!mvnw
+!mvnw.cmd
+!pom.xml
+!src/

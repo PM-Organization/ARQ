@@ -51,3 +51,4 @@ backend/sistema-hoteles-be/logs/myapp.log*
 
 # Ignorar caché de eslint en node_modules
 frontend/sistema_hoteles/node_modules/.cache/.eslintcache
+.vscode/

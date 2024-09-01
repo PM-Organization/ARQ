@@ -1,12 +1,1 @@
-<<<<<<< HEAD
-2024-08-30 18:22:17,574 pmorales-virtual-machine sistema-hoteles-be-dev.jar[8998] INFO  [io.quarkus] (Quarkus Main Thread) sistema-hoteles-be 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.7.4) started in 5.994s. Listening on: http://localhost:8085
-2024-08-30 18:22:17,577 pmorales-virtual-machine sistema-hoteles-be-dev.jar[8998] INFO  [io.quarkus] (Quarkus Main Thread) Profile dev activated. Live Coding activated.
-2024-08-30 18:22:17,580 pmorales-virtual-machine sistema-hoteles-be-dev.jar[8998] INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [agroal, cdi, hibernate-orm, hibernate-orm-panache, jdbc-oracle, narayana-jta, resteasy-client, resteasy-reactive, resteasy-reactive-jackson, smallrye-context-propagation, vertx]
-2024-08-30 18:22:17,583 pmorales-virtual-machine sistema-hoteles-be-dev.jar[8998] INFO  [io.qua.dep.dev.RuntimeUpdatesProcessor] (vert.x-worker-thread-1) Live reload total time: 6.843s 
-=======
-2024-08-30 18:14:53,682 pmorales-virtual-machine sistema-hoteles-be-dev.jar[8998] INFO  [io.quarkus] (Quarkus Main Thread) sistema-hoteles-be 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.7.4) started in 5.939s. Listening on: http://localhost:8085
-2024-08-30 18:14:53,685 pmorales-virtual-machine sistema-hoteles-be-dev.jar[8998] INFO  [io.quarkus] (Quarkus Main Thread) Profile dev activated. Live Coding activated.
-2024-08-30 18:14:53,687 pmorales-virtual-machine sistema-hoteles-be-dev.jar[8998] INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [agroal, cdi, hibernate-orm, hibernate-orm-panache, jdbc-oracle, narayana-jta, resteasy-client, resteasy-reactive, resteasy-reactive-jackson, smallrye-context-propagation, vertx]
-2024-08-30 18:14:53,689 pmorales-virtual-machine sistema-hoteles-be-dev.jar[8998] INFO  [io.qua.dep.dev.RuntimeUpdatesProcessor] (vert.x-worker-thread-1) Live reload total time: 10.801s 
-2024-08-30 18:14:53,693 pmorales-virtual-machine sistema-hoteles-be-dev.jar[8998] INFO  [io.qua.dep.dev.RuntimeUpdatesProcessor] (vert.x-worker-thread-1) Live reload took more than 4 seconds, you may want to enable instrumentation based reload (quarkus.live-reload.instrumentation=true). This allows small changes to take effect without restarting Quarkus.
->>>>>>> 56da079ba265dde738d7661692dfad58d9bb6e0d
+2024-08-30 23:29:29,118 pmorales-virtual-machine surefirebooter-20240830232917263_3.jar[37122] WARN  [io.qua.res.rea.com.dep.ResteasyReactiveCommonProcessor] (build-29) Mixing RESTEasy Reactive server and RESTEasy Classic client parts might lead to unexpected results. Consider using 'quarkus-rest-client-reactive' instead.
