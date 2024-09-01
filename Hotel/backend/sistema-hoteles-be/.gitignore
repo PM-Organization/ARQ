@@ -9,3 +9,5 @@ logs/myapp.log*
 
 # Ignorar caché de eslint
 frontend/sistema_hoteles/node_modules/.cache/.eslintcache
+
+backend/sistema-hoteles-be/logs/*.log
