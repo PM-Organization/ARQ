@@ -1,266 +1,114 @@
 pipeline {
     agent any
+
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('554fa22a-b8cf-4538-bb29-778d1bc87aea')
-        SONARQUBE_ENV = 'SonarQube'
+        SONARQUBE_URL = 'http://localhost:9000' 
+        SONARQUBE_CREDENTIALS = 'sqa_a5a79f4a32d13a706b505f9dd073005433da41e6'
         SONARQUBE_PROJECT_KEY = 'ARQ-PROJECT'
         SONARQUBE_PROJECT_NAME = 'ARQ PROJECT'
-        SONARQUBE_HOST_URL = 'http://localhost:9000'
-        SONARQUBE_AUTH_TOKEN = 'sqa_e363a54de85c463743a8d04cd7efa4a151a79c3d'
+        SONARQUBE_PROJECT_VERSION = '1.0'
+        EMAIL_RECIPIENTS = 'pdmorales@unis.edu.gt'
+        MAVEN_HOME = tool 'Default Maven'
     }
+
     stages {
         stage('Checkout') {
             steps {
-                git(
-                    branch: 'dev',
-                    url: 'https://github.com/PM-Organization/ARQ.git',
-                    changelog: false,
-                    poll: false,
-                    shallow: false // Asegura que se clona todo el repositorio
-                )
+                git branch: 'dev', url: 'https://github.com/PM-Organization/ARQ.git'
             }
         }
 
-        stage('Verify mvnw presence') {
-            steps {
-                dir('backend/sistema-hoteles-be') {
-                    sh "pwd"  // Muestra el directorio actual
-                    sh "ls -la"  // Lista todos los archivos para asegurar que mvnw esté presente
-                }
-            }
-        }
-
-stage('SonarQube Analysis') {
-    steps {
-        withSonarQubeEnv('SonarQube') {
-            sh "chmod +x ./mvnw"  // Asegura que mvnw sea ejecutable
-            sh "./mvnw sonar:sonar -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} -Dsonar.projectName=${SONARQUBE_PROJECT_NAME} -Dsonar.host.url=${SONARQUBE_HOST_URL} -Dsonar.login=${SONARQUBE_AUTH_TOKEN}"
-        }
-    }
-}
-        }
-
-        stage('Build Backend') {
-            steps {
-                dir('backend/sistema-hoteles-be') {
-                    script {
-                        dockerImageBackend = docker.build("backend-image:${env.BRANCH_NAME}")
-                    }
-                }
-            }
-        }
-
-        stage('Build Frontend') {
-            steps {
-                dir('frontend/sistema_hoteles') {
-                    script {
-                        dockerImageFrontend = docker.build("frontend-image:${env.BRANCH_NAME}")
-                    }
-                }
-            }
-        }
-
-stage('Unit Tests') {
-    steps {
-        dir('backend/sistema-hoteles-be') {
-            sh '../../mvnw test'
-        }
-        dir('frontend/sistema_hoteles') {
-            sh 'npm test'
-        }
-    }
-}
-
-        stage('Build and Push Docker Images') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', DOCKERHUB_CREDENTIALS) {
-                        dockerImageBackend.push("${env.BRANCH_NAME}")
-                        dockerImageFrontend.push("${env.BRANCH_NAME}")
-                    }
-                }
-            }
-        }
-
-        stage('Deploy to Development') {
-            when {
-                branch 'dev'
-            }
-            steps {
-                script {
-                    dockerImageBackend.run('-p 8085:8085 backend-image:dev')
-                    dockerImageFrontend.run('-p 3000:3000 frontend-image:dev')
-                }
-            }
-        }
-
-        stage('Deploy to UAT/QA') {
-            when {
-                branch 'uat'
-            }
-            steps {
-                script {
-                    dockerImageBackend.run('-p 8085:8085 backend-image:uat')
-                    dockerImageFrontend.run('-p 3000:3000 frontend-image:uat')
-                }
-            }
-        }
-
-        stage('Deploy to Production') {
-            when {
-                branch 'master'
-            }
-            steps {
-                script {
-                    dockerImageBackend.run('-p 8085:8085 backend-image:master')
-                    dockerImageFrontend.run('-p 3000:3000 frontend-image:master')
-                }
-            }
-        }
-    }
-
-    post {
-        failure {
-<<<<<<< HEAD
-            mail to: 'jflores@unis.edu.gt',
-=======
-            mail to: 'pdmorales@unis.edu.gt',
->>>>>>> main
-                 subject: "Build Failed: ${env.BUILD_TAG}",
-                 body: "Something is wrong with the build ${env.BUILD_URL}"
-        }
-        success {
-            script {
-                currentBuild.description = "Build Successful: ${env.BRANCH_NAME}"
-            }
-<<<<<<< HEAD
-        }
-    }
-=======
-        }
-    }
->>>>>>> main
-}
-<<<<<<< HEAD
-
-pipeline {
-    agent any
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('554fa22a-b8cf-4538-bb29-778d1bc87aea')
-        SONARQUBE_ENV = 'SonarQube'
-    }
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: env.BRANCH_NAME, url: 'https://github.com/PM-Organization/ARQ.git'
-            }
-        }
-
-        stage('Build Backend') {
-            steps {
-                dir('backend/sistema-hoteles-be') {
-                    script {
-                        dockerImageBackend = docker.build("backend-image:latest")
-                    }
-                }
-            }
-        }
-
-        stage('Build Frontend') {
-            steps {
-                dir('frontend/sistema_hoteles') {
-                    script {
-                        dockerImageFrontend = docker.build("frontend-image:latest")
-                    }
-                }
-            }
-        }
-
-        stage('Unit Tests') {
-            steps {
-                dir('backend/sistema-hoteles-be') {
-                    sh './mvnw test'
-                }
-                dir('frontend/sistema_hoteles') {
-                    sh 'npm test'
-                }
-            }
-        }
-
-        stage('Code Quality Analysis') {
+        stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    dir('backend/sistema-hoteles-be') {
-                        sh './mvnw sonar:sonar'
-                    }
-                    dir('frontend/sistema_hoteles') {
-                        sh 'npm run sonar'
-                    }
+                    sh "${MAVEN_HOME}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} -Dsonar.projectName=${SONARQUBE_PROJECT_NAME} -Dsonar.projectVersion=${SONARQUBE_PROJECT_VERSION} -Dsonar.host.url=${SONARQUBE_URL} -Dsonar.login=${SONARQUBE_CREDENTIALS}"
                 }
             }
         }
 
-        stage('Build and Push Docker Images') {
+        stage('Unit Testing') {
+            steps {
+                sh "${MAVEN_HOME}/bin/mvn test"
+            }
+        }
+
+        stage('Quality Gate') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', '554fa22a-b8cf-4538-bb29-778d1bc87aea') {
-                        dockerImageBackend.push("${env.BRANCH_NAME}")
-                        dockerImageFrontend.push("${env.BRANCH_NAME}")
+                    timeout(time: 5, unit: 'MINUTES') {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        }
                     }
                 }
             }
         }
-
-        stage('Deploy to Development') {
+        
+        stage('Smoke Testing') {
             when {
                 branch 'dev'
             }
             steps {
-                script {
-                    dockerImageBackend.run('-p 8085:8085 backend-image:dev')
-                    dockerImageFrontend.run('-p 3000:3000 frontend-image:dev')
-                }
+                echo 'Running Smoke Tests...'
             }
         }
 
-        stage('Deploy to UAT/QA') {
+        stage('Deploy to Dev') {
+            when {
+                branch 'dev'
+            }
+            steps {
+                sh 'docker-compose up -d db backend-dev frontend-dev'
+            }
+        }
+
+        stage('Automated QA') {
             when {
                 branch 'uat'
             }
             steps {
-                script {
-                    dockerImageBackend.run('-p 8085:8085 backend-image:uat')
-                    dockerImageFrontend.run('-p 3000:3000 frontend-image:uat')
-                }
+                echo 'Running Automated QA Tests...'
+            }
+        }
+
+        stage('Deploy to UAT') {
+            when {
+                branch 'uat'
+            }
+            steps {
+                sh 'docker-compose up -d db backend-uat frontend-uat'
+            }
+        }
+
+        stage('QA') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo 'Running QA Tests...'
             }
         }
 
         stage('Deploy to Production') {
             when {
-                branch 'master'
+                branch 'main'
             }
             steps {
-                script {
-                    dockerImageBackend.run('-p 8085:8085 backend-image:master')
-                    dockerImageFrontend.run('-p 3000:3000 frontend-image:master')
-                }
+                sh 'docker-compose up -d db backend-main frontend-main'
             }
         }
     }
 
     post {
         failure {
-            mail to: 'pdmorales@unis.edu.gt',
-                 subject: "Build Failed: ${env.BUILD_TAG}",
-                 body: "Something is wrong with the build ${env.BUILD_URL}"
+            mail to: "${EMAIL_RECIPIENTS}",
+                 subject: "Pipeline failed in branch ${env.BRANCH_NAME}",
+                 body: "The pipeline has failed during ${env.STAGE_NAME}. Please check the logs for more details."
         }
+
         success {
-            script {
-                currentBuild.description = "Build Successful: ${env.BRANCH_NAME}"
-            }
+            echo 'Pipeline completed successfully.'
         }
     }
 }
-
-=======
->>>>>>> main
