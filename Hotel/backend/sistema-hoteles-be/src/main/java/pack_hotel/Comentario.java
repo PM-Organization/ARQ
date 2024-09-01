@@ -70,7 +70,7 @@ public class Comentario {
 
     public void setTextoComentario(String texto_comentario) {
         this.texto_comentario = texto_comentario;
-    }
+    } 
 
     public Integer getRating() {
         return rating;

@@ -1,0 +1,107 @@
+version: '3'
+services:
+  # Backend Services
+  backend-main:
+    build:
+      context: ./backend/sistema-hoteles-be
+      dockerfile: Dockerfile
+    ports:
+    - "8090:8085"
+    container_name: backend-main
+    networks:
+      - hotel-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/sonarqube
+      - SPRING_DATASOURCE_USERNAME=pmoralesm
+      - SPRING_DATASOURCE_PASSWORD=pablo0
+
+  backend-dev:
+    build:
+      context: ./backend/sistema-hoteles-be
+      dockerfile: Dockerfile
+    ports:
+    - "8091:8085"
+    container_name: backend-dev
+    networks:
+      - hotel-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/sonarqube
+      - SPRING_DATASOURCE_USERNAME=pmoralesm
+      - SPRING_DATASOURCE_PASSWORD=pablo0
+
+  backend-uat:
+    build:
+      context: ./backend/sistema-hoteles-be
+      dockerfile: Dockerfile
+    ports:
+    - "8092:8085"
+    container_name: backend-uat
+    networks:
+      - hotel-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/sonarqube
+      - SPRING_DATASOURCE_USERNAME=pmoralesm
+      - SPRING_DATASOURCE_PASSWORD=pablo0
+
+  # Frontend Services
+  frontend-main:
+    build:
+      context: ./frontend/sistema_hoteles
+      dockerfile: Dockerfile
+    ports:
+      - "3010:80"
+    container_name: frontend-main
+    networks:
+      - hotel-network
+
+  frontend-dev:
+    build:
+      context: ./frontend/sistema_hoteles
+      dockerfile: Dockerfile
+    ports:
+      - "3011:80"
+    container_name: frontend-dev
+    networks:
+      - hotel-network
+
+  frontend-uat:
+    build:
+      context: ./frontend/sistema_hoteles
+      dockerfile: Dockerfile
+    ports:
+      - "3012:80"
+    container_name: frontend-uat
+    networks:
+      - hotel-network
+
+  sonarqube:
+    image: sonarqube:latest
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_logs:/opt/sonarqube/logs
+      - sonarqube_extensions:/opt/sonarqube/extensions
+    environment:
+      - SONAR_JDBC_URL=jdbc:postgresql://db:5432/sonarqube
+      - SONAR_JDBC_USERNAME=pmoralesm
+      - SONAR_JDBC_PASSWORD=pablo0
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: pmoralesm
+      POSTGRES_PASSWORD: pablo0
+      POSTGRES_DB: sonarqube
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+
+volumes:
+  sonarqube_data:
+  sonarqube_logs:
+  sonarqube_extensions:
+  postgresql_data:
+
+networks:
+  hotel-network:
+    driver: bridge
