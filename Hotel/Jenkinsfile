@@ -11,11 +11,7 @@ pipeline {
     }
 
     stages {
-        stage('Clean Up') {
-            steps {
-                sh 'docker-compose down'
-            }
-        }
+
 
         stage('Checkout') {
             steps {
