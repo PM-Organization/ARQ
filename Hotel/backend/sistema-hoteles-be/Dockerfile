@@ -1,16 +1,33 @@
-# Use a Quarkus base image
-FROM quay.io/quarkus/ubi-quarkus-native-image:22.2.0-java11 AS build
-WORKDIR /work/
-COPY mvnw ./
-COPY .mvn .mvn
-COPY pom.xml ./
-COPY src ./src
-RUN ./mvnw package -Pnative -Dquarkus.native.container-build=true -DskipTests
+# Backend Dockerfile (ubicado en sistema-hoteles-be/Dockerfile)
+FROM openjdk:17-jdk-slim AS build
 
-# Use a smaller base image for runtime
-FROM quay.io/quarkus/quarkus-micro-image:1.0
-WORKDIR /work/
-COPY --from=build /work/target/*-runner /work/application
+WORKDIR /app
+
+# Copiar los archivos de configuración de Maven
+COPY .mvn/ .mvn/
+COPY mvnw .
+COPY mvnw.cmd .
+COPY pom.xml .
+
+# Copiar el código fuente
+COPY src/ src/
+
+# Compilar el proyecto
+RUN chmod +x mvnw
+RUN ./mvnw clean package -DskipTests
+
+# Crear una imagen ligera para ejecutar la aplicación
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+
+# Copiar el jar generado
+COPY --from=build /app/target/quarkus-app/lib/ /app/lib/
+COPY --from=build /app/target/quarkus-app/*.jar /app/
+COPY --from=build /app/target/quarkus-app/app/ /app/app/
+COPY --from=build /app/target/quarkus-app/quarkus/ /app/quarkus/
+
+# Exponer el puerto
 EXPOSE 8085
-CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
 
+# Ejecutar la aplicación
+CMD ["java", "-jar", "/app/quarkus-run.jar"]

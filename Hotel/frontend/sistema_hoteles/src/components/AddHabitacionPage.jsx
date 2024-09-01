@@ -33,7 +33,7 @@ const AddHabitacionPage = () => {
 
   const fetchHoteles = async () => {
     try {
-      const response = await fetch('http://localhost:8085/hoteles');
+      const response = await fetch('http://localhost:8090/hoteles');
 
       if (!response.ok) throw new Error('Error al cargar los hoteles');
       const data = await response.json();
@@ -46,7 +46,7 @@ const AddHabitacionPage = () => {
 
   const fetchHabitaciones = async (idHotel) => {
     try {
-      const url = idHotel ? `http://localhost:8085/habitaciones?hotelId=${idHotel}` : 'http://localhost:8085/habitaciones';
+      const url = idHotel ? `http://localhost:8090/habitaciones?hotelId=${idHotel}` : 'http://localhost:8090/habitaciones';
       const response = await fetch(url);
       if (!response.ok) throw new Error('No se pudieron cargar las habitaciones');
       const data = await response.json();
@@ -87,7 +87,7 @@ const AddHabitacionPage = () => {
             ...nuevaHabitacion, 
             id_hotel: selectedHotel //
         };
-        const response = await fetch('http://localhost:8085/habitaciones', {
+        const response = await fetch('http://localhost:8090/habitaciones', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(habitacionData),
@@ -117,7 +117,7 @@ const iniciarEdicion = (habitacion) => {
   
   const guardarEdicion = async (idHabitacion) => {
     try {
-      const response = await fetch(`http://localhost:8085/habitaciones/${idHabitacion}`, {
+      const response = await fetch(`http://localhost:8090/habitaciones/${idHabitacion}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -144,7 +144,7 @@ const cancelarEdicion = () => {
   
 const eliminarHabitacion = async (idHabitacion) => {
     try {
-      const response = await fetch(`http://localhost:8085/habitaciones/${idHabitacion}`, {
+      const response = await fetch(`http://localhost:8090/habitaciones/${idHabitacion}`, {
         method: 'DELETE',
       });
       if (!response.ok) throw new Error('Error al eliminar la habitación');
@@ -165,7 +165,7 @@ const cambiarEstadoHabitacion = async (idHabitacion, estadoActual) => {
   const nuevoEstado = estadoActual === 'activo' ? 'inactivo' : 'activo';
 
   try {
-    const response = await fetch(`http://localhost:8085/habitaciones/${idHabitacion}/estado/${nuevoEstado}`, {
+    const response = await fetch(`http://localhost:8090/habitaciones/${idHabitacion}/estado/${nuevoEstado}`, {
       method: 'PUT',
     });
     if (!response.ok) {
