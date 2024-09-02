@@ -46,14 +46,7 @@ public class Rol {
         this.tipo = tipo;
     }
 
-    // Método ficticio para simular una vulnerabilidad de inyección SQL
-    public String getRoleDetails(String roleId) {
-        // Vulnerabilidad de inyección SQL (no debe hacerse en producción)
-        String query = "SELECT * FROM roles WHERE id_rol = " + roleId; // Sin validación
-        return query;
-    }
-
-    // hashCode y equdals basados en el ID del rol
+    // hashCode y equals basados en el ID del rol
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -78,5 +71,12 @@ public class Rol {
     @Override
     public String toString() {
         return "Rol [idRol=" + idRol + ", tipo=" + tipo + "]";
+    }
+
+    // Bloque de código adicional para forzar la detección de SonarQube
+    public void detectIssue() {
+        if (true) { // Esto debería generar una advertencia en SonarQube
+            // No hace nada
+        }
     }
 }
