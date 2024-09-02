@@ -26,7 +26,7 @@ COPY --from=build /app/target/quarkus-app/*.jar /app/
 COPY --from=build /app/target/quarkus-app/app/ /app/app/
 COPY --from=build /app/target/quarkus-app/quarkus/ /app/quarkus/
 
-# Exponer el puerto
+# Exponer el puertooooo
 EXPOSE 8085
 
 # Ejecutar la aplicación
