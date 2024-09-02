@@ -46,7 +46,14 @@ public class Rol {
         this.tipo = tipo;
     }
 
-    // hashCode y equals basados en el ID del rol
+    // Método ficticio para simular una vulnerabilidad de inyección SQL
+    public String getRoleDetails(String roleId) {
+        // Vulnerabilidad de inyección SQL (no debe hacerse en producción)
+        String query = "SELECT * FROM roles WHERE id_rol = " + roleId; // Sin validación
+        return query;
+    }
+
+    // hashCode y equdals basados en el ID del rol
     @Override
     public int hashCode() {
         final int prime = 31;
