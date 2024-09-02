@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+      - dev
+      - uat
+      - '**'  # Para proteger cualquier rama creada
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+
+      - name: Build with Maven
+        run: mvn clean verify sonar:sonar \
+          -Dsonar.projectKey=ARQ-PROJECT \
+          -Dsonar.projectName='ARQ PROJECT' \
+          -Dsonar.projectVersion=1.0 \
+          -Dsonar.host.url=http://localhost:9000 \
+          -Dsonar.login=${{ secrets.SONAR_LOGIN }} \
+          -Dsonar.projectToken=${{ secrets.SONAR_TOKEN }}
+
+      - name: Notify success
+        run: echo "SonarQube analysis completed successfully."
+
+      - name: Check for code quality
+        run: |
+          echo "Checking SonarQube report..."
+          RESULT=$(curl -s -u ${{ secrets.SONAR_LOGIN }}:${{ secrets.SONAR_TOKEN }} http://localhost:9000/api/qualitygates/project_status?projectKey=ARQ-PROJECT)
+          echo "$RESULT"
+          if [[ "$RESULT" != *"OK"* ]]; then
+            echo "Code quality checks failed."
+            exit 1
+          fi
+
+      - name: Finalize build
+        run: echo "Build completed successfully."
