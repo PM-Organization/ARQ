@@ -1,49 +1,41 @@
-name: CI
+name: SonarQube Scan
 
 on:
   pull_request:
-    branches:
-      - main
-      - master
-      - dev
-      - uat
-      - '**'  # Para proteger cualquier rama creada
+    branches: [ "**" ]  
 
 jobs:
-  build:
+  sonarqube_scan:
+    name: SonarQube Scan
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout Code
+      uses: actions/checkout@v3
 
-      - name: Set up JDK
-        uses: actions/setup-java@v1
-        with:
-          java-version: '17'
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
 
-      - name: Build with Maven
-        run: |
-          cd Hotel/backend/sistema-hoteles-be  # Asegurarse de estar en el directorio correcto
-          mvn clean verify sonar:sonar \
-            -Dsonar.projectKey=ARQ-PROJECT \
-            -Dsonar.projectName='ARQ PROJECT' \
-            -Dsonar.projectVersion=1.0 \
-            -Dsonar.host.url=https://cool-phones-kiss.loca.lt \
-            -Dsonar.login=${{ secrets.SONAR_LOGIN }} \
-            -Dsonar.projectToken=${{ secrets.SONAR_TOKEN }}
+    - name: Cache SonarQube packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
 
-      - name: Notify success
-        run: echo "SonarQube analysis completed successfully."
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@v1
+      with:
+        projectBaseDir: .
+        args: >
+          -Dsonar.host.url=https://90e32f98b0d6c258cc14d9ef64f7b59e.serveo.net
+          -Dsonar.login=${{ secrets.SONAR_LOGIN }}
+          -Dsonar.projectToken=${{ secrets.SONAR_TOKEN }}
 
-      - name: Check for code quality
-        run: |
-          echo "Checking SonarQube report..."
-          RESULT=$(curl -s -u ${{ secrets.SONAR_LOGIN }}:${{ secrets.SONAR_TOKEN }} https://cool-phones-kiss.loca.lt/api/qualitygates/project_status?projectKey=ARQ-PROJECT)
-          echo "$RESULT"
-          if [[ "$RESULT" != *"OK"* ]]; then
-            echo "Code quality checks failed."
-            exit 1
-
-      - name: Finalize build
-        run: echo "Build completed successfully."
+    - name: Archive SonarQube Results
+      uses: actions/upload-artifact@v3
+      with:
+        name: sonarqube-results
+        path: .scannerwork/**
