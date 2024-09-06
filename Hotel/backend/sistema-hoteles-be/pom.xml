@@ -134,6 +134,9 @@
         <version>${surefire-plugin.version}</version>
         <configuration>
           <systemPropertyVariables>
+            <quarkus.datasource.jdbc.url>jdbc:oracle:thin:@192.168.1.20:1521/XE</quarkus.datasource.jdbc.url>
+            <quarkus.datasource.username>C##myuser</quarkus.datasource.username>
+            <quarkus.datasource.password>pablo</quarkus.datasource.password>
             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
             <maven.home>${maven.home}</maven.home>
           </systemPropertyVariables>
@@ -152,6 +155,9 @@
         </executions>
         <configuration>
           <systemPropertyVariables>
+            <quarkus.datasource.jdbc.url>jdbc:oracle:thin:@192.168.1.20:1521/XE</quarkus.datasource.jdbc.url>
+            <quarkus.datasource.username>C##myuser</quarkus.datasource.username>
+            <quarkus.datasource.password>pablo</quarkus.datasource.password>
             <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
             <maven.home>${maven.home}</maven.home>
@@ -161,7 +167,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.8</version> 
+        <version>0.8.8</version>
         <executions>
           <execution>
             <id>prepare-agent</id>
