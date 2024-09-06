@@ -24,7 +24,7 @@ function FAQs() {
         setFaqs(data);
     }
 
-    // Fetch Secciones Generales
+    // Fetch Secciones Generalesdasdas
     async function fetchSeccionesGenerales() {
         const response = await fetch('http://localhost:8090/secciones-generales');
         const data = await response.json();
