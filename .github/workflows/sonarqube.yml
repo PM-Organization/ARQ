@@ -29,7 +29,7 @@ jobs:
             -Dsonar.projectKey=ARQ-PROJECT \
             -Dsonar.projectName='ARQ PROJECT' \
             -Dsonar.projectVersion=1.0 \
-            -Dsonar.host.url=https://cool-phones-kiss.loca.lt \
+            -Dsonar.host.url=https://90e32f98b0d6c258cc14d9ef64f7b59e.serveo.net \
             -Dsonar.login=${{ secrets.SONAR_LOGIN }} \
             -Dsonar.projectToken=${{ secrets.SONAR_TOKEN }}
 
