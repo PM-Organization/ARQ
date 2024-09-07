@@ -6,7 +6,7 @@ node {
     dir('Hotel/backend/sistema-hoteles-be') { 
       def mvn = tool 'Default Maven'
       withSonarQubeEnv('SonarQube') {
-        sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=ARQ-PROJECT -Dsonar.projectName='ARQ PROJECT' -Dsonar.projectVersion=1.0 -Dsonar.host.url=http://localhost:9000 -Dsonar.login=sqa_fe34dacccd605e87088319e5b0f8387efa120caa -Dsonar.projectToken=sqp_aebb49e8db719b8e3346bacebaf9a85568d34a6f"
+        sh "${mvn}/bin/mvn clean verify sonar:sonar -Dquarkus.profile=test -Dsonar.projectKey=ARQ-PROJECT -Dsonar.projectName='ARQ PROJECT' -Dsonar.projectVersion=1.0 -Dsonar.host.url=http://localhost:9000 -Dsonar.login=sqa_fe34dacccd605e87088319e5b0f8387efa120caa -Dsonar.projectToken=sqp_aebb49e8db719b8e3346bacebaf9a85568d34a6f"
       }
     }
   }
