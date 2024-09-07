@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3  # Actualización a la versión más reciente
 
     - name: Set up JDK 17
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3  # Actualización a la versión más reciente
       with:
         java-version: '17'
         distribution: 'temurin'
@@ -34,12 +34,12 @@ jobs:
           -Dsonar.projectName="ARQ PROJECT" \
           -Dsonar.projectVersion=1.0 \
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-          -Dsonar.login=${{ secrets.SONAR_LOGIN }} \
+          -Dsonar.login=${{ secrets.SONAR_LOGIN }}
           -Dsonar.projectToken=${{ secrets.SONAR_PROJECT_TOKEN }}
-
+          
     - name: Archive results
       if: always()
       uses: actions/upload-artifact@v2
       with:
         name: sonar-results
-        path: target/
+        path: target/  # Asegúrate que el path sea correcto
