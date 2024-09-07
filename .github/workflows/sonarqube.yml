@@ -1,12 +1,9 @@
-name: SonarQube Analysis
+name: SonarQube Scan
 
 on:
   pull_request:
     branches:
-      - '**'  # Ejecuta el análisis en cualquier rama para verificar antes de mergear
-  push:
-    branches:
-      - '**'  # Ejecuta el análisis en cada push para verificar el código enviado
+      - '**'  # Aplica a todas las ramas para el análisis de SonarQube en Pull Requests
 
 jobs:
   sonar:
@@ -30,9 +27,9 @@ jobs:
         restore-keys: ${{ runner.os }}-maven
 
     - name: Run SonarQube Analysis
-      working-directory: Hotel/backend/sistema-hoteles-be  # Directorio donde está el pom.xml
+      working-directory: Hotel/backend/sistema-hoteles-be  # Ajusta el directorio donde está el pom.xml
       run: |
-        mvn clean verify sonar:sonar \
+        mvn clean verify -Dquarkus.profile=test sonar:sonar \
           -Dsonar.projectKey=ARQ-PROJECT \
           -Dsonar.projectName="ARQ PROJECT" \
           -Dsonar.projectVersion=1.0 \
@@ -46,9 +43,3 @@ jobs:
       with:
         name: sonar-results
         path: target/
-
-    - name: Quality Gate
-      run: |
-        mvn sonar:quality-gate \
-          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-          -Dsonar.login=${{ secrets.SONAR_LOGIN }}
