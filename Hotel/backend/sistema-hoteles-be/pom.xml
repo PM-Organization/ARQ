@@ -96,12 +96,11 @@
       <artifactId>google-auth-library-oauth2-http</artifactId>
       <version>1.2.1</version>
     </dependency>
-           <dependency>
-    <groupId>io.quarkus</groupId>
-    <artifactId>quarkus-jdbc-h2</artifactId>
-    <scope>test</scope>
-</dependency>
-
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-jdbc-h2</artifactId>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>com.google.http-client</groupId>
       <artifactId>google-http-client-jackson2</artifactId>
@@ -126,12 +125,6 @@
           </execution>
         </executions>
       </plugin>
-<plugin>
-   <groupId>org.sonarsource.scanner.maven</groupId>
-   <artifactId>sonar-maven-plugin</artifactId>
-   <version>3.9.1.2184</version>
-</plugin>
-
 
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -142,6 +135,7 @@
           </compilerArgs>
         </configuration>
       </plugin>
+
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${surefire-plugin.version}</version>
@@ -152,6 +146,7 @@
           </systemPropertyVariables>
         </configuration>
       </plugin>
+
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
         <version>${surefire-plugin.version}</version>
@@ -171,6 +166,7 @@
           </systemPropertyVariables>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
@@ -194,22 +190,19 @@
     </plugins>
   </build>
 
-<profiles>
-  <profile>
-    <id>native</id>
-    <activation>
-      <property>
-        <name>native</name>
-      </property>
-    </activation>
-    <properties>
-      <skipITs>false</skipITs>
-      <quarkus.package.type>native</quarkus.package.type>
-      <!-- Añadimos las propiedades de SonarQube aquí -->
-      <sonar.host.url>https://0zvgrx6x-9000.use.devtunnels.ms</sonar.host.url>
-      <sonar.login>sqa_fe34dacccd605e87088319e5b0f8387efa120caa</sonar.login>
-    </properties>
-  </profile>
-</profiles>
-
+  <!-- Eliminamos las propiedades de SonarQube del perfil -->
+  <profiles>
+    <profile>
+      <id>native</id>
+      <activation>
+        <property>
+          <name>native</name>
+        </property>
+      </activation>
+      <properties>
+        <skipITs>false</skipITs>
+        <quarkus.package.type>native</quarkus.package.type>
+      </properties>
+    </profile>
+  </profiles>
 </project>
