@@ -194,23 +194,22 @@
     </plugins>
   </build>
 
-  <profiles>
-    <profile>
-      <id>native</id>
-      <activation>
-        <property>
-          <name>native</name>
-        </property>
-      </activation>
-      <properties>
-        <skipITs>false</skipITs>
-        <quarkus.package.type>native</quarkus.package.type>
-      </properties>
-      <properties>
-    <sonar.host.url>https://0zvgrx6x-9000.use.devtunnels.ms</sonar.host.url>
-    <sonar.login>sqa_fe34dacccd605e87088319e5b0f8387efa120caa</sonar.login>
-</properties>
+<profiles>
+  <profile>
+    <id>native</id>
+    <activation>
+      <property>
+        <name>native</name>
+      </property>
+    </activation>
+    <properties>
+      <skipITs>false</skipITs>
+      <quarkus.package.type>native</quarkus.package.type>
+      <!-- Añadimos las propiedades de SonarQube aquí -->
+      <sonar.host.url>https://0zvgrx6x-9000.use.devtunnels.ms</sonar.host.url>
+      <sonar.login>sqa_fe34dacccd605e87088319e5b0f8387efa120caa</sonar.login>
+    </properties>
+  </profile>
+</profiles>
 
-    </profile>
-  </profiles>
 </project>
