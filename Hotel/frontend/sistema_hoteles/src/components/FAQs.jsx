@@ -17,7 +17,7 @@ function FAQs() {
     fetchSeccionesGenerales();
   }, []);
 
-    // Fetch FAQsdasdasd3123123213
+    // Fetch FAQsdasdasd3123123213dada
     async function fetchFaqs() {
         const response = await fetch('http://localhost:8090/faqs');
         const data = await response.json();
