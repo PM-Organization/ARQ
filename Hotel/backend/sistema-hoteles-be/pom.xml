@@ -126,11 +126,12 @@
           </execution>
         </executions>
       </plugin>
-          <plugin>
-      <groupId>org.sonarsource.scanner.maven</groupId>
-      <artifactId>sonar-maven-plugin</artifactId>
-      <version>4.0.0.4121</version>
-    </plugin>
+<plugin>
+   <groupId>org.sonarsource.scanner.maven</groupId>
+   <artifactId>sonar-maven-plugin</artifactId>
+   <version>3.9.1.2184</version>
+</plugin>
+
 
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -205,6 +206,11 @@
         <skipITs>false</skipITs>
         <quarkus.package.type>native</quarkus.package.type>
       </properties>
+      <properties>
+    <sonar.host.url>https://0zvgrx6x-9000.use.devtunnels.ms</sonar.host.url>
+    <sonar.login>sqa_fe34dacccd605e87088319e5b0f8387efa120caa</sonar.login>
+</properties>
+
     </profile>
   </profiles>
 </project>
