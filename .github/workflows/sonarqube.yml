@@ -4,10 +4,6 @@ on:
   pull_request:
     branches:
       - '**'  # Ejecuta el análisis en cualquier rama para verificar antes de mergear
-  push:
-    branches:
-      - '**'  # Ejecuta el análisis en cada push para verificar el código enviado
-
 jobs:
   sonar:
     runs-on: ubuntu-latest
