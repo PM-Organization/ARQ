@@ -2,8 +2,8 @@ name: SonarQube Scan
 
 on:
   pull_request:
-    branches: 
-      - '**'
+    branches:
+      - '**'  # Aplica a todas las ramas
 
 jobs:
   sonar:
@@ -27,14 +27,15 @@ jobs:
         restore-keys: ${{ runner.os }}-maven
 
     - name: Run SonarQube Analysis
-      working-directory: Hotel/backend/sistema-hoteles-be
-      run: mvn clean verify sonar:sonar \
-        -Dsonar.projectKey=ARQ-PROJECT \
-        -Dsonar.projectName="ARQ PROJECT" \
-        -Dsonar.projectVersion=1.0 \
-        -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-        -Dsonar.login=${{ secrets.SONAR_LOGIN }} \
-        -Dsonar.projectToken=${{ secrets.SONAR_PROJECT_TOKEN }}
+      working-directory: Hotel/backend/sistema-hoteles-be  # Directorio donde está el pom.xml
+      run: |
+        mvn clean verify sonar:sonar \
+          -Dsonar.projectKey=ARQ-PROJECT \
+          -Dsonar.projectName="ARQ PROJECT" \
+          -Dsonar.projectVersion=1.0 \
+          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+          -Dsonar.login=${{ secrets.SONAR_LOGIN }} \
+          -Dsonar.projectToken=${{ secrets.SONAR_PROJECT_TOKEN }}
 
     - name: Archive results
       if: always()
