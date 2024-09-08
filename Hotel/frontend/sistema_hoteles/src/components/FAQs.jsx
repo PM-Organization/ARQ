@@ -104,7 +104,7 @@ function FAQs() {
     
     return (
       <div className="container mt-4">
-          <h2>FAQs y Secciones GeneralesDASD</h2>
+          <h2>FAQs y Secciones GeneralesDASD22</h2>
 
           <div>
               <h3>FAQs</h3>
