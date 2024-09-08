@@ -20,7 +20,7 @@
     <sonar.jacoco.reportPaths>${project.build.directory}/jacoco.exec</sonar.jacoco.reportPaths>
     
     <!-- Propiedades de SonarQube -->
-    <sonar.host.url>https://0zvgrx6x-9000.use.devtunnels.ms</sonar.host.url>
+    <sonar.host.url>https://0zvgrx6x-9000.use.devtunnels.ms/</sonar.host.url>
     <sonar.login>sqa_fe34dacccd605e87088319e5b0f8387efa120caa</sonar.login>
   </properties>
 
