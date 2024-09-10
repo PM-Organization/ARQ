@@ -2,8 +2,12 @@ kind: pipeline
 type: docker
 name: sonar_analysis
 
-mvn clean verify sonar:sonar \
-  -Dsonar.projectKey=DRONEARQ \
-  -Dsonar.projectName='DRONEARQ' \
-  -Dsonar.host.url=https://0zvgrx6x-9000.use.devtunnels.ms \
-  -Dsonar.token=sqp_dd09130614766a06193ca48af6a7ac953caa1fc8
+steps:
+  - name: sonar_scan
+    image: openjdk:17-jdk-slim
+    commands:
+      - ./mvnw clean verify sonar:sonar \
+        -Dsonar.projectKey=DRONEARQ \
+        -Dsonar.projectName='DRONEARQ' \
+        -Dsonar.host.url=https://0zvgrx6x-9000.use.devtunnels.ms \
+        -Dsonar.token=sqp_dd09130614766a06193ca48af6a7ac953caa1fc8
