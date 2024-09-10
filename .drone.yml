@@ -4,7 +4,7 @@ name: sonar_analysis
 
 steps:
   - name: sonar_scan
-    image: maven:3.8.6-openjdk-17  # Usamos una imagen de Maven con JDK 17
+    image: maven:3.8.6-eclipse-temurin-17  # Imagen correcta de Maven con JDK 17
     working_dir: /drone/src/Hotel/backend/sistema-hoteles-be  # Ruta absoluta dentro del contenedor
     commands:
       - mvn clean verify sonar:sonar \
