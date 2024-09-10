@@ -9,10 +9,10 @@ steps:
       SONAR_TOKEN:
         from_secret: sonar_token
     commands:
-      # Ajuste del comando de Maven
+      # Ajuste del comando de Maven con formato correcto
       - cd Hotel/backend/sistema-hoteles-be
       - mvn clean verify sonar:sonar \
         -Dsonar.projectKey=DRONEARQ \
-        -Dsonar.projectName="DRONEARQ" \
-        -Dsonar.host.url="https://0zvgrx6x-9000.use.devtunnels.ms" \
+        -Dsonar.projectName=DRONEARQ \
+        -Dsonar.host.url=https://0zvgrx6x-9000.use.devtunnels.ms \
         -Dsonar.login=$SONAR_TOKEN
