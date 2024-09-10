@@ -7,13 +7,12 @@ steps:
     image: maven:3.6.3-jdk-11
     environment:
       SONAR_TOKEN:
-        from_secret: sonar_token
+        from_secret: sonar_token  # Secreto para SonarQube token
     commands:
-      # Ajuste del comando de Maven para el análisis de SonarQube
+      # Comando de Maven ajustado para ejecutar SonarQube en Drone
       - cd Hotel/backend/sistema-hoteles-be  # Navegar al directorio correcto
       - mvn clean verify sonar:sonar \
-        -Dsonar.projectKey=ARQ-PROJECT \
-        -Dsonar.projectName="ARQ PROJECT" \
-        -Dsonar.projectVersion=1.0 \
-        -Dsonar.host.url="http://localhost:9000" \
+        -Dsonar.projectKey=DRONEARQ \
+        -Dsonar.projectName='DRONEARQ' \
+        -Dsonar.host.url=https://0zvgrx6x-9000.use.devtunnels.ms \
         -Dsonar.login=$SONAR_TOKEN
