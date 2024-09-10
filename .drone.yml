@@ -2,17 +2,8 @@ kind: pipeline
 type: docker
 name: sonar_analysis
 
-steps:
-  - name: sonar_scan
-    image: maven:3.6.3-jdk-11
-    environment:
-      SONAR_TOKEN:
-        from_secret: sonar_token
-    commands:
-      # Ajuste del comando de Maven con formato correcto
-      - cd Hotel/backend/sistema-hoteles-be
-      - mvn clean verify sonar:sonar \
-        -Dsonar.projectKey=DRONEARQ \
-        -Dsonar.projectName=DRONEARQ \
-        -Dsonar.host.url=https://0zvgrx6x-9000.use.devtunnels.ms \
-        -Dsonar.login=$SONAR_TOKEN
+mvn clean verify sonar:sonar \
+  -Dsonar.projectKey=DRONEARQ \
+  -Dsonar.projectName='DRONEARQ' \
+  -Dsonar.host.url=https://0zvgrx6x-9000.use.devtunnels.ms \
+  -Dsonar.token=sqp_dd09130614766a06193ca48af6a7ac953caa1fc8
