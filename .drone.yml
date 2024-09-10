@@ -9,11 +9,11 @@ steps:
       SONAR_TOKEN:
         from_secret: sonar_token
     commands:
-      # Simula la estructura del Jenkinsfile
-      - cd Hotel/backend/sistema-hoteles-be  # Navegar al directorio del backend
+      # Ajuste del comando de Maven para el análisis de SonarQube
+      - cd Hotel/backend/sistema-hoteles-be  # Navegar al directorio correcto
       - mvn clean verify sonar:sonar \
         -Dsonar.projectKey=ARQ-PROJECT \
         -Dsonar.projectName="ARQ PROJECT" \
         -Dsonar.projectVersion=1.0 \
-        -Dsonar.host.url=http://localhost:9000 \
+        -Dsonar.host.url="http://localhost:9000" \
         -Dsonar.login=$SONAR_TOKEN
