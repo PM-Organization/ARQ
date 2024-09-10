@@ -9,10 +9,10 @@ steps:
       SONAR_TOKEN:
         from_secret: sonar_token  # Secreto para SonarQube token
     commands:
-      # Comando de Maven ajustado para ejecutar SonarQube en Drone
+      # Comando Maven ajustado con mejor formato
       - cd Hotel/backend/sistema-hoteles-be  # Navegar al directorio correcto
       - mvn clean verify sonar:sonar \
-        -Dsonar.projectKey=DRONEARQ \
-        -Dsonar.projectName='DRONEARQ' \
-        -Dsonar.host.url=https://0zvgrx6x-9000.use.devtunnels.ms \
-        -Dsonar.login=$SONAR_TOKEN
+        "-Dsonar.projectKey=DRONEARQ" \
+        "-Dsonar.projectName='DRONEARQ'" \
+        "-Dsonar.host.url=https://0zvgrx6x-9000.use.devtunnels.ms" \
+        "-Dsonar.login=$SONAR_TOKEN"
