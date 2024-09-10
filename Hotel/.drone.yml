@@ -1,0 +1,97 @@
+kind: pipeline
+type: docker
+name: build
+
+steps:
+- name: unit_test
+  image: maven:3.6.3-jdk-11
+  commands:
+    - cd backend/sistema-hoteles-be
+    - mvn test
+
+- name: sonar_scan
+  image: maven:3.6.3-jdk-11
+  environment:
+    SONAR_TOKEN:
+      from_secret: sonar_token
+  commands:
+    - cd backend/sistema-hoteles-be
+    - mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=$SONAR_TOKEN
+
+- name: build_docker
+  image: plugins/docker
+  settings:
+    repo: pmoralesm355/sistema-hoteles-be
+    tags: latest
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    branch:
+      - dev
+      - uat
+      - master
+
+- name: deploy_dev
+  image: appleboy/ssh-action
+  environment:
+    SSH_PASSWORD:
+      from_secret: ssh_password
+    SSH_HOST:
+      from_secret: ssh_host
+    SSH_USER:
+      from_secret: ssh_user
+  settings:
+    host: $SSH_HOST
+    username: $SSH_USER
+    password: $SSH_PASSWORD
+    script:
+      - cd ~/Downloads/ProyectoARQ/ARQ/Hotel/
+      - docker-compose down
+      - docker-compose up -d
+  when:
+    branch:
+      - dev
+
+- name: deploy_uat
+  image: appleboy/ssh-action
+  environment:
+    SSH_PASSWORD:
+      from_secret: ssh_password
+    SSH_HOST:
+      from_secret: ssh_host
+    SSH_USER:
+      from_secret: ssh_user
+  settings:
+    host: $SSH_HOST
+    username: $SSH_USER
+    password: $SSH_PASSWORD
+    script:
+      - cd ~/Downloads/ProyectoARQ/ARQ/Hotel/
+      - docker-compose down
+      - docker-compose up -d
+  when:
+    branch:
+      - uat
+
+- name: deploy_prod
+  image: appleboy/ssh-action
+  environment:
+    SSH_PASSWORD:
+      from_secret: ssh_password
+    SSH_HOST:
+      from_secret: ssh_host
+    SSH_USER:
+      from_secret: ssh_user
+  settings:
+    host: $SSH_HOST
+    username: $SSH_USER
+    password: $SSH_PASSWORD
+    script:
+      - cd ~/Downloads/ProyectoARQ/ARQ/Hotel/
+      - docker-compose down
+      - docker-compose up -d
+  when:
+    branch:
+      - main
