@@ -1,20 +1,42 @@
-- name: sonar-scan-backend
-  image: sonarsource/sonar-scanner-cli
-  user: root
-  environment:
-    SONAR_HOST_URL: "https://0zvgrx6x-9000.use.devtunnels.ms"
-    SONAR_TOKEN:
-      from_secret: sonar_token
-  commands:
-    - cd Hotel/backend/sistema-hoteles-be
-    - sonar-scanner -X
-      -Dsonar.projectKey=backend-main
-      -Dsonar.sources=./
-      -Dsonar.host.url=$SONAR_HOST_URL
-      -Dsonar.login=$SONAR_TOKEN
-      -Dsonar.ws.timeout=3000
-      -Dsonar.java.binaries=target/classes
-      -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-      -Dsonar.scm.exclusions.disabled=true  # Desactiva la exclusión basada en .gitignore
-  depends_on:
-    - build-backend
+kind: pipeline
+type: docker
+name: backend-build
+
+steps:
+  # Build del backend (sin sonar)
+  - name: build-backend
+    image: maven:3.8.6-eclipse-temurin-17
+    environment:
+      QUARKUS_PROFILE: prod
+    commands:
+      - cd Hotel/backend/sistema-hoteles-be
+      - mvn clean install
+
+  # SonarQube scan del backend (sin maven)
+  - name: sonar-scan-backend
+    image: sonarsource/sonar-scanner-cli  # Imagen ligera de SonarQube
+    user: root
+    environment:
+      SONAR_HOST_URL: "https://0zvgrx6x-9000.use.devtunnels.ms"
+      SONAR_TOKEN:
+        from_secret: sonar_token
+    commands:
+      - cd Hotel/backend/sistema-hoteles-be
+      - sonar-scanner -X
+        -Dsonar.projectKey=backend-main
+        -Dsonar.sources=./
+        -Dsonar.host.url=$SONAR_HOST_URL
+        -Dsonar.login=$SONAR_TOKEN
+        -Dsonar.ws.timeout=1200
+        -Dsonar.java.binaries=target/classes
+    depends_on:
+      - build-backend
+
+trigger:
+  event:
+    - push
+    - pull_request
+    - custom
+
+secrets:
+  - sonar_token
