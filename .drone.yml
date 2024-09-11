@@ -1,14 +1,51 @@
 kind: pipeline
 type: docker
-name: sonar_analysis
+name: backend-sonar-unit
 
 steps:
-  - name: sonar_scan
-    image: maven:3.8.6-eclipse-temurin-17  # Imagen correcta de Maven con JDK 17
-    working_dir: /drone/src/Hotel/backend/sistema-hoteles-be  # Ruta absoluta dentro del contenedor
+  # Build del backend
+  - name: build-backend
+    image: maven:3.8.6-eclipse-temurin-17
+    environment:
+      QUARKUS_PROFILE: prod
     commands:
+      - cd Hotel/backend/sistema-hoteles-be
+      - mvn clean install
+
+  # Unit tests del backend
+  - name: test-backend
+    image: maven:3.8.6-eclipse-temurin-17
+    commands:
+      - cd Hotel/backend/sistema-hoteles-be
+      - mvn test
+    depends_on:
+      - build-backend
+
+  # SonarQube scan del backend
+  - name: sonar-scan-backend
+    image: sonarsource/sonar-scanner-cli
+    user: root
+    environment:
+      SONAR_HOST_URL: "https://0zvgrx6x-9000.use.devtunnels.ms"
+      SONAR_LOGIN:
+        from_secret: sonar_login
+    commands:
+      - cd Hotel/backend/sistema-hoteles-be
       - mvn clean verify sonar:sonar \
-        -Dsonar.projectKey=DRONEARQ \
+        -Dsonar.projectKey=backend \
         -Dsonar.projectName='DRONEARQ' \
-        -Dsonar.host.url=https://0zvgrx6x-9000.use.devtunnels.ms \
-        -Dsonar.token=sqp_dd09130614766a06193ca48af6a7ac953caa1fc8
+        -Dsonar.host.url=$SONAR_HOST_URL \
+        -Dsonar.login=$SONAR_LOGIN \
+        -Dsonar.ws.timeout=600 \
+        -Dsonar.java.binaries=target/classes
+    depends_on:
+      - test-backend
+
+trigger:
+  event:
+    - push
+    - pull_request
+    - custom
+
+secrets:
+  - sonar_login
