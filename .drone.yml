@@ -19,7 +19,7 @@ steps:
     environment:
       SONAR_HOST_URL: "https://0zvgrx6x-9000.use.devtunnels.ms"
       SONAR_LOGIN:
-        from_secret: sonar_login
+        from_secret: sonar_token
     commands:
       - cd Hotel/backend/sistema-hoteles-be
       - sonar-scanner -X
@@ -39,4 +39,4 @@ trigger:
     - custom
 
 secrets:
-  - sonar_login
+  - sonar_token
