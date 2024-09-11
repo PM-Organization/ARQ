@@ -23,7 +23,7 @@ steps:
     commands:
       - cd Hotel/backend/sistema-hoteles-be
       - sonar-scanner -X
-        -Dsonar.projectKey=DRONEARQ
+        -Dsonar.projectKey=backend-main
         -Dsonar.sources=./
         -Dsonar.host.url=$SONAR_HOST_URL
         -Dsonar.login=$SONAR_TOKEN
@@ -33,16 +33,13 @@ steps:
       - build-backend
 
 trigger:
-  branch:
-    include:
-      - main
-      - dev
-      - uat
   event:
-    include:
-      - push
-      - pull_request
-      - custom
+    - push
+    - pull_request
+  branch:
+    - main
+    - dev
+    - uat
 
 secrets:
   - sonar_token
