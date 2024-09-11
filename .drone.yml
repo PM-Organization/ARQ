@@ -26,7 +26,7 @@ steps:
         -Dsonar.projectKey=backend-main
         -Dsonar.sources=./
         -Dsonar.host.url=$SONAR_HOST_URL
-        -Dsonar.login=$SONAR_LOGIN
+        -Dsonar.login=$SONAR_TOKEN
         -Dsonar.ws.timeout=1200
         -Dsonar.java.binaries=target/classes
     depends_on:
