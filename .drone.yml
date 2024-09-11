@@ -1,12 +1,18 @@
 kind: pipeline
 type: docker
-name: sonar-scan-backend
+name: backend-build
 
 steps:
-  # SonarQube scan para backend-main
-  - name: sonar-scan-backend-main
-    image: sonarsource/sonar-scanner-cli
-    user: root
+  - name: build-backend
+    image: maven:3.8.6-eclipse-temurin-17
+    environment:
+      QUARKUS_PROFILE: prod
+    commands:
+      - cd Hotel/backend/sistema-hoteles-be
+      - mvn clean install
+
+  - name: sonar-scan-backend
+    image: maven:3.8.6-eclipse-temurin-17  # Imagen con Maven y JDK 17
     environment:
       SONAR_HOST_URL: "https://0zvgrx6x-9000.use.devtunnels.ms"
       SONAR_LOGIN:
@@ -20,6 +26,8 @@ steps:
         -Dsonar.login=$SONAR_LOGIN \
         -Dsonar.ws.timeout=600 \
         -Dsonar.java.binaries=target/classes
+    depends_on:
+      - build-backend
 
 trigger:
   event:
