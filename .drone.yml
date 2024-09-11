@@ -12,14 +12,14 @@ steps:
       - mvn clean install
 
   - name: sonar-scan-backend
-    image: maven:3.8.6-eclipse-temurin-17  # Imagen con Maven y JDK 17
+    image: sonarsource/sonar-scanner-cli
     environment:
       SONAR_HOST_URL: "https://0zvgrx6x-9000.use.devtunnels.ms"
       SONAR_LOGIN:
         from_secret: sonar_login
     commands:
       - cd Hotel/backend/sistema-hoteles-be
-      - mvn clean verify sonar:sonar \
+      - mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar \
         -Dsonar.projectKey=backend-main \
         -Dsonar.projectName='DRONEARQ-MAIN' \
         -Dsonar.host.url=$SONAR_HOST_URL \
