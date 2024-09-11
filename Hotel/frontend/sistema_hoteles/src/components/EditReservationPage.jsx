@@ -21,7 +21,7 @@ const EditReservationPage = ({ show, handleClose, reserva, actualizarReserva }) 
         const fetchTiposHabitacion = async () => {
             if (show && reserva?.idHotel) {
                 try {
-                    const url = `http://localhost:8090/reservas/tipos-habitacion-por-hotel?hotelId=${reserva.idHotel}`;
+                    const url = `http://localhost:8092/reservas/tipos-habitacion-por-hotel?hotelId=${reserva.idHotel}`;
                     console.log(`Fetching room types with url: ${url}`);
                     const response = await fetch(url);
                     if (!response.ok) {
