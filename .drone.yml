@@ -3,7 +3,6 @@ type: docker
 name: backend-build
 
 steps:
-  # Build del backend (sin sonar)
   - name: build-backend
     image: maven:3.8.6-eclipse-temurin-17
     environment:
@@ -12,9 +11,8 @@ steps:
       - cd Hotel/backend/sistema-hoteles-be
       - mvn clean install
 
-  # SonarQube scan del backend (sin maven)
   - name: sonar-scan-backend
-    image: sonarsource/sonar-scanner-cli  # Imagen ligera de SonarQube
+    image: sonarsource/sonar-scanner-cli
     user: root
     environment:
       SONAR_HOST_URL: "https://0zvgrx6x-9000.use.devtunnels.ms"
@@ -36,6 +34,7 @@ trigger:
   event:
     - push
     - pull_request
+    - custom  # Acepta eventos custom también
   branch:
     - main
     - dev
