@@ -37,6 +37,11 @@ trigger:
     - push
     - pull_request
     - custom
+  branches:
+    include:
+      - main
+      - dev
+      - uat
 
 secrets:
   - sonar_token
