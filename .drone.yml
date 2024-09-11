@@ -33,15 +33,16 @@ steps:
       - build-backend
 
 trigger:
-  event:
-    - push
-    - pull_request
-    - custom
-  branches:
+  branch:
     include:
       - main
       - dev
       - uat
+  event:
+    include:
+      - push
+      - pull_request
+      - custom
 
 secrets:
   - sonar_token
