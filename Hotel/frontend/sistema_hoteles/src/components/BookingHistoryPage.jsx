@@ -21,7 +21,7 @@ const BookingHistoryPage = () => {
   const fetchReservations = async () => {
     console.log('Fetching reservations for user:', user.id);
     try {
-      const response = await fetch(`http://localhost:8090/reservas/detalle/usuario/${user.id}`);
+      const response = await fetch(`http://localhost:8091/reservas/detalle/usuario/${user.id}`);
       if (response.ok) {
         const data = await response.json();
         console.log('Reservations fetched successfully:', data);
@@ -65,7 +65,7 @@ const BookingHistoryPage = () => {
 
   const cancelarReserva = async (idReserva) => {
     try {
-      const response = await fetch(`http://localhost:8090/reservas/${idReserva}/cancelar`, {
+      const response = await fetch(`http://localhost:8091/reservas/${idReserva}/cancelar`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ const BookingHistoryPage = () => {
   const actualizarReserva = async (reservaActualizada) => {
     console.log('Updating reservation with:', reservaActualizada);
     try {
-      const response = await fetch(`http://localhost:8090/reservas/${reservaActualizada.idReserva}`, {
+      const response = await fetch(`http://localhost:8091/reservas/${reservaActualizada.idReserva}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(reservaActualizada),

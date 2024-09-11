@@ -73,7 +73,7 @@ const RegisterPage = () => {
     
   
     try {
-      const response = await fetch('http://localhost:8090/usuarios/captcha', {
+      const response = await fetch('http://localhost:8091/usuarios/captcha', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
