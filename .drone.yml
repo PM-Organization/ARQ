@@ -3,6 +3,7 @@ type: docker
 name: backend-build
 
 steps:
+  # Build del backend (sin sonar)
   - name: build-backend
     image: maven:3.8.6-eclipse-temurin-17
     environment:
@@ -11,20 +12,22 @@ steps:
       - cd Hotel/backend/sistema-hoteles-be
       - mvn clean install
 
+  # SonarQube scan del backend (sin maven)
   - name: sonar-scan-backend
-    image: maven:3.8.6-eclipse-temurin-17  # Usamos la imagen de Maven para ejecutar el SonarQube
+    image: sonarsource/sonar-scanner-cli  # Imagen ligera de SonarQube
+    user: root
     environment:
       SONAR_HOST_URL: "https://0zvgrx6x-9000.use.devtunnels.ms"
       SONAR_LOGIN:
         from_secret: sonar_login
     commands:
       - cd Hotel/backend/sistema-hoteles-be
-      - mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar \
-        -Dsonar.projectKey=backend-main \
-        -Dsonar.projectName='DRONEARQ-MAIN' \
-        -Dsonar.host.url=$SONAR_HOST_URL \
-        -Dsonar.login=$SONAR_LOGIN \
-        -Dsonar.ws.timeout=600 \
+      - sonar-scanner -X
+        -Dsonar.projectKey=backend-main
+        -Dsonar.sources=./
+        -Dsonar.host.url=$SONAR_HOST_URL
+        -Dsonar.login=$SONAR_LOGIN
+        -Dsonar.ws.timeout=600
         -Dsonar.java.binaries=target/classes
     depends_on:
       - build-backend
