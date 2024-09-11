@@ -18,7 +18,7 @@ steps:
     user: root
     environment:
       SONAR_HOST_URL: "https://0zvgrx6x-9000.use.devtunnels.ms"
-      SONAR_LOGIN:
+      SONAR_TOKEN:
         from_secret: sonar_token
     commands:
       - cd Hotel/backend/sistema-hoteles-be
