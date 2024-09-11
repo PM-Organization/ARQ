@@ -37,7 +37,7 @@ function FAQs() {
         setFunction(prevState => ({ ...prevState, [name]: value }));
     }
 
-    // Submit FAQdad
+    // Submit FAQdad DWADADDADAWD
     async function handleSubmitFaq(e) {
         e.preventDefault();
         const url = faqEdit.id ? `http://localhost:8090/faqs/${faqEdit.id}` : 'http://localhost:8090/faqs';
