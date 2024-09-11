@@ -32,7 +32,7 @@ public class Comentario {
     private String texto_comentario;
 
     @Column(name = "RATING")
-    private Integer rating; // Cambiado a Integer para permitir nulos
+    private Integer rating; // Cambiaddasdao a Integer para permitir nulos
 
     @Column(name = "FECHA_COMENTARIO")
     private LocalDateTime fecha_comentario;
