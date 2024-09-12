@@ -1,4 +1,0 @@
-2024-09-11 18:30:32,191 pmorales-virtual-machine sistema-hoteles-be-dev.jar[64783] INFO  [io.quarkus] (Quarkus Main Thread) sistema-hoteles-be 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.7.4) started in 16.229s. Listening on: http://localhost:8085
-2024-09-11 18:30:32,200 pmorales-virtual-machine sistema-hoteles-be-dev.jar[64783] INFO  [io.quarkus] (Quarkus Main Thread) Profile dev activated. Live Coding activated.
-2024-09-11 18:30:32,202 pmorales-virtual-machine sistema-hoteles-be-dev.jar[64783] INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [agroal, cdi, hibernate-orm, hibernate-orm-panache, jdbc-oracle, narayana-jta, resteasy-client, resteasy-reactive, resteasy-reactive-jackson, smallrye-context-propagation, vertx]
-2024-09-11 19:01:35,444 pmorales-virtual-machine sistema-hoteles-be-dev.jar[64783] INFO  [io.quarkus] (Shutdown thread) sistema-hoteles-be stopped in 1.715s

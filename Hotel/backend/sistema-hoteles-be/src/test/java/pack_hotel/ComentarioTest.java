@@ -1,4 +1,4 @@
-package org.acme;
+package pack_hotel;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

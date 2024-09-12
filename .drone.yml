@@ -3,18 +3,19 @@ type: docker
 name: backend-build
 
 steps:
-  # Build del backend (sin sonar)
+  # Build del backend con mvn install seguido de verify
   - name: build-backend
     image: maven:3.8.6-eclipse-temurin-17
     environment:
       QUARKUS_PROFILE: prod
     commands:
       - cd Hotel/backend/sistema-hoteles-be
-      - mvn clean install
+      - mvn clean install   # Instala dependencias y genera artefactos
+      - mvn verify          # Ejecuta tests y genera reportes como JaCoCo
 
-  # SonarQube scan del backend (sin maven)
+  # SonarQube scan del backend incluyendo el reporte de cobertura
   - name: sonar-scan-backend
-    image: sonarsource/sonar-scanner-cli  # Imagen ligera de SonarQube
+    image: sonarsource/sonar-scanner-cli
     user: root
     environment:
       SONAR_HOST_URL: "https://2036-181-209-150-83.ngrok-free.app"
@@ -29,6 +30,7 @@ steps:
         -Dsonar.login=$SONAR_TOKEN
         -Dsonar.ws.timeout=3600
         -Dsonar.java.binaries=target/classes
+        -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
     depends_on:
       - build-backend
 
