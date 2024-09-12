@@ -129,12 +129,11 @@
           </execution>
         </executions>
       </plugin>
-<plugin>
-  <groupId>org.sonarsource.scanner.maven</groupId>
-  <artifactId>sonar-maven-plugin</artifactId>
-  <version>4.0.0.2929</version> 
-</plugin>
-
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>4.0.0.2929</version> 
+      </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${compiler-plugin.version}</version>
@@ -144,6 +143,8 @@
           </compilerArgs>
         </configuration>
       </plugin>
+
+      <!-- Plugin Maven Surefire -->
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${surefire-plugin.version}</version>
@@ -154,6 +155,8 @@
           </systemPropertyVariables>
         </configuration>
       </plugin>
+
+      <!-- Plugin Maven Failsafe -->
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
         <version>${surefire-plugin.version}</version>
@@ -173,6 +176,8 @@
           </systemPropertyVariables>
         </configuration>
       </plugin>
+
+      <!-- Plugin Jacoco -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
