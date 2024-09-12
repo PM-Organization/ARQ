@@ -8,49 +8,61 @@ import static org.junit.jupiter.api.Assertions.*;
 class HabitacionesTest {
 
     private Habitaciones habitacion;
+    
+    // Definición de constantes para valores que se repiten
+    private static final Long ID_HABITACION = 1L;
+    private static final Long ID_HOTEL = 101L;
+    private static final boolean DISPONIBLE = true;
+    private static final int NUMERO_HABITACION = 205;
+    private static final int CAPACIDAD_PERSONAS = 4;
+    private static final int TIPO_HABITACION = 2;
+    private static final double PRECIO_POR_PERSONA = 50.0;
+    private static final double PRECIO_POR_NOCHE = 200.0;
+    private static final int VALUACION = 5;
+    private static final String ESTADO_ACTIVO = "Activo";
 
     @BeforeEach
     void setUp() {
         habitacion = new Habitaciones();
-        habitacion.setId_habitacion(1L);
-        habitacion.setId_hotel(101L);
-        habitacion.setDisponible(true);
-        habitacion.setNumero_habitacion(205);
-        habitacion.setCapacidad_personas(4);
-        habitacion.setTipo_habitacion(2);
-        habitacion.setPrecioxpersona(50.0);
-        habitacion.setPrecioxnoche(200.0);
-        habitacion.setValuacion(5);
-        habitacion.setEstado("Activo");
+        habitacion.setId_habitacion(ID_HABITACION);
+        habitacion.setId_hotel(ID_HOTEL);
+        habitacion.setDisponible(DISPONIBLE);
+        habitacion.setNumero_habitacion(NUMERO_HABITACION);
+        habitacion.setCapacidad_personas(CAPACIDAD_PERSONAS);
+        habitacion.setTipo_habitacion(TIPO_HABITACION);
+        habitacion.setPrecioxpersona(PRECIO_POR_PERSONA);
+        habitacion.setPrecioxnoche(PRECIO_POR_NOCHE);
+        habitacion.setValuacion(VALUACION);
+        habitacion.setEstado(ESTADO_ACTIVO);
     }
 
     @Test
     void testGettersAndSetters() {
-        assertEquals(1L, habitacion.getId_habitacion());
-        assertEquals(101L, habitacion.getId_hotel());
+        assertEquals(ID_HABITACION, habitacion.getId_habitacion());
+        assertEquals(ID_HOTEL, habitacion.getId_hotel());
         assertTrue(habitacion.isDisponible());
-        assertEquals(205, habitacion.getNumero_habitacion());
-        assertEquals(4, habitacion.getCapacidad_personas());
-        assertEquals(2, habitacion.getTipo_habitacion());
-        assertEquals(50.0, habitacion.getPrecioxpersona());
-        assertEquals(200.0, habitacion.getPrecioxnoche());
-        assertEquals(5, habitacion.getValuacion());
-        assertEquals("Activo", habitacion.getEstado());
+        assertEquals(NUMERO_HABITACION, habitacion.getNumero_habitacion());
+        assertEquals(CAPACIDAD_PERSONAS, habitacion.getCapacidad_personas());
+        assertEquals(TIPO_HABITACION, habitacion.getTipo_habitacion());
+        assertEquals(PRECIO_POR_PERSONA, habitacion.getPrecioxpersona());
+        assertEquals(PRECIO_POR_NOCHE, habitacion.getPrecioxnoche());
+        assertEquals(VALUACION, habitacion.getValuacion());
+        assertEquals(ESTADO_ACTIVO, habitacion.getEstado());
     }
 
     @Test
     void testEqualsAndHashCode() {
         Habitaciones habitacion2 = new Habitaciones();
-        habitacion2.setId_habitacion(1L);
-        habitacion2.setId_hotel(101L);
-        habitacion2.setDisponible(true);
-        habitacion2.setNumero_habitacion(205);
-        habitacion2.setCapacidad_personas(4);
-        habitacion2.setTipo_habitacion(2);
-        habitacion2.setPrecioxpersona(50.0);
-        habitacion2.setPrecioxnoche(200.0);
-        habitacion2.setValuacion(5);
-        habitacion2.setEstado("Activo");
+        habitacion2.setId_habitacion(ID_HABITACION);
+        habitacion2.setId_hotel(ID_HOTEL);
+        habitacion2.setDisponible(DISPONIBLE);
+        habitacion2.setNumero_habitacion(NUMERO_HABITACION);
+        habitacion2.setCapacidad_personas(CAPACIDAD_PERSONAS);
+        habitacion2.setTipo_habitacion(TIPO_HABITACION);
+        habitacion2.setPrecioxpersona(PRECIO_POR_PERSONA);
+        habitacion2.setPrecioxnoche(PRECIO_POR_NOCHE);
+        habitacion2.setValuacion(VALUACION);
+        habitacion2.setEstado(ESTADO_ACTIVO);
 
         assertEquals(habitacion, habitacion2);
         assertEquals(habitacion.hashCode(), habitacion2.hashCode());
@@ -67,7 +79,11 @@ class HabitacionesTest {
 
     @Test
     void testToString() {
-        String expected = "Habitaciones{id_habitacion=1, id_hotel=101, disponible=true, numero_habitacion=205, capacidad_personas=4, tipo_habitacion=2, precioxpersona=50.0, precioxnoche=200.0, valuacion=5}";
+        String expected = "Habitaciones{id_habitacion=" + ID_HABITACION + ", id_hotel=" + ID_HOTEL + 
+                          ", disponible=" + DISPONIBLE + ", numero_habitacion=" + NUMERO_HABITACION + 
+                          ", capacidad_personas=" + CAPACIDAD_PERSONAS + ", tipo_habitacion=" + TIPO_HABITACION + 
+                          ", precioxpersona=" + PRECIO_POR_PERSONA + ", precioxnoche=" + PRECIO_POR_NOCHE + 
+                          ", valuacion=" + VALUACION + "}";
         assertEquals(expected, habitacion.toString());
     }
 }

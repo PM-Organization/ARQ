@@ -11,48 +11,60 @@ class HotelesTest {
 
     private Hoteles hotel;
 
+    // Definición de constantes para los valores que se repiten
+    private static final Long ID_HOTEL = 1L;
+    private static final Long ID_CADENA = 10L;
+    private static final String NOMBRE_HOTEL = "Hotel Central";
+    private static final String PAIS = "Guatemala";
+    private static final String CIUDAD = "Ciudad de Guatemala";
+    private static final String DIRECCION = "Calle 10";
+    private static final LocalTime CHECKIN_TIME = LocalTime.of(14, 0);
+    private static final LocalTime CHECKOUT_TIME = LocalTime.of(12, 0);
+    private static final String IMAGEN_URL = "http://example.com/hotel.jpg";
+    private static final String ESTADO_ACTIVO = "Activo";
+
     @BeforeEach
     void setUp() {
         hotel = new Hoteles();
-        hotel.setId_hotel(1L);
-        hotel.setId_cadena(10L);
-        hotel.setNombre("Hotel Central");
-        hotel.setPais("Guatemala");
-        hotel.setCiudad("Ciudad de Guatemala");
-        hotel.setDireccion("Calle 10");
-        hotel.setCheckin(LocalTime.of(14, 0));
-        hotel.setCheckout(LocalTime.of(12, 0));
-        hotel.setImagenUrl("http://example.com/hotel.jpg");
-        hotel.setEstado("Activo");
+        hotel.setId_hotel(ID_HOTEL);
+        hotel.setId_cadena(ID_CADENA);
+        hotel.setNombre(NOMBRE_HOTEL);
+        hotel.setPais(PAIS);
+        hotel.setCiudad(CIUDAD);
+        hotel.setDireccion(DIRECCION);
+        hotel.setCheckin(CHECKIN_TIME);
+        hotel.setCheckout(CHECKOUT_TIME);
+        hotel.setImagenUrl(IMAGEN_URL);
+        hotel.setEstado(ESTADO_ACTIVO);
     }
 
     @Test
     void testGettersAndSetters() {
-        assertEquals(1L, hotel.getId_hotel());
-        assertEquals(10L, hotel.getId_cadena());
-        assertEquals("Hotel Central", hotel.getNombre());
-        assertEquals("Guatemala", hotel.getPais());
-        assertEquals("Ciudad de Guatemala", hotel.getCiudad());
-        assertEquals("Calle 10", hotel.getDireccion());
-        assertEquals(LocalTime.of(14, 0), hotel.getCheckin());
-        assertEquals(LocalTime.of(12, 0), hotel.getCheckout());
-        assertEquals("http://example.com/hotel.jpg", hotel.getImagenUrl());
-        assertEquals("activo", hotel.getEstado());  // El estado se guarda en minúsculas
+        assertEquals(ID_HOTEL, hotel.getId_hotel());
+        assertEquals(ID_CADENA, hotel.getId_cadena());
+        assertEquals(NOMBRE_HOTEL, hotel.getNombre());
+        assertEquals(PAIS, hotel.getPais());
+        assertEquals(CIUDAD, hotel.getCiudad());
+        assertEquals(DIRECCION, hotel.getDireccion());
+        assertEquals(CHECKIN_TIME, hotel.getCheckin());
+        assertEquals(CHECKOUT_TIME, hotel.getCheckout());
+        assertEquals(IMAGEN_URL, hotel.getImagenUrl());
+        assertEquals(ESTADO_ACTIVO.toLowerCase(), hotel.getEstado());  // El estado se guarda en minúsculas
     }
 
     @Test
     void testEqualsAndHashCode() {
         Hoteles hotel2 = new Hoteles();
-        hotel2.setId_hotel(1L);
-        hotel2.setId_cadena(10L);
-        hotel2.setNombre("Hotel Central");
-        hotel2.setPais("Guatemala");
-        hotel2.setCiudad("Ciudad de Guatemala");
-        hotel2.setDireccion("Calle 10");
-        hotel2.setCheckin(LocalTime.of(14, 0));
-        hotel2.setCheckout(LocalTime.of(12, 0));
-        hotel2.setImagenUrl("http://example.com/hotel.jpg");
-        hotel2.setEstado("activo");
+        hotel2.setId_hotel(ID_HOTEL);
+        hotel2.setId_cadena(ID_CADENA);
+        hotel2.setNombre(NOMBRE_HOTEL);
+        hotel2.setPais(PAIS);
+        hotel2.setCiudad(CIUDAD);
+        hotel2.setDireccion(DIRECCION);
+        hotel2.setCheckin(CHECKIN_TIME);
+        hotel2.setCheckout(CHECKOUT_TIME);
+        hotel2.setImagenUrl(IMAGEN_URL);
+        hotel2.setEstado(ESTADO_ACTIVO.toLowerCase());
 
         assertEquals(hotel, hotel2);
         assertEquals(hotel.hashCode(), hotel2.hashCode());
@@ -69,7 +81,10 @@ class HotelesTest {
 
     @Test
     void testToString() {
-        String expected = "Hoteles{id_hotel=1, id_cadena=10, nombre=Hotel Central, pais=Guatemala, ciudad=Ciudad de Guatemala, direccion=Calle 10, checkin=14:00, checkout=12:00}";
+        String expected = "Hoteles{id_hotel=" + ID_HOTEL + ", id_cadena=" + ID_CADENA + 
+                          ", nombre=" + NOMBRE_HOTEL + ", pais=" + PAIS + 
+                          ", ciudad=" + CIUDAD + ", direccion=" + DIRECCION + 
+                          ", checkin=" + CHECKIN_TIME + ", checkout=" + CHECKOUT_TIME + "}";
         assertEquals(expected, hotel.toString());
     }
 }
