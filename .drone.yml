@@ -28,21 +28,56 @@ steps:
         -Dsonar.sources=./
         -Dsonar.host.url=$SONAR_HOST_URL
         -Dsonar.login=$SONAR_TOKEN
-        -Dsonar.ws.timeout=3600
+        -Dsonar.ws.timeout=5600
         -Dsonar.java.binaries=target/classes
         -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
     depends_on:
       - build-backend
 
+  # Actualización de contenedores después de un merge en ramas específicas
+  - name: deploy-containers
+    image: docker
+    commands:
+      - cd Hotel/
+      - docker-compose down
+      - docker-compose up -d
+    when:
+      branch:
+        - dev
+        - uat
+        - main
+      event:
+        - merge
 
-  - name: notify-email
+  # Notificación por correo electrónico al éxito
+  - name: notify-email-success
     image: drillster/drone-email
     settings:
-      host: smtp.gmail.com   
-      username: pablo.moralesm355@gmail.com     
+      host: smtp.gmail.com
+      username: pablo.moralesm355@gmail.com
       password:
-        from_secret: email_password  
-      from: pablo.moralesm355@gmail.com 
+        from_secret: email_password
+      from: pablo.moralesm355@gmail.com
+      recipients:
+        - pablo.moralesm355@gmail.com
+        - pdmorales@unis.edu.gt
+      subject: "Drone Build Notification - Success"
+    when:
+      status:
+        - success
+    depends_on:
+      - build-backend
+      - sonar-scan-backend
+
+  # Notificación por correo electrónico al fallo
+  - name: notify-email-failure
+    image: drillster/drone-email
+    settings:
+      host: smtp.gmail.com
+      username: pablo.moralesm355@gmail.com
+      password:
+        from_secret: email_password
+      from: pablo.moralesm355@gmail.com
       recipients:
         - pablo.moralesm355@gmail.com
         - pdmorales@unis.edu.gt
@@ -53,16 +88,14 @@ steps:
     depends_on:
       - build-backend
       - sonar-scan-backend
-    failure: true
-
-
-
 
 trigger:
   event:
     - push
     - pull_request
     - custom
+    - merge
 
 secrets:
   - sonar_token
+  - email_password
