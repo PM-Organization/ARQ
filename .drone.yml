@@ -35,14 +35,13 @@ steps:
       - build-backend
 
 
-# Notificación por correo en caso de fallo
   - name: notify-email
     image: drillster/drone-email
     settings:
       host: smtp.gmail.com   
       username: pablo.moralesm355@gmail.com     
       password:
-        from_secret: email_password  # Secret que añadiste
+        from_secret: email_password  
       from: pablo.moralesm355@gmail.com 
       recipients:
         - pablo.moralesm355@gmail.com
