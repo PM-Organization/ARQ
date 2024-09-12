@@ -51,7 +51,7 @@ function FAQs() {
             body: JSON.stringify(faqEdit),
         });
 
-        setFaqEdit({ pregunta: '', respuesta: '', id: null }); // Reset form
+        setFaqEdit({ pregunta: '', respuesta: '', id: null }); // Reset form3121312312
         fetchFaqs(); // Refetch FAQs
     }
 
