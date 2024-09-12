@@ -3,19 +3,22 @@ type: docker
 name: backend-build
 
 steps:
+  # Build del backend con mvn install seguido de verify
   - name: build-backend
     image: maven:3.8.6-eclipse-temurin-17
     environment:
       QUARKUS_PROFILE: prod
     commands:
       - cd Hotel/backend/sistema-hoteles-be
-      - mvn clean install
+      - mvn clean install   # Instala dependencias y genera artefactos
+      - mvn verify          # Ejecuta tests y genera reportes como JaCoCo
 
+  # SonarQube scan del backend incluyendo el reporte de cobertura
   - name: sonar-scan-backend
     image: sonarsource/sonar-scanner-cli
     user: root
     environment:
-      SONAR_HOST_URL: "https://0zvgrx6x-9000.use.devtunnels.ms"
+      SONAR_HOST_URL: "https://a6c7-181-209-150-83.ngrok-free.app"
       SONAR_TOKEN:
         from_secret: sonar_token
     commands:
@@ -25,20 +28,76 @@ steps:
         -Dsonar.sources=./
         -Dsonar.host.url=$SONAR_HOST_URL
         -Dsonar.login=$SONAR_TOKEN
-        -Dsonar.ws.timeout=3000
+        -Dsonar.ws.timeout=7200
         -Dsonar.java.binaries=target/classes
+        -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
     depends_on:
       - build-backend
+
+  # Actualización de contenedores después de un merge en ramas específicas
+  - name: deploy-containers
+    image: docker
+    commands:
+      - cd Hotel/
+      - docker-compose down
+      - docker-compose up -d
+    when:
+      branch:
+        - dev
+        - uat
+        - main
+      event:
+        - merge
+
+  # Notificación por correo electrónico al éxito
+  - name: notify-email-success
+    image: drillster/drone-email
+    settings:
+      host: smtp.gmail.com
+      port: 587
+      username: pablo.moralesm355@gmail.com
+      password:
+        from_secret: email_password
+      from: pablo.moralesm355@gmail.com
+      recipients:
+        - pablo.moralesm355@gmail.com
+        - pdmorales@unis.edu.gt
+      subject: "Drone Build Notification - Success"
+    when:
+      status:
+        - success
+    depends_on:
+      - build-backend
+      - sonar-scan-backend
+
+  # Notificación por correo electrónico al fallo
+  - name: notify-email-failure
+    image: drillster/drone-email
+    settings:
+      host: smtp.gmail.com
+      port: 587
+      username: pablo.moralesm355@gmail.com
+      password:
+        from_secret: email_password
+      from: pablo.moralesm355@gmail.com
+      recipients:
+        - pablo.moralesm355@gmail.com
+        - pdmorales@unis.edu.gt
+      subject: "Drone Build Notification - Failure"
+    when:
+      status:
+        - failure
+    depends_on:
+      - build-backend
+      - sonar-scan-backend
 
 trigger:
   event:
     - push
     - pull_request
-    - custom  # Acepta eventos custom también
-  branch:
-    - main
-    - dev
-    - uat
+    - custom
+    - merge
 
 secrets:
   - sonar_token
+  - email_password
