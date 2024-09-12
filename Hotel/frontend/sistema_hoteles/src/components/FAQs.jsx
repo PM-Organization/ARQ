@@ -55,7 +55,7 @@ function FAQs() {
         fetchFaqs(); // Refetch FAQs
     }
 
-    // Submit Sección General
+    // Submit Sección GeneralAAAAAAAAAAAAAAAAAAAAA
     async function handleSubmitSeccion(e) {
         e.preventDefault();
         const url = seccionEdit.id ? `http://localhost:8090/secciones-generales/${seccionEdit.id}` : 'http://localhost:8090/secciones-generales';

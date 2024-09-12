@@ -25,7 +25,7 @@ steps:
       - cd Hotel/backend/sistema-hoteles-be
       - sonar-scanner -X
         -Dsonar.projectKey=backend-main
-        -Dsonar.sources=./
+        -Dsonar.sources=./k
         -Dsonar.host.url=$SONAR_HOST_URL
         -Dsonar.login=$SONAR_TOKEN
         -Dsonar.ws.timeout=7200
