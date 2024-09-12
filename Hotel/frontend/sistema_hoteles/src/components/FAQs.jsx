@@ -31,7 +31,7 @@ function FAQs() {
         setSeccionesGenerales(data);
     }
 
-    // Handle change for FAQs and Secciones Generales
+    // Handle change for FAQs and Secciones Generales312321
     function handleChange(e, setFunction) {
         const { name, value } = e.target;
         setFunction(prevState => ({ ...prevState, [name]: value }));
