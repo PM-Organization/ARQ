@@ -3,6 +3,9 @@ package org.acme;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import pack_hotel.Comentario;
+
 import java.time.LocalDateTime;
 
 public class ComentarioTest {
