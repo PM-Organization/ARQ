@@ -1,7 +1,9 @@
-package pack_hotel;
+package org.acme;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import pack_hotel.Tipos_habitacion;
 
 import java.util.ArrayList;
 import java.util.List;
