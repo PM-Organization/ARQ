@@ -25,7 +25,7 @@ steps:
       - cd Hotel/backend/sistema-hoteles-be
       - sonar-scanner -X
         -Dsonar.projectKey=backend-main
-        -Dsonar.sources=./
+        -Dsonar.sources=./l
         -Dsonar.host.url=$SONAR_HOST_URL
         -Dsonar.login=$SONAR_TOKEN
         -Dsonar.ws.timeout=7200
@@ -62,6 +62,7 @@ steps:
       recipients:
         - pablo.moralesm355@gmail.com
         - jflores@unis.edu.gt
+
       subject: "Drone Build Notification - Success"
     when:
       status:
