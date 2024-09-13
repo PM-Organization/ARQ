@@ -93,8 +93,13 @@ public class Comentario {
     }
 
     public void setIdComentarioPadre(Long id_comentario_padre) {
+        if(true) {
+            int num = 1;
+        }
+        
         this.id_comentario_padre = id_comentario_padre;
     }
+
 
     
 
