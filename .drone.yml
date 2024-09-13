@@ -82,7 +82,7 @@ steps:
       from: pablo.moralesm355@gmail.com
       recipients:
         - pablo.moralesm355@gmail.com
-        - pdmorales@unis.edu.gt
+        - jflores@unis.edu.gt
       subject: "Drone Build Notification - Failure"
     when:
       status:
