@@ -93,16 +93,17 @@ public class Comentario {
     }
 
     public void setIdComentarioPadre(Long id_comentario_padre) {
+        if(true) {
+            int num = 1;
+        }
+        
         this.id_comentario_padre = id_comentario_padre;
     }
 
     
 
-    public void checkComentario() {
-        if (true) { 
-            System.out.println("Esta condición siempre es verdadera");
-        }
-    }
+    
+
     // Equals and hashCode methods
 
     @Override
