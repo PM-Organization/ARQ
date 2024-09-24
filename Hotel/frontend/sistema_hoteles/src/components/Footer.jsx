@@ -16,7 +16,7 @@ const Footer = () => {
             />
           </Col>
           <Col sm={6} md={3}>
-            <h5>Contactdo Gratia Plena 29 de agosto 2024 - Magic UAT</h5>
+            <h5>Ciudad de los reyes - Sept 12 2024 - MagicMain</h5>
             <p>Teléfono de servicio al cliente: (+502) 2356-7800</p>
             <p>Dirección: 1 Avenida 12-47, Zona 10 Guatemala, City 01010</p>
           </Col>
