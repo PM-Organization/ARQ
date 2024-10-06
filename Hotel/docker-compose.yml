@@ -102,12 +102,32 @@ services:
     volumes:
       - grafana_data:/var/lib/grafana  # Volumen persistente para Grafana
 
+
+  netdata:
+    image: netdata/netdata:latest
+    container_name: netdata
+    hostname: netdata
+    ports:
+      - "19999:19999"
+    networks:
+      - hotel-network
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - netdata_data:/var/lib/netdata
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+
 volumes:
   sonarqube_data:
   sonarqube_logs:
   sonarqube_extensions:
   postgresql_data:
-  grafana_data:  # Definición del volumen para almacenar los datos de Grafana
+  grafana_data: 
+  netdata_data: 
 
 networks:
   hotel-network:
