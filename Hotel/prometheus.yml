@@ -1,0 +1,27 @@
+global:
+  scrape_interval: 25s
+
+scrape_configs:
+  # Scrape cAdvisor metrics
+  - job_name: 'cadvisor'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['cadvisor:8080']
+
+  # Scrape backend-uat metrics
+  - job_name: 'backend-uat'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['backend-uat:8085']
+
+  # Scrape frontend-uat metrics
+  - job_name: 'frontend-uat'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['frontend-uat:80']
+
+  # Scrape Drone metrics
+  - job_name: 'drone'
+    bearer_token: 532050eba76ed77d08b6afbee8e69ba8
+    static_configs:
+      - targets: ['0zvgrx6x-8082.use.devtunnels.ms']

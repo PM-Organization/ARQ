@@ -1,34 +1,7 @@
 version: '3'
 services:
   # Backend Services
-  backend-main:
-    build:
-      context: ./backend/sistema-hoteles-be
-      dockerfile: Dockerfile
-    ports:
-    - "8090:8085"
-    container_name: backend-main
-    networks:
-      - hotel-network
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/sonarqube
-      - SPRING_DATASOURCE_USERNAME=pmoralesm
-      - SPRING_DATASOURCE_PASSWORD=pablo0
-
-  backend-dev:
-    build:
-      context: ./backend/sistema-hoteles-be
-      dockerfile: Dockerfile
-    ports:
-    - "8091:8085"
-    container_name: backend-dev
-    networks:
-      - hotel-network
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/sonarqube
-      - SPRING_DATASOURCE_USERNAME=pmoralesm
-      - SPRING_DATASOURCE_PASSWORD=pablo0
-
+ 
   backend-uat:
     build:
       context: ./backend/sistema-hoteles-be
@@ -44,25 +17,6 @@ services:
       - SPRING_DATASOURCE_PASSWORD=pablo0
 
   # Frontend Services
-  frontend-main:
-    build:
-      context: ./frontend/sistema_hoteles
-      dockerfile: Dockerfile
-    ports:
-      - "3010:80"
-    container_name: frontend-main
-    networks:
-      - hotel-network
-
-  frontend-dev:
-    build:
-      context: ./frontend/sistema_hoteles
-      dockerfile: Dockerfile
-    ports:
-      - "3011:80"
-    container_name: frontend-dev
-    networks:
-      - hotel-network
 
   frontend-uat:
     build:
@@ -74,6 +28,7 @@ services:
     networks:
       - hotel-network
 
+  # SonarQube Service
   sonarqube:
     image: sonarqube:latest
     ports:
@@ -87,6 +42,7 @@ services:
       - SONAR_JDBC_USERNAME=pmoralesm
       - SONAR_JDBC_PASSWORD=pablo0
 
+  # PostgreSQL Service
   db:
     image: postgres:latest
     environment:
@@ -96,11 +52,84 @@ services:
     volumes:
       - postgresql_data:/var/lib/postgresql/data
 
+  # Prometheus Service
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - /home/pmorales/Downloads/ProyectoARQ/ARQ/Hotel/prometheus-2.41.0.linux-amd64/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - hotel-network
+    depends_on:
+      - db
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        while [ ! -f /etc/prometheus/prometheus.yml ]; do
+          echo "Waiting for prometheus.yml to be available..."
+          sleep 2
+        done
+        /bin/prometheus --config.file=/etc/prometheus/prometheus.yml
+
+  # cAdvisor Service
+  cadvisor:
+    image: google/cadvisor:latest
+    ports:
+      - "8081:8080"
+    command:
+      - "--docker_only"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    privileged: true
+    networks:
+      - hotel-network
+
+  # Grafana Service
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - hotel-network
+    depends_on:
+      - prometheus
+    volumes:
+      - grafana_data:/var/lib/grafana  # Volumen persistente para Grafana
+
+
+  netdata:
+    image: netdata/netdata:latest
+    container_name: netdata
+    hostname: netdata
+    ports:
+      - "19999:19999"
+    networks:
+      - hotel-network
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - netdata_data:/var/lib/netdata
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+
 volumes:
   sonarqube_data:
   sonarqube_logs:
   sonarqube_extensions:
   postgresql_data:
+  grafana_data: 
+  netdata_data: 
 
 networks:
   hotel-network:
