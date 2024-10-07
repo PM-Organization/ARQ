@@ -1,0 +1,12 @@
+scrape_configs:
+  - job_name: cadvisor
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+        - cadvisor:8080
+
+  - job_name: drone
+    scrape_interval: 60s
+    bearer_token: 532050eba76ed77d08b6afbee8e69ba8
+    static_configs:
+      - targets: ['0zvgrx6x-8082.use.devtunnels.ms']
