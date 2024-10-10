@@ -13,7 +13,7 @@ steps:
       - mvn clean install   # Instala dependencias y genera artefactos
       - mvn verify          # Ejecuta tests y genera reportes como JaCoCo
 
-  # SonarQube scan del backend incluyendo el reporte de cobertura
+  # SonarQube scan del backend incluyendo el reporte de coberturaa
   - name: sonar-scan-backend
     image: sonarsource/sonar-scanner-cli
     user: root
