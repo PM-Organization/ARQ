@@ -18,7 +18,7 @@ steps:
     image: sonarsource/sonar-scanner-cli
     user: root
     environment:
-      SONAR_HOST_URL: "https://d5074160ce33.ngrok.app"
+      SONAR_HOST_URL: "https://846462db3da4.ngrok.app"
       SONAR_TOKEN:
         from_secret: sonar_token
     commands:
