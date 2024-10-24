@@ -20,7 +20,8 @@ steps:
       - mvn verify          # Ejecuta tests y genera reportes como JaCoCo
     when:
       status: [ success, failure ]
-    # Reporte de tiempo al finalizar el paso usando Prometheus Pushgateway
+  
+  # Reporte de tiempo al finalizar el paso usando Prometheus Pushgateway
   - name: report-build-time
     image: curlimages/curl:latest
     commands:
@@ -38,17 +39,18 @@ steps:
         from_secret: sonar_token
     commands:
       - cd Hotel/backend/sistema-hoteles-be
-      - sonar-scanner -X
-        -Dsonar.projectKey=backend-main
-        -Dsonar.sources=./
-        -Dsonar.host.url=$SONAR_HOST_URL
-        -Dsonar.login=$SONAR_TOKEN
-        -Dsonar.ws.timeout=7200
-        -Dsonar.java.binaries=target/classes
+      - sonar-scanner -X \
+        -Dsonar.projectKey=backend-main \
+        -Dsonar.sources=./ \
+        -Dsonar.host.url=$SONAR_HOST_URL \
+        -Dsonar.login=$SONAR_TOKEN \
+        -Dsonar.ws.timeout=7200 \
+        -Dsonar.java.binaries=target/classes \
         -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
     depends_on:
       - build-backend
-    # Reporte del tiempo de ejecución del SonarQube scan
+  
+  # Reporte del tiempo de ejecución del SonarQube scan
   - name: report-sonar-time
     image: curlimages/curl:latest
     commands:
@@ -72,7 +74,8 @@ steps:
         - merge
     depends_on:
       - sonar-scan-backend
-    # Reporte del tiempo de despliegue
+  
+  # Reporte del tiempo de despliegue
   - name: report-deploy-time
     image: curlimages/curl:latest
     commands:
