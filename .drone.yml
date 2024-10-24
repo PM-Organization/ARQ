@@ -122,7 +122,7 @@ steps:
     depends_on:
       - deploy-containers
 
-  # Notificación por correo electrónico al fallo
+  # Notificación por correo electrónico al fall
   - name: notify-email-failure
     image: drillster/drone-email
     settings:
