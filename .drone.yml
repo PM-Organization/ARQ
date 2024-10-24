@@ -20,7 +20,10 @@ steps:
       - mvn verify          # Ejecuta tests y genera reportes como JaCoCo
     when:
       status: [ success, failure ]
-    # Reporte de tiempo al finalizar el paso usando Prometheus Pushgateway
+    depends_on:
+      - start-pipeline
+
+  # Reporte de tiempo al finalizar el paso usando Prometheus Pushgateway
   - name: report-build-time
     image: curlimages/curl:latest
     commands:
@@ -42,7 +45,7 @@ steps:
       - NETWORK_IO=$(ifconfig eth0 | grep "RX bytes" | awk '{print $2}' | cut -d: -f2)
       - echo "pipeline_network_io_bytes $NETWORK_IO" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
     depends_on:
-      - build-backend
+      - report-build-time
 
   # SonarQube scan del backend incluyendo el reporte de cobertura
   - name: sonar-scan-backend
@@ -54,17 +57,18 @@ steps:
         from_secret: sonar_token
     commands:
       - cd Hotel/backend/sistema-hoteles-be
-      - sonar-scanner -X
-        -Dsonar.projectKey=backend-main
-        -Dsonar.sources=./
-        -Dsonar.host.url=$SONAR_HOST_URL
-        -Dsonar.login=$SONAR_TOKEN
-        -Dsonar.ws.timeout=7200
-        -Dsonar.java.binaries=target/classes
+      - sonar-scanner -X \
+        -Dsonar.projectKey=backend-main \
+        -Dsonar.sources=./ \
+        -Dsonar.host.url=$SONAR_HOST_URL \
+        -Dsonar.login=$SONAR_TOKEN \
+        -Dsonar.ws.timeout=7200 \
+        -Dsonar.java.binaries=target/classes \
         -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
     depends_on:
-      - build-backend
-    # Reporte del tiempo de ejecución del SonarQube scan
+      - report-cpu-memory-network
+
+  # Reporte del tiempo de ejecución del SonarQube scan
   - name: report-sonar-time
     image: curlimages/curl:latest
     commands:
@@ -87,8 +91,9 @@ steps:
       event:
         - merge
     depends_on:
-      - sonar-scan-backend
-    # Reporte del tiempo de despliegue
+      - report-sonar-time
+
+  # Reporte del tiempo de despliegue
   - name: report-deploy-time
     image: curlimages/curl:latest
     commands:
@@ -122,7 +127,7 @@ steps:
     depends_on:
       - deploy-containers
 
-  # Notificación por correo electrónico al fall
+  # Notificación por correo electrónico al fallo
   - name: notify-email-failure
     image: drillster/drone-email
     settings:
