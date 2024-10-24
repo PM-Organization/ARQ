@@ -9,7 +9,7 @@ steps:
     commands:
       - echo "pipeline_status 1" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
 
-  # Build del backend con mvn install seguido de verify
+  # Build del backend con mvn install seguido de verifys
   - name: build-backend
     image: maven:3.8.6-eclipse-temurin-17
     environment:
