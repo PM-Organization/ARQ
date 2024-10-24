@@ -47,7 +47,7 @@ steps:
     depends_on:
       - report-build-time
 
-  # SonarQube scan del backend incluyendo el reporte de cobertura
+  # SonarQube scan del backend incluyendo el reporte de coberturad
   - name: sonar-scan-backend
     image: sonarsource/sonar-scanner-cli
     user: root
