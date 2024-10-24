@@ -8,7 +8,7 @@ steps:
     image: curlimages/curl:latest
     commands:
       - >
-        echo "pipeline_status 1" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
+       - echo "pipeline_status" | curl --data-binary @- http://localhost:9091/metrics/job/drone_pipeline
 
   # Build del backend con mvn install seguido de verify
   - name: build-backend
@@ -111,7 +111,7 @@ steps:
     image: curlimages/curl:latest
     commands:
       - >
-        echo "pipeline_status 0" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
+       - echo "pipeline_status" | curl --data-binary @- http://localhost:9091/metrics/job/drone_pipeline
 
   # Notificación por correo electrónico al éxito
   - name: notify-email-success
