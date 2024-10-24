@@ -13,7 +13,7 @@ steps:
   - name: build-backend
     image: maven:3.8.6-eclipse-temurin-17
     environment:
-      QUARKUS_PROFILE: prod
+      - QUARKUS_PROFILE=prod
     commands:
       - cd Hotel/backend/sistema-hoteles-be
       - mvn clean install   # Instala dependencias y genera artefactos
@@ -51,7 +51,7 @@ steps:
     user: root
     environment:
       - SONAR_HOST_URL=https://6bb968504f22.ngrok.app
-      - SONAR_TOKEN=from_secret:sonar_token
+      - SONAR_TOKEN=${SONAR_TOKEN}
     commands:
       - cd Hotel/backend/sistema-hoteles-be
       - sonar-scanner -X \
