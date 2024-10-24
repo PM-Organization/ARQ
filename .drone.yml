@@ -5,7 +5,7 @@ name: backend-build
 steps:
   # Señalar inicio del pipeline
   - name: start-pipeline
-    image: prom/pushgateway
+    image: curlimages/curl:latest
     commands:
       - echo "pipeline_status 1" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline/instance/backend_build
 
@@ -21,14 +21,12 @@ steps:
     when:
       status: [ success, failure ]
     # Reporte de tiempo al finalizar el paso usando Prometheus Pushgateway
-- name: report-build-time
-  image: prom/pushgateway:latest
-  commands:
-    - apk add --no-cache curl     # Instala curl
-    - echo "build_backend_duration_seconds $(($SECONDS))" | curl --data-binary @- http://pushgateway:9091/metrics/job/backend_build
-  depends_on:
-    - build-backend
-
+  - name: report-build-time
+    image: curlimages/curl:latest
+    commands:
+      - echo "build_backend_duration_seconds $(($SECONDS))" | curl --data-binary @- http://pushgateway:9091/metrics/job/backend_build
+    depends_on:
+      - build-backend
 
   # SonarQube scan del backend incluyendo el reporte de cobertura
   - name: sonar-scan-backend
@@ -52,7 +50,7 @@ steps:
       - build-backend
     # Reporte del tiempo de ejecución del SonarQube scan
   - name: report-sonar-time
-    image: prom/pushgateway
+    image: curlimages/curl:latest
     commands:
       - echo "sonarqube_scan_duration_seconds $(($SECONDS))" | curl --data-binary @- http://pushgateway:9091/metrics/job/sonar_scan_backend
     depends_on:
@@ -76,7 +74,7 @@ steps:
       - sonar-scan-backend
     # Reporte del tiempo de despliegue
   - name: report-deploy-time
-    image: prom/pushgateway
+    image: curlimages/curl:latest
     commands:
       - echo "deploy_containers_duration_seconds $(($SECONDS))" | curl --data-binary @- http://pushgateway:9091/metrics/job/deploy_containers
     depends_on:
@@ -84,7 +82,7 @@ steps:
 
   # Señalar fin del pipeline
   - name: stop-pipeline
-    image: prom/pushgateway
+    image: curlimages/curl:latest
     commands:
       - echo "pipeline_status 0" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline/instance/backend_build
 
