@@ -7,7 +7,8 @@ steps:
   - name: start-pipeline
     image: curlimages/curl:latest
     commands:
-      - echo "pipeline_status 1" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
+      - >
+        echo "pipeline_status 1" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
 
   # Build del backend con mvn install seguido de verify
   - name: build-backend
@@ -25,7 +26,8 @@ steps:
   - name: report-build-time
     image: curlimages/curl:latest
     commands:
-      - echo "build_backend_duration_seconds $(($SECONDS))" | curl --data-binary @- http://pushgateway:9091/metrics/job/backend_build
+      - >
+        echo "build_backend_duration_seconds $(($SECONDS))" | curl --data-binary @- http://pushgateway:9091/metrics/job/backend_build
     depends_on:
       - build-backend
 
@@ -33,15 +35,18 @@ steps:
   - name: report-cpu-memory-network
     image: curlimages/curl:latest
     commands:
-      # Métricas de CPU
-      - CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
-      - echo "pipeline_cpu_usage_percent $CPU_USAGE" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
-      # Métricas de Memoria
-      - MEMORY_USAGE=$(free | grep Mem | awk '{print $3}')
-      - echo "pipeline_memory_usage_bytes $MEMORY_USAGE" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
-      # Métricas de Red
-      - NETWORK_IO=$(ifconfig eth0 | grep "RX bytes" | awk '{print $2}' | cut -d: -f2)
-      - echo "pipeline_network_io_bytes $NETWORK_IO" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
+      - >
+        CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
+      - >
+        echo "pipeline_cpu_usage_percent $CPU_USAGE" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
+      - >
+        MEMORY_USAGE=$(free | grep Mem | awk '{print $3}')
+      - >
+        echo "pipeline_memory_usage_bytes $MEMORY_USAGE" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
+      - >
+        NETWORK_IO=$(ifconfig eth0 | grep "RX bytes" | awk '{print $2}' | cut -d: -f2)
+      - >
+        echo "pipeline_network_io_bytes $NETWORK_IO" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
     depends_on:
       - report-build-time
 
@@ -54,7 +59,8 @@ steps:
       - SONAR_TOKEN=${SONAR_TOKEN}
     commands:
       - cd Hotel/backend/sistema-hoteles-be
-      - sonar-scanner -X \
+      - >
+        sonar-scanner -X \
         -Dsonar.projectKey=backend-main \
         -Dsonar.sources=./ \
         -Dsonar.host.url=$SONAR_HOST_URL \
@@ -69,7 +75,8 @@ steps:
   - name: report-sonar-time
     image: curlimages/curl:latest
     commands:
-      - echo "sonarqube_scan_duration_seconds $(($SECONDS))" | curl --data-binary @- http://pushgateway:9091/metrics/job/sonar_scan_backend
+      - >
+        echo "sonarqube_scan_duration_seconds $(($SECONDS))" | curl --data-binary @- http://pushgateway:9091/metrics/job/sonar_scan_backend
     depends_on:
       - sonar-scan-backend
 
@@ -94,7 +101,8 @@ steps:
   - name: report-deploy-time
     image: curlimages/curl:latest
     commands:
-      - echo "deploy_containers_duration_seconds $(($SECONDS))" | curl --data-binary @- http://pushgateway:9091/metrics/job/deploy_containers
+      - >
+        echo "deploy_containers_duration_seconds $(($SECONDS))" | curl --data-binary @- http://pushgateway:9091/metrics/job/deploy_containers
     depends_on:
       - deploy-containers
 
@@ -102,7 +110,8 @@ steps:
   - name: stop-pipeline
     image: curlimages/curl:latest
     commands:
-      - echo "pipeline_status 0" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
+      - >
+        echo "pipeline_status 0" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
 
   # Notificación por correo electrónico al éxito
   - name: notify-email-success
