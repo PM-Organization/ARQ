@@ -7,6 +7,11 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['cadvisor:8080']
+    relabel_configs:
+      # Solo recoge las métricas cuando el pipeline de Drone esté en ejecución
+      - source_labels: [__address__]
+        action: keep_if_equal
+        regex: "drone-pipeline-active"
 
   # Scrape backend-main metrics
   - job_name: 'backend-main'
@@ -25,3 +30,9 @@ scrape_configs:
     bearer_token: 532050eba76ed77d08b6afbee8e69ba8
     static_configs:
       - targets: ['0zvgrx6x-8082.use.devtunnels.ms']
+
+  # Scrape Pushgateway metrics
+  - job_name: 'pushgateway'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['pushgateway:9091']

@@ -100,7 +100,7 @@ services:
     depends_on:
       - prometheus
     volumes:
-      - grafana_data:/var/lib/grafana  # Volumen persistente para Grafana
+      - grafana_data:/var/lib/grafana  # Volumen persistente para Grafanada
 
 
   netdata:
