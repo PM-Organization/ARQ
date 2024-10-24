@@ -71,6 +71,15 @@ services:
         done
         /bin/prometheus --config.file=/etc/prometheus/prometheus.yml
 
+  # Pushgateway Service
+  pushgateway:
+    image: prom/pushgateway:latest
+    container_name: pushgateway
+    ports:
+      - "9091:9091"
+    networks:
+      - hotel-network
+
   # cAdvisor Service
   cadvisor:
     image: google/cadvisor:latest
