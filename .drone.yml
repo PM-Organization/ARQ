@@ -14,13 +14,15 @@ steps:
   - name: build-backend
     image: maven:3.8.6-eclipse-temurin-17
     environment:
-      - QUARKUS_PROFILE=prod
+      QUARKUS_PROFILE: prod
     commands:
       - cd Hotel/backend/sistema-hoteles-be
       - mvn clean install   # Instala dependencias y genera artefactos
       - mvn verify          # Ejecuta tests y genera reportes como JaCoCo
     when:
-      status: [ success, failure ]
+      status:
+        - success
+        - failure
 
   # Reporte de tiempo al finalizar el paso usando Prometheus Pushgateway
   - name: report-build-time
@@ -36,16 +38,13 @@ steps:
     image: curlimages/curl:latest
     commands:
       - >
-        CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
-      - >
+        CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}') &&
         echo "pipeline_cpu_usage_percent $CPU_USAGE" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
       - >
-        MEMORY_USAGE=$(free | grep Mem | awk '{print $3}')
-      - >
+        MEMORY_USAGE=$(free | grep Mem | awk '{print $3}') &&
         echo "pipeline_memory_usage_bytes $MEMORY_USAGE" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
       - >
-        NETWORK_IO=$(ifconfig eth0 | grep "RX bytes" | awk '{print $2}' | cut -d: -f2)
-      - >
+        NETWORK_IO=$(ifconfig eth0 | grep "RX bytes" | awk '{print $2}' | cut -d: -f2) &&
         echo "pipeline_network_io_bytes $NETWORK_IO" | curl --data-binary @- http://pushgateway:9091/metrics/job/drone_pipeline
     depends_on:
       - report-build-time
@@ -55,8 +54,9 @@ steps:
     image: sonarsource/sonar-scanner-cli
     user: root
     environment:
-      - SONAR_HOST_URL=https://6bb968504f22.ngrok.app
-      - SONAR_TOKEN=${SONAR_TOKEN}
+      SONAR_HOST_URL: https://6bb968504f22.ngrok.app
+      SONAR_TOKEN:
+        from_secret: sonar_token
     commands:
       - cd Hotel/backend/sistema-hoteles-be
       - >
