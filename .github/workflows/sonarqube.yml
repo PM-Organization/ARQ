@@ -1,6 +1,5 @@
 name: SonarQube Pull Request Analysis
 
-# Ejecuta el workflow en cada pull request a las ramas dev, uat, y main.
 on:
   pull_request:
     branches:
@@ -13,18 +12,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Paso 1: Checkout del código
+
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Paso 2: Configurar JDK 17
+
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      # Paso 3: Cachear dependencias de Maven
+
       - name: Cache Maven packages
         uses: actions/cache@v2
         with:
@@ -32,9 +31,9 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven
 
-      # Paso 4: Ejecutar análisis de SonarQube
+
       - name: SonarQube Analysis
-        working-directory: Hotel/backend/sistema-hoteles-be # Directorio donde se encuentra el pom.xml
+        working-directory: Hotel/backend/sistema-hoteles-be 
         run: |
           mvn clean verify sonar:sonar \
             -Dsonar.projectKey=ARQ-PROJECT \

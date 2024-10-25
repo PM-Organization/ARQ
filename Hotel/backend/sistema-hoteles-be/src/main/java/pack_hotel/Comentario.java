@@ -97,11 +97,6 @@ public class Comentario {
     }
 
     
-    public void checkComentario() {
-        if (true) { 
-            System.out.println("Esta condición siempre es verdadera");
-        }
-    }
 
     // Equals and hashCode methods
 
