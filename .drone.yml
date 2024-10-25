@@ -3,7 +3,7 @@ type: docker
 name: backend-build
 
 steps:
-  # Build del backend con mvn install seguido de verify
+  # Build del backend con mvn install seguido de verifydsadsad
   - name: build-backend
     image: maven:3.8.6-eclipse-temurin-17
     environment:
@@ -13,7 +13,7 @@ steps:
       - mvn clean install   # Instala dependencias y genera artefactos
       - mvn verify          # Ejecuta tests y genera reportes como JaCoCo
 
-  # SonarQube scan del backend incluyendo el reporte de cobertura
+  # SonarQube scan del backend incluyendo el reporte de coberturas
   - name: sonar-scan-backend
     image: sonarsource/sonar-scanner-cli
     user: root
