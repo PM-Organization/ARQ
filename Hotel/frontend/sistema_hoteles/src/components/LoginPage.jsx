@@ -30,7 +30,7 @@ const LoginPage = () => {
         body: JSON.stringify(credentials),
       });
       const data = await response.json();
-      console.log('Login response data:', data); // Log de la respuesta del servidor
+      console.log('Login response data:', data); // Log de la respuesta del servidor JENKINSSSSS
 
       if (response.ok) {
         login(data);
