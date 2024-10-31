@@ -114,6 +114,8 @@ public class Comentario {
     }
 
     // toString method
+
+    // Borrando vulnerabilidad if/true
     @Override
     public String toString() {
         return "Comentario{" +
