@@ -98,7 +98,7 @@ public class Comentario {
 
     
 
-    // Equals and hashCode methods
+    // Equals and hashCode methodss
 
     @Override
     public boolean equals(Object o) {
