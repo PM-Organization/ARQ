@@ -17,7 +17,7 @@ function FAQs() {
     fetchSeccionesGenerales();
   }, []);
 
-    // Fetch FAQsdasdasd312313DE2132312321dawd2
+    // Fetch FAQsdasdasd312313DE2132312321dawd2  MAIN JENKINS TEST
     async function fetchFaqs() {
         const response = await fetch('http://localhost:8090/faqs');
         const data = await response.json();
